@@ -102,6 +102,13 @@ function useReveal(dep) {
       { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
     );
     document.querySelectorAll("[data-reveal]").forEach((el) => { el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el); });
+    // Immediate check: reveal elements already in viewport (fixes filter/route-change race)
+    requestAnimationFrame(() => {
+      document.querySelectorAll("[data-reveal]").forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; io.unobserve(el); }
+      });
+    });
     return () => io.disconnect();
   }, [dep]);
 }
@@ -371,7 +378,10 @@ function Portfolio() {
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>{product.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 9px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div>
                   <div style={{ paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: 12, color: t.t2 }}>{product.stats.views} views {"\u00b7"} {product.stats.agents} agents {"\u00b7"} Guided tour</span>
-                    <span style={{ fontSize: 13, color: t.blue, fontWeight: 500 }}>View details {"\u2192"}</span>
+                    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                      <span style={{ fontSize: 13, color: t.t1, fontWeight: 500, cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); go("detail", product.slug); }}>View details {"\u2192"}</span>
+                      <a href={product.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 13, color: t.blue, fontWeight: 500, textDecoration: "none", cursor: "pointer" }}>Try it {"\u2192"}</a>
+                    </div>
                   </div>
                 </div>
               </div></R>
@@ -454,9 +464,18 @@ function Portfolio() {
                     {statusBadge(item.status)}
                   </div>
                   <div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 8 }}>{item.title}</div>
+                  {item.status === "coming" && (
+                    <div style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: t.t3, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Prototype in progress</div>
+                  )}
                   <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{item.summary}</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{(item.tags || []).slice(0, 4).map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{tag}</span>)}</div>
                   {item.date && <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</div>}
+                  {item.appUrl && item.status === "live" && (
+                    <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: 12, color: t.t2 }}>{item.stats?.views || 0} views {"\u00b7"} {item.stats?.agents || 0} agents</span>
+                      <a href={item.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 12, color: t.blue, fontWeight: 500, textDecoration: "none" }}>Try it {"\u2192"}</a>
+                    </div>
+                  )}
                 </div>
               </div></R>
             );
