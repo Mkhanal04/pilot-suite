@@ -1,49 +1,768 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pilot Suite - Milan Khanal</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<title>Milan Khanal — AI Product Builder</title>
+<meta name="description" content="Strategy to prototype. 10+ years enterprise delivery, Human-Centered AI degree, live decision intelligence products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'DM Sans',sans-serif;background:#FAFAF9;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
-.container{max-width:720px;width:100%;text-align:center}
-h1{font-family:'DM Serif Display',serif;font-size:36px;color:#1C1917;margin-bottom:8px}
-.sub{font-size:16px;color:#57534E;margin-bottom:40px;line-height:1.6}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.card{background:white;border:1px solid #E7E5E4;border-radius:14px;padding:28px 24px;text-decoration:none;color:inherit;transition:all .2s;text-align:left}
-.card:hover{border-color:#2563EB;box-shadow:0 8px 24px rgba(37,99,235,.1);transform:translateY(-2px)}
-.card-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;margin-bottom:14px}
-.card h2{font-size:18px;font-weight:600;color:#1C1917;margin-bottom:6px}
-.card p{font-size:13px;color:#57534E;line-height:1.5}
-.card .domain{font-size:11px;font-weight:600;color:#78716C;text-transform:uppercase;letter-spacing:.06em;margin-top:12px}
-.footer{margin-top:40px;font-size:13px;color:#78716C}
-.footer a{color:#2563EB;text-decoration:none}
-@media(max-width:540px){.cards{grid-template-columns:1fr}h1{font-size:28px}}
+/* ========== DESIGN TOKENS ========== */
+:root {
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --max-text: 680px;
+  --max-content: 1080px;
+  --section-gap: 120px;
+  --header-gap: 32px;
+  --card-gap: 16px;
+  --radius: 12px;
+  --transition: 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+  --border: rgba(255,255,255,0.06); --border-hover: rgba(255,255,255,0.13);
+  --t0: #F4F4F5; --t1: #A1A1AA; --t2: #63636E; --t3: #3F3F46;
+  --blue: #3B82F6; --green: #22C55E; --amber: #EAB308;
+}
+
+[data-theme="light"] {
+  --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+  --border: rgba(0,0,0,0.06); --border-hover: rgba(0,0,0,0.12);
+  --t0: #18181B; --t1: #52525B; --t2: #A1A1AA; --t3: #D4D4D8;
+  --blue: #2563EB; --green: #16A34A; --amber: #CA8A04;
+}
+
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--t0);
+  background: var(--bg);
+  transition: background var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ========== LAYOUT ========== */
+.section {
+  padding: 0 24px;
+  margin-bottom: var(--section-gap);
+}
+
+.section-inner {
+  max-width: var(--max-content);
+  margin: 0 auto;
+}
+
+.section-header {
+  max-width: var(--max-text);
+  margin-bottom: var(--header-gap);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  color: var(--t0);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.section-desc {
+  color: var(--t1);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* ========== NAV ========== */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  transition: background var(--transition);
+}
+
+nav .nav-inner {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-name {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--t0);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px;
+  color: var(--t1);
+  transition: color var(--transition);
+}
+
+.nav-links a:hover { color: var(--t0); text-decoration: none; }
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--t1);
+  font-size: 16px;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.theme-toggle:hover { border-color: var(--border-hover); color: var(--t0); }
+
+/* ========== HERO ========== */
+.hero {
+  padding-top: 140px;
+  padding-bottom: 0;
+  margin-bottom: var(--section-gap);
+}
+
+.hero-inner {
+  max-width: var(--max-text);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.hero-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), #8B5CF6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
+
+.hero-meta {
+  font-size: 14px;
+  color: var(--t1);
+}
+
+.hero-meta .status {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 6vw, 50px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--t0);
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--t1);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 580px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--t0);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ========== CHAPTERS ========== */
+.chapters-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--card-gap);
+}
+
+.chapter-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: border-color var(--transition);
+}
+
+.chapter-card:hover { border-color: var(--border-hover); }
+
+.chapter-num {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.chapter-card:nth-child(1) .chapter-num { color: var(--blue); }
+.chapter-card:nth-child(2) .chapter-num { color: var(--amber); }
+.chapter-card:nth-child(3) .chapter-num { color: var(--green); }
+
+.chapter-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--t0);
+  margin-bottom: 12px;
+}
+
+.chapter-body {
+  color: var(--t1);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.chapter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--t2);
+  background: var(--bg2);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ========== WORK ========== */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--card-gap);
+}
+
+.work-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color var(--transition), transform 0.2s ease;
+}
+
+.work-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.work-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.work-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+}
+
+.work-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-live {
+  color: var(--green);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.badge-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+}
+
+.work-domain {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.work-name {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--t0);
+  margin-bottom: 10px;
+}
+
+.work-desc {
+  color: var(--t1);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ========== ARCHITECTURE CALLOUT ========== */
+.arch-callout {
+  margin-top: 24px;
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  text-align: center;
+}
+
+.arch-callout p {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--t1);
+  margin-bottom: 16px;
+}
+
+.arch-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* ========== THESIS ========== */
+.thesis-content {
+  max-width: var(--max-text);
+}
+
+.thesis-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 3vw, 26px);
+  font-style: italic;
+  color: var(--t0);
+  line-height: 1.5;
+  margin-bottom: 24px;
+  padding-left: 20px;
+  border-left: 2px solid var(--blue);
+}
+
+.thesis-body {
+  color: var(--t1);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* ========== CONTACT ========== */
+.contact {
+  text-align: center;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: white;
+}
+
+.btn-primary:hover { opacity: 0.9; text-decoration: none; }
+
+.btn-secondary {
+  background: var(--bg2);
+  color: var(--t0);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover { border-color: var(--border-hover); text-decoration: none; }
+
+/* ========== FOOTER ========== */
+footer {
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+}
+
+footer .footer-inner {
+  max-width: var(--max-content);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-left {
+  font-size: 14px;
+  color: var(--t2);
+}
+
+.footer-right {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--t3);
+}
+
+/* ========== SCROLL REVEAL ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  :root { --section-gap: 80px; }
+
+  .nav-links .nav-link-text { display: none; }
+
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: 32px; }
+
+  .hero-stats { gap: 24px; }
+  .stat-value { font-size: 20px; }
+
+  .work-grid { grid-template-columns: 1fr; }
+
+  footer .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>Pilot Suite</h1>
-  <p class="sub">Domain-agnostic decision intelligence architecture.<br>Two products. One pattern. Built by Milan Khanal.</p>
-  <div class="cards">
-    <a href="/tradepilot/" class="card">
-      <div class="card-icon" style="background:linear-gradient(135deg,#1C1917,#292524)">TP</div>
-      <h2>TradePilot</h2>
-      <p>AI-powered decision intelligence for supply chain and trade operations. Tariff analysis, supplier risk, cross-department ripple effects.</p>
-      <div class="domain">Supply Chain</div>
-    </a>
-    <a href="/talentpilot/" class="card">
-      <div class="card-icon" style="background:linear-gradient(135deg,#0F1729,#1E3554)">TP</div>
-      <h2>TalentPilot</h2>
-      <p>Decision intelligence for recruiting. Glass Box transparency, bias monitoring, dual-signal placement health, multi-role personas.</p>
-      <div class="domain">Recruiting</div>
-    </a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">Milan Khanal</span>
+    <ul class="nav-links">
+      <li><a href="#story"><span class="nav-link-text">Story</span></a></li>
+      <li><a href="#work"><span class="nav-link-text">Work</span></a></li>
+      <li><a href="#thesis"><span class="nav-link-text">Thesis</span></a></li>
+      <li><a href="#contact"><span class="nav-link-text">Contact</span></a></li>
+      <li><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">&#9681;</button></li>
+    </ul>
   </div>
-  <div class="footer">
-    Built with the 10-80-10 human-AI framework. <a href="/about/">About the builder</a> · <a href="/talentpilot/">Take the tour</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-avatar">MK</div>
+      <span class="hero-meta"><span class="status"></span>AI Product Builder &middot; McKinney, TX</span>
+    </div>
+    <h1>Strategy to prototype.<br>One person. Two weeks.</h1>
+    <p class="hero-sub">10+ years of enterprise delivery. A degree in Human-Centered AI. Now I build the decision intelligence products that used to take a team of six.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-value">10+</span>
+        <span class="stat-label">Years Enterprise</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">2</span>
+        <span class="stat-label">Live Products</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">5+</span>
+        <span class="stat-label">Domains</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">1</span>
+        <span class="stat-label">Architecture</span>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- CHAPTERS -->
+<section class="section" id="story">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">The Story</div>
+      <h2 class="section-title">Three chapters. One identity.</h2>
+      <p class="section-desc">These aren't sequential steps — they're overlapping lenses. Each one sharpens the others.</p>
+    </div>
+    <div class="chapters-grid">
+      <div class="chapter-card reveal">
+        <div class="chapter-num">01 — Enterprise</div>
+        <h3 class="chapter-title">I spent a decade watching the same problems repeat.</h3>
+        <p class="chapter-body">Toyota, Dell, FleetPride, World Kinect, CRC Group — different industries, same pattern. Decisions fragmented across departments, no shared context, no audit trail. I started seeing the architecture before I had a name for it.</p>
+        <div class="chapter-tags">
+          <span class="tag">Toyota</span>
+          <span class="tag">Dell</span>
+          <span class="tag">FleetPride</span>
+          <span class="tag">World Kinect</span>
+          <span class="tag">CRC Group</span>
+          <span class="tag">SAFe 5 PO/PM</span>
+        </div>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">02 — Education</div>
+        <h3 class="chapter-title">I went and got the formal framework.</h3>
+        <p class="chapter-body">A B.S. in Human-Centered AI at Texas Tech, Cornell's AI certification, AWS Cloud Practitioner. Not to pivot away from enterprise — to give structure to what I was already seeing: AI done right is connective tissue between products, not a feature.</p>
+        <div class="chapter-tags">
+          <span class="tag">Texas Tech — HCAI</span>
+          <span class="tag">Cornell AI</span>
+          <span class="tag">AWS Certified</span>
+        </div>
+      </div>
+      <div class="chapter-card reveal">
+        <div class="chapter-num">03 — Building</div>
+        <h3 class="chapter-title">Now I prove it — same architecture, different domain, every time.</h3>
+        <p class="chapter-body">TradePilot for supply chain. TalentPilot for recruiting. Same six architectural pillars, different data, different personas. The portfolio you're looking at runs on the same pattern. One person, prototype to production.</p>
+        <div class="chapter-tags">
+          <span class="tag">TradePilot</span>
+          <span class="tag">TalentPilot</span>
+          <span class="tag">Glass Box</span>
+          <span class="tag">10-80-10</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">Live Products</div>
+      <h2 class="section-title">Click. Explore. It's real.</h2>
+      <p class="section-desc">Not mockups. Not pitch decks. Live, interactive decision intelligence products you can use right now.</p>
+    </div>
+    <div class="work-grid">
+      <a href="/tradepilot/" class="work-card reveal">
+        <div class="work-card-header">
+          <div class="work-icon" style="background: linear-gradient(135deg, #1C1917, #292524)">TP</div>
+          <span class="work-badge badge-live">Live</span>
+        </div>
+        <div class="work-domain">Supply Chain</div>
+        <h3 class="work-name">TradePilot</h3>
+        <p class="work-desc">AI-powered decision intelligence for trade operations. Tariff analysis, supplier risk scoring, cross-department ripple effects, and a full Glass Box audit trail. 5 AI agents, 6 interactive views.</p>
+        <div class="work-tags">
+          <span class="tag">Decision Intelligence</span>
+          <span class="tag">Glass Box</span>
+          <span class="tag">Agentic AI</span>
+          <span class="tag">Kill Switch</span>
+        </div>
+      </a>
+      <a href="/talentpilot/" class="work-card reveal">
+        <div class="work-card-header">
+          <div class="work-icon" style="background: linear-gradient(135deg, #0F1729, #1E3554)">TP</div>
+          <span class="work-badge badge-live">Live</span>
+        </div>
+        <div class="work-domain">Recruiting</div>
+        <h3 class="work-name">TalentPilot</h3>
+        <p class="work-desc">Decision intelligence for recruiting. Bias monitoring, dual-signal placement health, Glass Box transparency, and human-in-the-loop controls at every decision point. 4 AI agents, 7 interactive views.</p>
+        <div class="work-tags">
+          <span class="tag">Bias Detection</span>
+          <span class="tag">Compliance</span>
+          <span class="tag">Dual-Signal</span>
+          <span class="tag">Multi-Persona</span>
+        </div>
+      </a>
+    </div>
+    <div class="arch-callout reveal">
+      <p>"Same architecture. Different domain. Every time."</p>
+      <div class="arch-pillars">
+        <span class="tag">Agentic AI</span>
+        <span class="tag">Human-in-the-Loop</span>
+        <span class="tag">Glass Box</span>
+        <span class="tag">Intelligence Mining</span>
+        <span class="tag">Learning Loops</span>
+        <span class="tag">Decision Lifecycle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-label">The Thesis</div>
+      <h2 class="section-title">Cross-domain pattern recognition as a product skill.</h2>
+    </div>
+    <div class="thesis-content reveal">
+      <blockquote class="thesis-quote">"I see what connects industries before the market does, and I build the proof."</blockquote>
+      <p class="thesis-body">Most product managers go deep in one vertical. I go wide across verticals and find the transferable architecture. Supply chain and recruiting look nothing alike — until you see that both need AI agents monitoring data streams, humans making high-stakes decisions with full transparency, and organizations acting on intelligence they didn't know they had. The architecture is the product. The domain is just a variable.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <div class="section-inner">
+    <div class="section-header reveal" style="text-align: center; max-width: 100%;">
+      <div class="section-label">Let's Talk</div>
+      <h2 class="section-title">Start a conversation.</h2>
+      <p class="section-desc">Whether you're hiring for AI product roles, exploring a partnership, or just want to go deeper on the architecture — I'd like to hear from you.</p>
+    </div>
+    <div class="contact-buttons reveal">
+      <a href="mailto:milan.khanal25@gmail.com" class="btn btn-primary">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email Me
+      </a>
+      <a href="https://www.linkedin.com/in/milankhanal/" target="_blank" class="btn btn-secondary">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-left">Milan Khanal &middot; AI Product Builder</span>
+    <span class="footer-right">&copy; 2026</span>
+  </div>
+</footer>
+
+<script>
+/* Theme Toggle */
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+}
+
+/* Load saved theme */
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+
+/* Scroll Reveal */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
