@@ -1,768 +1,501 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milan Khanal — AI Product Builder</title>
-<meta name="description" content="Strategy to prototype. 10+ years enterprise delivery, Human-Centered AI degree, live decision intelligence products.">
+<meta name="description" content="I've delivered enterprise products for a decade. Now I build AI products designed to actually get adopted. 10+ years enterprise delivery, Human-Centered AI, live prototypes.">
+<meta property="og:title" content="Milan Khanal — AI Product Builder">
+<meta property="og:description" content="Strategy to prototype. Enterprise delivery meets Human-Centered AI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pilot-suite-sigma.vercel.app">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <style>
-/* ========== DESIGN TOKENS ========== */
-:root {
-  --font-serif: 'Newsreader', Georgia, serif;
-  --font-sans: 'Outfit', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --max-text: 680px;
-  --max-content: 1080px;
-  --section-gap: 120px;
-  --header-gap: 32px;
-  --card-gap: 16px;
-  --radius: 12px;
-  --transition: 0.3s ease;
-}
-
-[data-theme="dark"] {
-  --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
-  --border: rgba(255,255,255,0.06); --border-hover: rgba(255,255,255,0.13);
-  --t0: #F4F4F5; --t1: #A1A1AA; --t2: #63636E; --t3: #3F3F46;
-  --blue: #3B82F6; --green: #22C55E; --amber: #EAB308;
-}
-
-[data-theme="light"] {
-  --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
-  --border: rgba(0,0,0,0.06); --border-hover: rgba(0,0,0,0.12);
-  --t0: #18181B; --t1: #52525B; --t2: #A1A1AA; --t3: #D4D4D8;
-  --blue: #2563EB; --green: #16A34A; --amber: #CA8A04;
-}
-
-/* ========== RESET & BASE ========== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font-sans);
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--t0);
-  background: var(--bg);
-  transition: background var(--transition), color var(--transition);
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: var(--blue); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* ========== LAYOUT ========== */
-.section {
-  padding: 0 24px;
-  margin-bottom: var(--section-gap);
-}
-
-.section-inner {
-  max-width: var(--max-content);
-  margin: 0 auto;
-}
-
-.section-header {
-  max-width: var(--max-text);
-  margin-bottom: var(--header-gap);
-}
-
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--t2);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
-
-.section-title {
-  font-family: var(--font-serif);
-  font-size: clamp(24px, 4vw, 32px);
-  font-weight: 400;
-  color: var(--t0);
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.section-desc {
-  color: var(--t1);
-  font-size: 16px;
-  line-height: 1.7;
-}
-
-/* ========== NAV ========== */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 16px 24px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(12px);
-  transition: background var(--transition);
-}
-
-nav .nav-inner {
-  max-width: var(--max-content);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-name {
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 16px;
-  color: var(--t0);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 14px;
-  color: var(--t1);
-  transition: color var(--transition);
-}
-
-.nav-links a:hover { color: var(--t0); text-decoration: none; }
-
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--t1);
-  font-size: 16px;
-  transition: border-color var(--transition), color var(--transition);
-}
-
-.theme-toggle:hover { border-color: var(--border-hover); color: var(--t0); }
-
-/* ========== HERO ========== */
-.hero {
-  padding-top: 140px;
-  padding-bottom: 0;
-  margin-bottom: var(--section-gap);
-}
-
-.hero-inner {
-  max-width: var(--max-text);
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.hero-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue), #8B5CF6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 14px;
-  color: white;
-}
-
-.hero-meta {
-  font-size: 14px;
-  color: var(--t1);
-}
-
-.hero-meta .status {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: var(--green);
-  border-radius: 50%;
-  margin-right: 4px;
-  vertical-align: middle;
-}
-
-.hero h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(34px, 6vw, 50px);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--t0);
-  margin-bottom: 20px;
-}
-
-.hero-sub {
-  font-size: 18px;
-  color: var(--t1);
-  line-height: 1.7;
-  margin-bottom: 40px;
-  max-width: 580px;
-}
-
-.hero-stats {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  padding-top: 32px;
-  border-top: 1px solid var(--border);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-value {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  color: var(--t0);
-}
-
-.stat-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--t2);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-/* ========== CHAPTERS ========== */
-.chapters-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--card-gap);
-}
-
-.chapter-card {
-  background: var(--bg1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-  transition: border-color var(--transition);
-}
-
-.chapter-card:hover { border-color: var(--border-hover); }
-
-.chapter-num {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 400;
-  margin-bottom: 12px;
-}
-
-.chapter-card:nth-child(1) .chapter-num { color: var(--blue); }
-.chapter-card:nth-child(2) .chapter-num { color: var(--amber); }
-.chapter-card:nth-child(3) .chapter-num { color: var(--green); }
-
-.chapter-title {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  color: var(--t0);
-  margin-bottom: 12px;
-}
-
-.chapter-body {
-  color: var(--t1);
-  font-size: 15px;
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-
-.chapter-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tag {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--t2);
-  background: var(--bg2);
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-/* ========== WORK ========== */
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: var(--card-gap);
-}
-
-.work-card {
-  background: var(--bg1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 32px;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: border-color var(--transition), transform 0.2s ease;
-}
-
-.work-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-2px);
-  text-decoration: none;
-}
-
-.work-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.work-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 15px;
-  color: white;
-}
-
-.work-badge {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.badge-live {
-  color: var(--green);
-  background: rgba(34, 197, 94, 0.1);
-}
-
-.badge-live::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-}
-
-.work-domain {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--t2);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 8px;
-}
-
-.work-name {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  color: var(--t0);
-  margin-bottom: 10px;
-}
-
-.work-desc {
-  color: var(--t1);
-  font-size: 15px;
-  line-height: 1.7;
-  margin-bottom: 16px;
-}
-
-.work-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* ========== ARCHITECTURE CALLOUT ========== */
-.arch-callout {
-  margin-top: 24px;
-  background: var(--bg1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 32px;
-  text-align: center;
-}
-
-.arch-callout p {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-style: italic;
-  color: var(--t1);
-  margin-bottom: 16px;
-}
-
-.arch-pillars {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-
-/* ========== THESIS ========== */
-.thesis-content {
-  max-width: var(--max-text);
-}
-
-.thesis-quote {
-  font-family: var(--font-serif);
-  font-size: clamp(20px, 3vw, 26px);
-  font-style: italic;
-  color: var(--t0);
-  line-height: 1.5;
-  margin-bottom: 24px;
-  padding-left: 20px;
-  border-left: 2px solid var(--blue);
-}
-
-.thesis-body {
-  color: var(--t1);
-  font-size: 16px;
-  line-height: 1.8;
-}
-
-/* ========== CONTACT ========== */
-.contact {
-  text-align: center;
-}
-
-.contact-buttons {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin-top: 24px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 15px;
-  transition: all 0.2s ease;
-}
-
-.btn-primary {
-  background: var(--blue);
-  color: white;
-}
-
-.btn-primary:hover { opacity: 0.9; text-decoration: none; }
-
-.btn-secondary {
-  background: var(--bg2);
-  color: var(--t0);
-  border: 1px solid var(--border);
-}
-
-.btn-secondary:hover { border-color: var(--border-hover); text-decoration: none; }
-
-/* ========== FOOTER ========== */
-footer {
-  padding: 32px 24px;
-  border-top: 1px solid var(--border);
-}
-
-footer .footer-inner {
-  max-width: var(--max-content);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.footer-left {
-  font-size: 14px;
-  color: var(--t2);
-}
-
-.footer-right {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--t3);
-}
-
-/* ========== SCROLL REVEAL ========== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-  :root { --section-gap: 80px; }
-
-  .nav-links .nav-link-text { display: none; }
-
-  .hero { padding-top: 100px; }
-  .hero h1 { font-size: 32px; }
-
-  .hero-stats { gap: 24px; }
-  .stat-value { font-size: 20px; }
-
-  .work-grid { grid-template-columns: 1fr; }
-
-  footer .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
 </style>
 </head>
 <body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <span class="nav-name">Milan Khanal</span>
-    <ul class="nav-links">
-      <li><a href="#story"><span class="nav-link-text">Story</span></a></li>
-      <li><a href="#work"><span class="nav-link-text">Work</span></a></li>
-      <li><a href="#thesis"><span class="nav-link-text">Thesis</span></a></li>
-      <li><a href="#contact"><span class="nav-link-text">Contact</span></a></li>
-      <li><button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">&#9681;</button></li>
-    </ul>
-  </div>
-</nav>
+/*
+ ╔═══════════════════════════════════════════════════════════════╗
+ ║  MILAN KHANAL | PORTFOLIO (FULL SITE)                        ║
+ ║  All pages: Homepage, Work, Product Detail, Case Study       ║
+ ║  Design System: LOCKED. Newsreader + Outfit + JetBrains Mono ║
+ ╚═══════════════════════════════════════════════════════════════╝
+*/
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">
-      <div class="hero-avatar">MK</div>
-      <span class="hero-meta"><span class="status"></span>AI Product Builder &middot; McKinney, TX</span>
-    </div>
-    <h1>Strategy to prototype.<br>One person. Two weeks.</h1>
-    <p class="hero-sub">10+ years of enterprise delivery. A degree in Human-Centered AI. Now I build the decision intelligence products that used to take a team of six.</p>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-value">10+</span>
-        <span class="stat-label">Years Enterprise</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">2</span>
-        <span class="stat-label">Live Products</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">5+</span>
-        <span class="stat-label">Domains</span>
-      </div>
-      <div class="stat">
-        <span class="stat-value">1</span>
-        <span class="stat-label">Architecture</span>
-      </div>
-    </div>
-  </div>
-</section>
+const themes = {
+  dark: {
+    bg: "#09090B", bg1: "#0F0F12", bg2: "#17171C", bg3: "#1E1E26",
+    border: "rgba(255,255,255,0.06)", borderH: "rgba(255,255,255,0.13)",
+    t0: "#F4F4F5", t1: "#A1A1AA", t2: "#63636E", t3: "#3F3F46",
+    blue: "#3B82F6", blueS: "rgba(59,130,246,0.08)", blueB: "rgba(59,130,246,0.18)",
+    green: "#22C55E", greenS: "rgba(34,197,94,0.08)", greenB: "rgba(34,197,94,0.18)",
+    amber: "#EAB308", amberS: "rgba(234,179,8,0.08)", amberB: "rgba(234,179,8,0.18)",
+    navBg: "rgba(9,9,11,0.85)",
+  },
+  light: {
+    bg: "#FAFAFA", bg1: "#FFFFFF", bg2: "#F4F4F5", bg3: "#E4E4E7",
+    border: "rgba(0,0,0,0.06)", borderH: "rgba(0,0,0,0.12)",
+    t0: "#18181B", t1: "#52525B", t2: "#A1A1AA", t3: "#D4D4D8",
+    blue: "#2563EB", blueS: "rgba(37,99,235,0.06)", blueB: "rgba(37,99,235,0.14)",
+    green: "#16A34A", greenS: "rgba(22,163,74,0.06)", greenB: "rgba(22,163,74,0.14)",
+    amber: "#CA8A04", amberS: "rgba(202,138,4,0.06)", amberB: "rgba(202,138,4,0.14)",
+    navBg: "rgba(250,250,250,0.88)",
+  },
+};
 
-<!-- CHAPTERS -->
-<section class="section" id="story">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">The Story</div>
-      <h2 class="section-title">Three chapters. One identity.</h2>
-      <p class="section-desc">These aren't sequential steps — they're overlapping lenses. Each one sharpens the others.</p>
-    </div>
-    <div class="chapters-grid">
-      <div class="chapter-card reveal">
-        <div class="chapter-num">01 — Enterprise</div>
-        <h3 class="chapter-title">I spent a decade watching the same problems repeat.</h3>
-        <p class="chapter-body">Toyota, Dell, FleetPride, World Kinect, CRC Group — different industries, same pattern. Decisions fragmented across departments, no shared context, no audit trail. I started seeing the architecture before I had a name for it.</p>
-        <div class="chapter-tags">
-          <span class="tag">Toyota</span>
-          <span class="tag">Dell</span>
-          <span class="tag">FleetPride</span>
-          <span class="tag">World Kinect</span>
-          <span class="tag">CRC Group</span>
-          <span class="tag">SAFe 5 PO/PM</span>
-        </div>
-      </div>
-      <div class="chapter-card reveal">
-        <div class="chapter-num">02 — Education</div>
-        <h3 class="chapter-title">I went and got the formal framework.</h3>
-        <p class="chapter-body">A B.S. in Human-Centered AI at Texas Tech, Cornell's AI certification, AWS Cloud Practitioner. Not to pivot away from enterprise — to give structure to what I was already seeing: AI done right is connective tissue between products, not a feature.</p>
-        <div class="chapter-tags">
-          <span class="tag">Texas Tech — HCAI</span>
-          <span class="tag">Cornell AI</span>
-          <span class="tag">AWS Certified</span>
-        </div>
-      </div>
-      <div class="chapter-card reveal">
-        <div class="chapter-num">03 — Building</div>
-        <h3 class="chapter-title">Now I prove it — same architecture, different domain, every time.</h3>
-        <p class="chapter-body">TradePilot for supply chain. TalentPilot for recruiting. Same six architectural pillars, different data, different personas. The portfolio you're looking at runs on the same pattern. One person, prototype to production.</p>
-        <div class="chapter-tags">
-          <span class="tag">TradePilot</span>
-          <span class="tag">TalentPilot</span>
-          <span class="tag">Glass Box</span>
-          <span class="tag">10-80-10</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+// --- CONTENT DATA ---
+const allWork = [
+  {
+    slug: "tradepilot", type: "product", title: "TradePilot", domain: "Supply Chain", color: "blue", status: "live", date: "2026-02",
+    summary: "Decision intelligence for supply chain. AI agents surface signals, enrich context, and recommend. Humans decide.",
+    desc: "Supply chain teams make high-stakes sourcing decisions on stale data and gut feel. TradePilot is an experiment: what if AI agents surfaced the signals, enriched the context, and recommended, but humans always made the call?",
+    problem: "Supply chain teams make high-stakes sourcing decisions on stale data and gut feel. Institutional knowledge lives in spreadsheets and the heads of senior buyers. When someone leaves, the knowledge leaves with them.",
+    approach: "Built a 6-view prototype with 5 AI agents that detect patterns across supplier data, surface decision-relevant signals, and recommend actions. Every recommendation comes with source evidence and a confidence score. Humans approve, reject, or modify. The system learns from every decision.",
+    pillars: ["Agentic AI", "Glass Box", "Decision Lifecycle", "Intelligence Mining", "Human-in-the-Loop"],
+    stats: { views: 6, agents: 5, tour: true }, appUrl: "/tradepilot/",
+    tags: ["Agentic AI", "Glass Box", "Decision Lifecycle", "5 AI Agents", "Learning Loops"],
+  },
+  {
+    slug: "talentpilot", type: "product", title: "TalentPilot", domain: "Recruiting", color: "amber", status: "live", date: "2026-03",
+    summary: "Same architecture, different domain. Tests whether the framework holds when you swap the industry.",
+    desc: "Same architecture, different domain. Recruiting has the same broken pattern: decisions made on incomplete data, bias invisible in the process, institutional knowledge siloed. TalentPilot tests whether the framework holds when you swap the industry.",
+    problem: "Recruiting decisions are made on incomplete data, bias is invisible in the process, and institutional knowledge about what makes a good hire is siloed in individual recruiters' heads.",
+    approach: "Applied the same architecture from TradePilot to recruiting. Decision enrichment replaces candidate scoring (because scoring implies the AI makes the call). Bias monitoring is built into the decision flow, not bolted on as a report. 4 AI agents, same Glass Box transparency.",
+    pillars: ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
+    stats: { views: 7, agents: 4, tour: true }, appUrl: "/talentpilot/",
+    tags: ["Decision Enrichment", "Bias Dashboard", "Pipeline Monitor", "4 AI Agents"],
+  },
+  {
+    slug: "healthcare-billing", type: "case-study", title: "Healthcare Billing Modernization", domain: "Healthcare", color: "green", status: "completed", date: "2025-11",
+    summary: "Led discovery and rapid prototyping for a $2M+ legacy billing platform replacement. 17 screens, 10 screen groups, production data.",
+    context: "A healthcare benefits company was running critical billing operations on a 20+ year old IBM mainframe system. The platform processed 500K+ monthly billing records across 7,000 customer groups. Staff relied on green-screen terminals and tribal knowledge.",
+    problem: "The legacy system was becoming unmaintainable. Key operators were approaching retirement. No documentation existed for complex billing logic. Previous modernization attempts had stalled because requirements were too abstract to validate.",
+    approach: "Spent 3 months in deep discovery with the Sr. Director of Billing Operations (27-year veteran). Instead of writing requirements docs, I built a working prototype with real production data that the team could react to. 17 screens across 10 screen groups, covering AR/AP billing, commissions, carrier remittance, and error handling.",
+    outcome: 'The Sr. Director called the prototype "phenomenal" and scheduled a VP of Product demo. The prototype captured institutional knowledge that had never been documented. It became the reference artifact for the engineering team.',
+    learnings: "Discovery doesn't have to end with a document. It can end with working software. When domain experts interact with a prototype, they surface edge cases and business rules they couldn't articulate in interviews alone. The prototype becomes the specification.",
+    tags: ["Legacy Modernization", "Healthcare", "Rapid Prototyping", "Discovery", "Production Data"],
+  },
+  { slug: "healthpilot", type: "product", title: "HealthPilot", domain: "Healthcare", color: "green", status: "coming", date: null, summary: "The billing modernization case study, redesigned as a Pilot Suite product with the full intelligence architecture.", tags: ["Healthcare", "Coming Soon"] },
+  { slug: "autopilot", type: "product", title: "AutoPilot", domain: "Automotive", color: "blue", status: "coming", date: null, summary: "Car buying intelligence. Consumer and dealer dashboards powered by the same decision architecture.", tags: ["Automotive", "Coming Soon"] },
+];
 
-<!-- WORK -->
-<section class="section" id="work">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">Live Products</div>
-      <h2 class="section-title">Click. Explore. It's real.</h2>
-      <p class="section-desc">Not mockups. Not pitch decks. Live, interactive decision intelligence products you can use right now.</p>
-    </div>
-    <div class="work-grid">
-      <a href="/tradepilot/" class="work-card reveal">
-        <div class="work-card-header">
-          <div class="work-icon" style="background: linear-gradient(135deg, #1C1917, #292524)">TP</div>
-          <span class="work-badge badge-live">Live</span>
-        </div>
-        <div class="work-domain">Supply Chain</div>
-        <h3 class="work-name">TradePilot</h3>
-        <p class="work-desc">AI-powered decision intelligence for trade operations. Tariff analysis, supplier risk scoring, cross-department ripple effects, and a full Glass Box audit trail. 5 AI agents, 6 interactive views.</p>
-        <div class="work-tags">
-          <span class="tag">Decision Intelligence</span>
-          <span class="tag">Glass Box</span>
-          <span class="tag">Agentic AI</span>
-          <span class="tag">Kill Switch</span>
-        </div>
-      </a>
-      <a href="/talentpilot/" class="work-card reveal">
-        <div class="work-card-header">
-          <div class="work-icon" style="background: linear-gradient(135deg, #0F1729, #1E3554)">TP</div>
-          <span class="work-badge badge-live">Live</span>
-        </div>
-        <div class="work-domain">Recruiting</div>
-        <h3 class="work-name">TalentPilot</h3>
-        <p class="work-desc">Decision intelligence for recruiting. Bias monitoring, dual-signal placement health, Glass Box transparency, and human-in-the-loop controls at every decision point. 4 AI agents, 7 interactive views.</p>
-        <div class="work-tags">
-          <span class="tag">Bias Detection</span>
-          <span class="tag">Compliance</span>
-          <span class="tag">Dual-Signal</span>
-          <span class="tag">Multi-Persona</span>
-        </div>
-      </a>
-    </div>
-    <div class="arch-callout reveal">
-      <p>"Same architecture. Different domain. Every time."</p>
-      <div class="arch-pillars">
-        <span class="tag">Agentic AI</span>
-        <span class="tag">Human-in-the-Loop</span>
-        <span class="tag">Glass Box</span>
-        <span class="tag">Intelligence Mining</span>
-        <span class="tag">Learning Loops</span>
-        <span class="tag">Decision Lifecycle</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THESIS -->
-<section class="section" id="thesis">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <div class="section-label">The Thesis</div>
-      <h2 class="section-title">Cross-domain pattern recognition as a product skill.</h2>
-    </div>
-    <div class="thesis-content reveal">
-      <blockquote class="thesis-quote">"I see what connects industries before the market does, and I build the proof."</blockquote>
-      <p class="thesis-body">Most product managers go deep in one vertical. I go wide across verticals and find the transferable architecture. Supply chain and recruiting look nothing alike — until you see that both need AI agents monitoring data streams, humans making high-stakes decisions with full transparency, and organizations acting on intelligence they didn't know they had. The architecture is the product. The domain is just a variable.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section contact" id="contact">
-  <div class="section-inner">
-    <div class="section-header reveal" style="text-align: center; max-width: 100%;">
-      <div class="section-label">Let's Talk</div>
-      <h2 class="section-title">Start a conversation.</h2>
-      <p class="section-desc">Whether you're hiring for AI product roles, exploring a partnership, or just want to go deeper on the architecture — I'd like to hear from you.</p>
-    </div>
-    <div class="contact-buttons reveal">
-      <a href="mailto:milan.khanal25@gmail.com" class="btn btn-primary">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Email Me
-      </a>
-      <a href="https://www.linkedin.com/in/milankhanal/" target="_blank" class="btn btn-secondary">
-        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <span class="footer-left">Milan Khanal &middot; AI Product Builder</span>
-    <span class="footer-right">&copy; 2026</span>
-  </div>
-</footer>
-
-<script>
-/* Theme Toggle */
-function toggleTheme() {
-  const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  const next = current === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+// --- SCROLL REVEAL ---
+function useReveal(dep) {
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.style.opacity = "1"; e.target.style.transform = "translateY(0)"; io.unobserve(e.target); } }),
+      { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
+    );
+    document.querySelectorAll("[data-reveal]").forEach((el) => { el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el); });
+    return () => io.disconnect();
+  }, [dep]);
 }
 
-/* Load saved theme */
-(function() {
-  const saved = localStorage.getItem('theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
-})();
+function R({ children, delay = 0, style = {} }) {
+  return <div data-reveal style={{ opacity: 0, transform: "translateY(24px)", transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`, ...style }}>{children}</div>;
+}
 
-/* Scroll Reveal */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+function SectionHeader({ label, title, body, t, s }) {
+  return <div style={s.narrow}><span style={s.tLabel}>{label}</span><h2 style={s.tSection}>{title}</h2>{body && <p style={s.tBody}>{body}</p>}</div>;
+}
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// --- APP WIREFRAME COMPONENT ---
+function AppWireframe({ t, color, isMobile, large }) {
+  const h = large ? (isMobile ? 200 : "85%") : 120;
+  const w = large ? "92%" : "75%";
+  const sb = large ? (isMobile ? 36 : 48) : 24;
+  const pad = large ? (isMobile ? 10 : 16) : 8;
+  return (
+    <div style={{ width: w, height: h, background: t.bg1, borderRadius: large ? 10 : 6, border: `1px solid ${t.border}`, display: "flex", overflow: "hidden", boxShadow: large ? `0 4px 24px ${t.border}` : "none" }}>
+      <div style={{ width: sb, borderRight: `1px solid ${t.border}`, padding: `${pad}px 0`, display: "flex", flexDirection: "column", alignItems: "center", gap: large ? 10 : 4, background: large ? t.bg : "transparent" }}>
+        {large && <div style={{ width: isMobile ? 16 : 22, height: isMobile ? 16 : 22, borderRadius: 5, background: `linear-gradient(135deg, ${color}30, ${color}10)`, border: `1px solid ${color}25`, marginBottom: 6 }} />}
+        {[1,2,3,4,5].slice(0, large ? 5 : 3).map(d => (
+          <div key={d} style={{ width: large ? (isMobile ? 14 : 18) : 6, height: large ? (isMobile ? 14 : 18) : 6, borderRadius: large ? 4 : 2, background: d===1 ? `${color}18` : t.bg2, border: d===1 ? `1px solid ${color}25` : "1px solid transparent" }} />
+        ))}
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        {large && (
+          <div style={{ padding: `${isMobile ? 8 : 10}px ${isMobile ? 12 : 16}px`, borderBottom: `1px solid ${t.border}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <div style={{ width: isMobile ? 50 : 80, height: 5, borderRadius: 3, background: t.bg2 }} />
+              <div style={{ width: 1, height: 12, background: t.border }} />
+              <div style={{ width: isMobile ? 30 : 50, height: 5, borderRadius: 3, background: t.bg2 }} />
+            </div>
+            <div style={{ width: isMobile ? 28 : 40, height: isMobile ? 12 : 14, borderRadius: 4, background: `${color}15`, border: `1px solid ${color}20` }} />
+          </div>
+        )}
+        <div style={{ flex: 1, padding: pad, display: "flex", flexDirection: "column", gap: large ? (isMobile ? 8 : 10) : 4 }}>
+          {large && (
+            <div style={{ display: "flex", gap: isMobile ? 6 : 8 }}>
+              {[1,2,3].map(d => (
+                <div key={d} style={{ flex: 1, height: isMobile ? 32 : 44, borderRadius: 6, background: t.bg, border: `1px solid ${t.border}`, padding: `${isMobile ? 4 : 6}px ${isMobile ? 6 : 10}px`, display: "flex", flexDirection: "column", justifyContent: "center", gap: 3 }}>
+                  <div style={{ width: "40%", height: 3, borderRadius: 2, background: t.bg2 }} />
+                  <div style={{ width: "65%", height: 4, borderRadius: 2, background: d===1 ? `${color}20` : t.bg2 }} />
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: large ? 6 : 4 }}>
+            {[1,2,3].map(d => (
+              <div key={d} style={{ flex: 1, borderRadius: large ? 6 : 3, background: large ? t.bg : (d===1 ? `${color}08` : t.bg2), border: `1px solid ${d===1 ? color+"25" : t.border}`, padding: `${large ? 8 : 4}px ${large ? 12 : 6}px`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                  <div style={{ width: large ? 100 : 40, height: 4, borderRadius: 2, background: t.bg2 }} />
+                  {large && <div style={{ width: 70, height: 3, borderRadius: 2, background: t.bg2 }} />}
+                </div>
+                {large && d===1 && <div style={{ width: 36, height: 14, borderRadius: 3, background: `${t.green}18`, border: `1px solid ${t.green}25` }} />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- MAIN APP ---
+function Portfolio() {
+  const [mode, setMode] = useState("dark");
+  const [page, setPage] = useState("home");
+  const [slug, setSlug] = useState(null);
+  const [filter, setFilter] = useState("all");
+  const [mobileNav, setMobileNav] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const t = themes[mode];
+  useReveal(page + slug);
+
+  useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
+
+  const font = "'Newsreader', Georgia, serif";
+  const sans = "'Outfit', system-ui, sans-serif";
+  const mono = "'JetBrains Mono', monospace";
+  const colorMap = { blue: t.blue, amber: t.amber, green: t.green };
+
+  const go = (p, s) => { setPage(p); setSlug(s || null); setMobileNav(false); window.scrollTo(0, 0); };
+  const active = allWork.find(w => w.slug === slug);
+
+  const s = {
+    page: { background: t.bg, color: t.t0, fontFamily: sans, fontSize: 16, lineHeight: 1.65, minHeight: "100vh", transition: "background 0.4s, color 0.4s" },
+    container: { maxWidth: 1080, margin: "0 auto", padding: "0 24px" },
+    narrow: { maxWidth: 680, margin: "0 auto" },
+    section: { padding: isMobile ? "80px 20px" : "120px 24px" },
+    tHero: { fontFamily: font, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0 },
+    tSection: { fontFamily: font, fontSize: "clamp(24px, 3.2vw, 32px)", fontWeight: 400, lineHeight: 1.25, letterSpacing: "-0.015em", color: t.t0, marginBottom: 12 },
+    tBody: { fontSize: 16, color: t.t1, lineHeight: 1.65 },
+    tLabel: { fontFamily: mono, fontSize: 11, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: t.blue, marginBottom: 12, display: "block" },
+    tCaption: { fontSize: 13, color: t.t2, lineHeight: 1.5 },
+    divider: { maxWidth: 1080, margin: "0 auto", height: 1, background: t.border },
+    card: { background: t.bg1, border: `1px solid ${t.border}`, borderRadius: 12, transition: "border-color 0.3s" },
+  };
+
+  const statusBadge = (status) => {
+    const map = { live: { c: t.green, bg: t.greenS, b: t.greenB, l: "Live", dot: true }, completed: { c: t.blue, bg: t.blueS, b: t.blueB, l: "Completed", dot: false }, coming: { c: t.t3, bg: t.bg2, b: t.border, l: "Coming", dot: false } };
+    const v = map[status] || map.coming;
+    return <span style={{ fontFamily: mono, fontSize: 10, color: v.c, background: v.bg, border: `1px solid ${v.b}`, padding: "3px 10px", borderRadius: 12, display: "flex", alignItems: "center", gap: 4 }}>{v.dot && <span style={{ width: 5, height: 5, borderRadius: "50%", background: v.c }} />}{v.l}</span>;
+  };
+
+  const Breadcrumb = ({ items }) => (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 32, flexWrap: "wrap" }}>
+      {items.map((item, i) => (
+        <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {i > 0 && <span style={{ color: t.t3, fontSize: 12 }}>/</span>}
+          {item.onClick ? <span onClick={item.onClick} style={{ fontSize: 13, color: t.t2, cursor: "pointer" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>{item.label}</span> : <span style={{ fontSize: 13, color: t.t0, fontWeight: 500 }}>{item.label}</span>}
+        </span>
+      ))}
+    </div>
+  );
+
+  const chapters = [
+    { num: "01", title: "Enterprise", subtitle: "The Track Record", color: t.blue, body: "Toyota. Dell. FleetPride. World Kinect. CRC Group. Ten years taking products from zero to production as a BA, product owner, and delivery lead. I learned what it actually takes to ship: cross-functional coordination, stakeholder alignment, and knowing when to push back on scope.", tags: ["Toyota", "Dell", "FleetPride", "World Kinect", "CRC Group", "SAFe 5 PO/PM", "Systems Design", "Cross-Functional Delivery"] },
+    { num: "02", title: "Education", subtitle: "The Framework", color: t.amber, body: "Enterprises are adopting AI fast, but most aren't designing for how humans actually make decisions. A B.S. in Human-Centered AI at Texas Tech and a Cornell AI certification gave me the frameworks to bridge that gap: when to keep humans in the loop, what needs to be transparent, and how to build trust into the product. Not a career change. A lens upgrade.", tags: ["Texas Tech HCAI", "Cornell AI", "10-80-10 Framework", "Glass Box Transparency", "AWS"] },
+    { num: "03", title: "Building", subtitle: "The Proof", color: t.green, body: "If the framework is real, it should work across domains. TradePilot applies it to supply chain decisions. TalentPilot applies the same architecture to recruiting. Each experiment tests the pattern in a new industry. These are working prototypes you can click, not slide decks.", tags: ["TradePilot", "TalentPilot", "Pilot Suite", "Prototype-Driven Discovery", "Domain Transfer"] },
+  ];
+
+  const typeLabels = { product: "Product", "case-study": "Case Study" };
+
+  // === NAV ===
+  const Nav = () => (
+    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: t.navBg, backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: `1px solid ${t.border}`, height: 56, display: "flex", alignItems: "center", padding: "0 24px", transition: "background 0.4s" }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span onClick={() => go("home")} style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", cursor: "pointer", color: t.t0 }}>Milan Khanal</span>
+        <div style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 24 }}>
+          {[{ l: "Story", a: () => go("home") }, { l: "Work", a: () => go("work") }, { l: "Thesis", a: () => go("home") }, { l: "Contact", a: () => go("home") }].map(n => (
+            <span key={n.l} onClick={n.a} style={{ fontSize: 13, color: (page === "work" && n.l === "Work") ? t.t0 : t.t2, cursor: "pointer", fontWeight: (page === "work" && n.l === "Work") ? 500 : 400, transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => { if (!(page === "work" && n.l === "Work")) e.target.style.color = t.t2; }}>{n.l}</span>
+          ))}
+          <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
+        </div>
+        <div style={{ display: isMobile ? "flex" : "none", alignItems: "center", gap: 8 }}>
+          <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
+          <button onClick={() => setMobileNav(!mobileNav)} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mobileNav ? "\u2715" : "\u2630"}</button>
+        </div>
+      </div>
+      {mobileNav && <div style={{ position: "absolute", top: 56, left: 0, right: 0, background: t.bg1, borderBottom: `1px solid ${t.border}`, padding: "16px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {[{ l: "Home", a: () => go("home") }, { l: "Work", a: () => go("work") }].map(n => <span key={n.l} onClick={n.a} style={{ fontSize: 15, color: t.t1, cursor: "pointer" }}>{n.l}</span>)}
+      </div>}
+    </nav>
+  );
+
+  const Footer = () => (
+    <footer style={{ padding: "28px 24px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1080, margin: "0 auto", fontSize: 12, color: t.t2, flexWrap: "wrap", gap: 8 }}>
+      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} AI Product Builder</span><span>{"\u00a9"} 2026</span>
+    </footer>
+  );
+
+  // === PAGE: HOME ===
+  const HomePage = () => (
+    <>
+      {/* HERO */}
+      <section style={{ padding: isMobile ? "100px 20px 80px" : "140px 24px 120px" }}>
+        <div style={s.narrow}>
+          <R delay={0.05}><div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
+            <div style={{ width: 56, height: 56, borderRadius: "50%", background: `linear-gradient(135deg, ${t.blue}, ${t.green})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#fff", flexShrink: 0 }}>MK</div>
+            <div><div style={{ fontWeight: 600, fontSize: 16, color: t.t0 }}>Milan Khanal</div><div style={{ ...s.tCaption, display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: t.green, display: "inline-block" }} />AI Product Builder {"\u00b7"} McKinney, TX</div></div>
+          </div></R>
+          <R delay={0.12}><h1 style={s.tHero}>I've delivered enterprise products for a decade.<br /><span style={{ display: "block", marginTop: 8 }}><em style={{ fontStyle: "italic", color: t.t1 }}>Now I build AI products designed to actually get adopted.</em></span></h1></R>
+          <R delay={0.18}><div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, marginBottom: 20 }}>{["Healthcare", "Supply Chain", "Automotive", "Energy", "ESG"].map(ind => <span key={ind} style={{ fontSize: 11, fontFamily: mono, color: t.t2, background: t.bg2, padding: "4px 12px", borderRadius: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{ind}</span>)}</div></R>
+          <R delay={0.2}>
+            <p style={{ ...s.tBody, marginBottom: 16 }}>I've taken products from zero to production at Toyota, Dell, World Kinect, and CRC Group as a BA, product owner, and delivery lead. That track record is what I bring to AI.</p>
+            <p style={{ ...s.tBody, marginBottom: 36 }}>Enterprises are rushing to adopt it, but without human-centered design, most AI products will fail: users won't trust them, workflows won't change, and the investment won't stick. I apply HCAI principles through rapid prototyping so organizations can validate whether their AI product works before committing the full engineering budget.</p>
+          </R>
+          <R delay={0.28}><div style={{ display: "flex", gap: isMobile ? 20 : 32, flexWrap: "wrap", paddingTop: 32, borderTop: `1px solid ${t.border}` }}>
+            {[{ val: "10+", lbl: "Years in Enterprise" }, { val: "2", lbl: "Live Prototypes" }, { val: "5+", lbl: "Industries Delivered" }, { val: "1", lbl: "Transferable Architecture" }].map(st => <div key={st.lbl}><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{st.val}</span><span style={{ fontSize: 12, color: t.t2 }}>{st.lbl}</span></div>)}
+          </div></R>
+        </div>
+      </section>
+      <div style={s.divider} />
+
+      {/* STORY */}
+      <section id="story" style={s.section}><div style={s.container}>
+        <R><SectionHeader label="The Story" title="How I got here." body="Three chapters. Each one sharpened the next." t={t} s={s} /></R>
+        <div style={{ maxWidth: 680, margin: "0 auto", display: "flex", flexDirection: "column", gap: 16, marginTop: 32 }}>
+          {chapters.map((ch, i) => <R key={ch.num} delay={0.05 * i}><div style={{ ...s.card, padding: "24px 28px", display: "grid", gridTemplateColumns: "44px 1fr", gap: 16 }} onMouseEnter={e => e.currentTarget.style.borderColor = ch.color + "40"} onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
+            <span style={{ fontFamily: mono, fontSize: 14, color: ch.color, paddingTop: 3 }}>{ch.num}</span>
+            <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 2 }}>{ch.title}: <span style={{ color: t.t1, fontStyle: "italic" }}>{ch.subtitle}</span></div><div style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 12 }}>{ch.body}</div><div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{ch.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 10px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div></div>
+          </div></R>)}
+        </div>
+        {/* Methodology */}
+        <R delay={0.2}><div style={{ ...s.card, padding: isMobile ? "24px 20px" : "28px 32px", marginTop: 40, maxWidth: 1080 }}>
+          <span style={s.tLabel}>How I Work</span><h3 style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 20 }}>Prototype-First Discovery</h3>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
+            {[{ step: "01", ch: "Discover with software", color: t.blue, text: "Instead of months of requirements docs and wireframes, build a working prototype during discovery. Stakeholders react to real software, not slide decks. Hard questions surface in weeks, not quarters." }, { step: "02", ch: "Design for adoption", color: t.amber, text: "Apply HCAI principles from day one. Humans stay in control. AI decisions are transparent. Trust is designed into the product, not patched in after launch. This is what separates products that ship from products that stick." }, { step: "03", ch: "Fail fast, fail cheap", color: t.green, text: "If the product hypothesis is wrong, you find out before the engineering budget is committed. If it's right, you hand off a production-grade prototype with validated requirements. Either outcome saves months and significant cost." }].map(lens => (
+              <div key={lens.ch} style={{ background: t.bg2, borderRadius: 10, padding: "20px 22px", borderLeft: `3px solid ${lens.color}` }}><div style={{ fontSize: 11, fontWeight: 600, color: lens.color, marginBottom: 8, fontFamily: mono, letterSpacing: "0.08em", textTransform: "uppercase" }}>{lens.step}. {lens.ch}</div><div style={{ fontSize: 14, color: t.t1, lineHeight: 1.6 }}>{lens.text}</div></div>
+            ))}
+          </div>
+        </div></R>
+      </div></section>
+      <div style={s.divider} />
+
+      {/* WORK */}
+      <section id="work" style={s.section}><div style={s.container}>
+        <R><SectionHeader label="Featured Work" title="Working hypotheses you can click." body="Each prototype tests whether the same architecture holds in a new domain. Different industry, same intelligence framework. Try them." t={t} s={s} /></R>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 32 }}>
+          {allWork.filter(w => w.type === "product" && w.status === "live").map((product, i) => {
+            const c = colorMap[product.color];
+            return (
+              <R key={product.slug} delay={i * 0.12}><div style={{ ...s.card, overflow: "hidden", cursor: "pointer", transition: "border-color 0.3s, transform 0.3s" }} onClick={() => go("detail", product.slug)} onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-3px)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
+                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: isMobile ? "auto" : 320 }}>
+                  <div style={{ background: t.bg2, padding: isMobile ? 20 : 32, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", minHeight: isMobile ? 200 : "auto" }}>
+                    <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6, position: "absolute", top: 16, right: 16 }}>{product.domain}</span>
+                    <AppWireframe t={t} color={c} isMobile={isMobile} large />
+                  </div>
+                  <div style={{ padding: isMobile ? 24 : 32, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.01em" }}>{product.title}</span>
+                      {statusBadge(product.status)}
+                    </div>
+                    <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{product.desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>{product.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 9px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div>
+                    <div style={{ paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: 12, color: t.t2 }}>{product.stats.views} views {"\u00b7"} {product.stats.agents} agents {"\u00b7"} Guided tour</span>
+                      <span style={{ fontSize: 13, color: t.blue, fontWeight: 500 }}>View details {"\u2192"}</span>
+                    </div>
+                  </div>
+                </div>
+              </div></R>
+            );
+          })}
+        </div>
+        {/* See all work link */}
+        <R delay={0.15}><div style={{ textAlign: "center", marginTop: 24 }}><span onClick={() => go("work")} style={{ fontSize: 14, color: t.blue, cursor: "pointer", fontWeight: 500 }}>View all work {"\u2192"}</span></div></R>
+        {/* Architecture box */}
+        <R delay={0.2}><div style={{ ...s.card, padding: isMobile ? "20px" : "24px 28px", marginTop: 32, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+          <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 4 }}>Same architecture. Different domain. That's the test.</div><div style={{ fontSize: 14, color: t.t1, maxWidth: 440 }}>Six shared pillars. If the pattern is real, adding a new domain shouldn't require rethinking the foundation.</div></div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{["Agentic AI", "Human-in-the-Loop", "Glass Box", "Intelligence Mining", "Learning Loops", "Decision Lifecycle"].map(p => <span key={p} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "5px 12px", borderRadius: 6, fontWeight: 500 }}>{p}</span>)}</div>
+        </div></R>
+      </div></section>
+      <div style={s.divider} />
+
+      {/* THESIS */}
+      <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
+        <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Make it cheap to find out if your product will work.</h2>
+          <p style={{ ...s.tBody, marginBottom: 16 }}>Most enterprise AI products fail because the first time a real user touches working software is month six. By then the budget is committed and the team is hired. You're not discovering whether the product works. You're defending why it should.</p>
+          <p style={{ ...s.tBody, marginBottom: 16 }}>Prototype-first discovery changes the math. Validate with working software during discovery, not after. If you're wrong, you find out early and cheap. If you're right, you hand off something real.</p>
+          <p style={{ ...s.tBody, marginBottom: 24, fontWeight: 500, color: t.t0 }}>The architecture transfers. The methodology compresses. The risk drops.</p>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Start a conversation {"\u2192"}</a>
+        </div></R>
+        <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
+          <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: t.t2, marginBottom: 20 }}>Architecture {"\u00b7"} Applied Across Domains</div>
+          {[{ domain: "Supply Chain", product: "TradePilot", live: true }, { domain: "Recruiting", product: "TalentPilot", live: true }, { domain: "Healthcare", product: "HealthPilot (next)", live: false }, { domain: "Automotive", product: "AutoPilot (next)", live: false }].map((row, i) => (
+            <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 24px 1fr", alignItems: "center", padding: "12px 0", borderBottom: i < 3 ? `1px solid ${t.border}` : "none", fontSize: 14 }}>
+              <span style={{ color: t.t1 }}>{row.domain}</span><span style={{ color: t.blue, textAlign: "center", fontFamily: mono, fontSize: 12 }}>{"\u2192"}</span><span style={{ color: row.live ? t.t0 : t.t2, fontWeight: row.live ? 500 : 400, textAlign: "right", fontStyle: row.live ? "normal" : "italic" }}>{row.product}</span>
+            </div>
+          ))}
+        </div></R>
+      </div></section>
+      <div style={s.divider} />
+
+      {/* CONTACT */}
+      <section id="contact" style={{ ...s.section, background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
+        <R><span style={{ ...s.tLabel, textAlign: "center" }}>Get in Touch</span><h2 style={{ ...s.tSection, textAlign: "center" }}>Let's find your domain.</h2>
+          <p style={{ ...s.tBody, marginBottom: 32, textAlign: "center" }}>I'm looking for the next domain to prove the pattern in. If you're building AI products, let's talk.</p>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>milan.khanal25@gmail.com {"\u2192"}</a>
+            <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>LinkedIn</a>
+          </div>
+        </R>
+      </div></section>
+    </>
+  );
+
+  // === PAGE: WORK LISTING ===
+  const WorkPage = () => {
+    const filtered = filter === "all" ? allWork : allWork.filter(w => filter === "products" ? w.type === "product" : w.type === "case-study");
+    return (
+      <section style={{ padding: "120px 24px 80px" }}><div style={s.container}>
+        <Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work" }]} />
+        <span style={s.tLabel}>All Work</span>
+        <h1 style={{ ...s.tSection, fontSize: "clamp(28px, 4vw, 40px)", marginBottom: 8 }}>Products, case studies, and thinking.</h1>
+        <p style={{ ...s.tBody, marginBottom: 32, maxWidth: 560 }}>Live prototypes, project deep-dives, and frameworks. Each piece maps back to the same architecture.</p>
+        <div style={{ display: "flex", gap: 8, marginBottom: 40, flexWrap: "wrap" }}>
+          {[{ k: "all", l: "All" }, { k: "products", l: "Products" }, { k: "case-studies", l: "Case Studies" }].map(f => (
+            <button key={f.k} onClick={() => setFilter(f.k)} style={{ padding: "6px 16px", borderRadius: 8, fontSize: 13, fontWeight: 500, border: `1px solid ${filter === f.k ? t.blue : t.border}`, background: filter === f.k ? t.blueS : "transparent", color: filter === f.k ? t.blue : t.t2, cursor: "pointer" }}>{f.l}</button>
+          ))}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "280px" : "320px"}, 1fr))`, gap: 16 }}>
+          {filtered.map(item => {
+            const c = colorMap[item.color];
+            const clickable = item.status !== "coming";
+            return (
+              <R key={item.slug}><div onClick={() => clickable && go("detail", item.slug)} style={{ ...s.card, padding: 0, overflow: "hidden", cursor: clickable ? "pointer" : "default", opacity: item.status === "coming" ? 0.6 : 1, transition: "border-color 0.3s, transform 0.3s" }} onMouseEnter={e => { if (clickable) { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; }}} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
+                {item.type === "product" && item.status === "live" && (
+                  <div style={{ height: 120, background: t.bg2, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <AppWireframe t={t} color={c} isMobile={isMobile} />
+                  </div>
+                )}
+                <div style={{ padding: "20px 24px 24px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                      <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "3px 8px", borderRadius: 5 }}>{item.domain}</span>
+                      <span style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{typeLabels[item.type] || item.type}</span>
+                    </div>
+                    {statusBadge(item.status)}
+                  </div>
+                  <div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 8 }}>{item.title}</div>
+                  <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{item.summary}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{(item.tags || []).slice(0, 4).map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{tag}</span>)}</div>
+                  {item.date && <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</div>}
+                </div>
+              </div></R>
+            );
+          })}
+        </div>
+      </div></section>
+    );
+  };
+
+  // === PAGE: PRODUCT DETAIL ===
+  const ProductPage = ({ item }) => {
+    const c = colorMap[item.color];
+    return (<>
+      <section style={{ padding: "120px 24px 0" }}><div style={s.container}><Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work", onClick: () => go("work") }, { label: item.title }]} /></div></section>
+      <section style={{ padding: "0 24px 80px" }}><div style={s.narrow}>
+        <R><div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+          <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6 }}>{item.domain}</span>
+          {statusBadge(item.status)}
+        </div></R>
+        <R delay={0.05}><h1 style={{ fontFamily: font, fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0, marginBottom: 16 }}>{item.title}</h1></R>
+        <R delay={0.1}><p style={{ ...s.tBody, fontSize: 18, marginBottom: 32 }}>{item.summary}</p></R>
+        {item.appUrl && <R delay={0.15}><a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Try {item.title} {"\u2192"}</a></R>}
+      </div></section>
+      <div style={s.divider} />
+      <section style={{ padding: "80px 24px" }}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 60 }}>
+        <R><div><span style={s.tLabel}>The Problem</span><p style={s.tBody}>{item.problem}</p></div></R>
+        <R delay={0.1}><div><span style={s.tLabel}>The Approach</span><p style={s.tBody}>{item.approach}</p></div></R>
+      </div></section>
+      <div style={s.divider} />
+      <section style={{ padding: "80px 24px" }}><div style={s.container}>
+        <R><span style={s.tLabel}>Architecture Pillars</span><h2 style={{ ...s.tSection, marginBottom: 24 }}>What's under the hood.</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>{(item.pillars || []).map(p => <span key={p} style={{ fontSize: 13, color: t.t1, background: t.bg1, border: `1px solid ${t.border}`, padding: "8px 16px", borderRadius: 8, fontWeight: 500 }}>{p}</span>)}</div></R>
+        <R delay={0.1}><div style={{ ...s.card, padding: "24px 28px", marginTop: 32, display: "flex", justifyContent: "space-around", textAlign: "center", flexWrap: "wrap", gap: 24 }}>
+          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{item.stats?.views}</span><span style={{ fontSize: 12, color: t.t2 }}>Views</span></div>
+          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{item.stats?.agents}</span><span style={{ fontSize: 12, color: t.t2 }}>AI Agents</span></div>
+          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>Yes</span><span style={{ fontSize: 12, color: t.t2 }}>Guided Tour</span></div>
+        </div></R>
+      </div></section>
+      <div style={s.divider} />
+      <section style={{ padding: "80px 24px", background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
+        <R><h2 style={{ ...s.tSection, textAlign: "center" }}>See it in action.</h2>
+        <p style={{ ...s.tBody, marginBottom: 24, textAlign: "center" }}>This is a working prototype with a guided tour. Click through the full decision lifecycle.</p>
+        {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Launch {item.title} {"\u2192"}</a>}</R>
+      </div></section>
+    </>);
+  };
+
+  // === PAGE: CASE STUDY ===
+  const CaseStudyPage = ({ item }) => {
+    const c = colorMap[item.color];
+    const sections = [{ label: "Context", body: item.context }, { label: "The Problem", body: item.problem }, { label: "The Approach", body: item.approach }, { label: "The Outcome", body: item.outcome }, { label: "What I Learned", body: item.learnings }].filter(s => s.body);
+    return (<>
+      <section style={{ padding: "120px 24px 0" }}><div style={s.container}><Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work", onClick: () => go("work") }, { label: item.title }]} /></div></section>
+      <section style={{ padding: "0 24px 60px" }}><div style={s.narrow}>
+        <R><div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+          <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6 }}>{item.domain}</span>
+          <span style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>Case Study</span>
+          {item.date && <span style={{ fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "long" })}</span>}
+        </div></R>
+        <R delay={0.05}><h1 style={{ fontFamily: font, fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0, marginBottom: 16 }}>{item.title}</h1></R>
+        <R delay={0.1}><p style={{ ...s.tBody, fontSize: 18 }}>{item.summary}</p></R>
+      </div></section>
+      <div style={s.divider} />
+      {sections.map((sec, i) => <div key={sec.label}><section style={{ padding: "64px 24px" }}><div style={s.narrow}><R><span style={{ ...s.tLabel, color: i === sections.length - 1 ? t.green : t.blue }}>{sec.label}</span><p style={s.tBody}>{sec.body}</p></R></div></section>{i < sections.length - 1 && <div style={s.divider} />}</div>)}
+      <div style={s.divider} />
+      <section style={{ padding: "48px 24px" }}><div style={s.narrow}><div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>{(item.tags || []).map(tag => <span key={tag} style={{ fontSize: 12, color: t.t2, background: t.bg2, padding: "5px 12px", borderRadius: 6 }}>{tag}</span>)}</div></div></section>
+      <div style={s.divider} />
+      <section style={{ padding: "64px 24px", background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
+        <R><p style={{ ...s.tBody, marginBottom: 20 }}>This case study demonstrates the prototype-first discovery methodology applied to a real enterprise challenge.</p>
+        <button onClick={() => go("work")} style={{ padding: "12px 24px", background: "transparent", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer" }}>{"\u2190"} Back to all work</button></R>
+      </div></section>
+    </>);
+  };
+
+  // === RENDER ===
+  return (
+    <div style={s.page}>
+      <Nav />
+      {page === "home" && <HomePage />}
+      {page === "work" && <WorkPage />}
+      {page === "detail" && active && active.type === "product" && <ProductPage item={active} />}
+      {page === "detail" && active && active.type === "case-study" && <CaseStudyPage item={active} />}
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.render(<Portfolio />, document.getElementById("root"));
 </script>
-
 </body>
 </html>
