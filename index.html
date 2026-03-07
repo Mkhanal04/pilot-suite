@@ -114,7 +114,53 @@ function SectionHeader({ label, title, body, t, s }) {
   return <div style={s.narrow}><span style={s.tLabel}>{label}</span><h2 style={s.tSection}>{title}</h2>{body && <p style={s.tBody}>{body}</p>}</div>;
 }
 
-// --- APP WIREFRAME COMPONENT ---
+// --- LIVE APP PREVIEW (iframe embed) ---
+function LiveAppPreview({ appUrl, t, color, isMobile, title }) {
+  const [loaded, setLoaded] = useState(false);
+  const containerH = isMobile ? 280 : 420;
+  const iframeW = 1400;
+  const iframeH = 860;
+  // Calculate scale to fit container width
+  const scaleVal = isMobile ? 0.26 : 0.52;
+
+  return (
+    <div style={{ width: "100%", height: containerH, position: "relative", overflow: "hidden", background: t.bg2, borderRadius: 0 }}>
+      {/* Loading skeleton */}
+      {!loaded && (
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, zIndex: 1 }}>
+          <div style={{ width: 40, height: 40, borderRadius: 8, background: `linear-gradient(135deg, ${color}30, ${color}10)`, border: `1px solid ${color}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: color, fontWeight: 600 }}>{title ? title.substring(0,2).toUpperCase() : "AP"}</span>
+          </div>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: t.t2, letterSpacing: "0.1em", textTransform: "uppercase" }}>Loading preview...</span>
+        </div>
+      )}
+      {/* Scaled iframe */}
+      <div style={{
+        width: iframeW, height: iframeH,
+        transform: `scale(${scaleVal})`,
+        transformOrigin: "top left",
+        position: "absolute", top: 0, left: isMobile ? -(iframeW * scaleVal * 0.05) : 0,
+        pointerEvents: "none",
+        opacity: loaded ? 1 : 0,
+        transition: "opacity 0.6s ease"
+      }}>
+        <iframe
+          src={appUrl}
+          title={`${title} Preview`}
+          width={iframeW}
+          height={iframeH}
+          style={{ border: "none", borderRadius: 0, background: "#fff" }}
+          loading="lazy"
+          onLoad={() => setLoaded(true)}
+        />
+      </div>
+      {/* Bottom fade gradient */}
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: `linear-gradient(transparent, ${t.bg2})`, pointerEvents: "none" }} />
+    </div>
+  );
+}
+
+// --- APP WIREFRAME COMPONENT (used for small thumbnails) ---
 function AppWireframe({ t, color, isMobile, large }) {
   const h = large ? (isMobile ? 200 : "85%") : 120;
   const w = large ? "92%" : "75%";
@@ -307,22 +353,23 @@ function Portfolio() {
             const c = colorMap[product.color];
             return (
               <R key={product.slug} delay={i * 0.12}><div style={{ ...s.card, overflow: "hidden", cursor: "pointer", transition: "border-color 0.3s, transform 0.3s" }} onClick={() => go("detail", product.slug)} onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-3px)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", minHeight: isMobile ? "auto" : 320 }}>
-                  <div style={{ background: t.bg2, padding: isMobile ? 20 : 32, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", minHeight: isMobile ? 200 : "auto" }}>
-                    <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6, position: "absolute", top: 16, right: 16 }}>{product.domain}</span>
-                    <AppWireframe t={t} color={c} isMobile={isMobile} large />
+                {/* Live app preview — stacked layout for maximum visual impact */}
+                <div style={{ position: "relative" }}>
+                  <LiveAppPreview appUrl={product.appUrl} t={t} color={c} isMobile={isMobile} title={product.title} />
+                  {/* Domain badge overlay */}
+                  <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6, position: "absolute", top: 16, right: 16, zIndex: 2, backdropFilter: "blur(8px)" }}>{product.domain}</span>
+                </div>
+                {/* Product details below the preview */}
+                <div style={{ padding: isMobile ? "20px 20px 24px" : "24px 32px 28px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                    <span style={{ fontSize: 20, fontWeight: 600, letterSpacing: "-0.01em" }}>{product.title}</span>
+                    {statusBadge(product.status)}
                   </div>
-                  <div style={{ padding: isMobile ? 24 : 32, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                      <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: "-0.01em" }}>{product.title}</span>
-                      {statusBadge(product.status)}
-                    </div>
-                    <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{product.desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>{product.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 9px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div>
-                    <div style={{ paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: 12, color: t.t2 }}>{product.stats.views} views {"\u00b7"} {product.stats.agents} agents {"\u00b7"} Guided tour</span>
-                      <span style={{ fontSize: 13, color: t.blue, fontWeight: 500 }}>View details {"\u2192"}</span>
-                    </div>
+                  <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{product.desc}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>{product.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 9px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div>
+                  <div style={{ paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontSize: 12, color: t.t2 }}>{product.stats.views} views {"\u00b7"} {product.stats.agents} agents {"\u00b7"} Guided tour</span>
+                    <span style={{ fontSize: 13, color: t.blue, fontWeight: 500 }}>View details {"\u2192"}</span>
                   </div>
                 </div>
               </div></R>
@@ -447,10 +494,15 @@ function Portfolio() {
         </div></R>
       </div></section>
       <div style={s.divider} />
-      <section style={{ padding: "80px 24px", background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
-        <R><h2 style={{ ...s.tSection, textAlign: "center" }}>See it in action.</h2>
-        <p style={{ ...s.tBody, marginBottom: 24, textAlign: "center" }}>This is a working prototype with a guided tour. Click through the full decision lifecycle.</p>
-        {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Launch {item.title} {"\u2192"}</a>}</R>
+      <section style={{ padding: "80px 24px", background: t.bg1 }}><div style={{ maxWidth: 1080, margin: "0 auto" }}>
+        <R><div style={{ textAlign: "center", marginBottom: 32 }}><h2 style={{ ...s.tSection, textAlign: "center" }}>See it in action.</h2>
+        <p style={{ ...s.tBody, textAlign: "center" }}>This is a working prototype with a guided tour. Click through the full decision lifecycle.</p></div></R>
+        {item.appUrl && <R delay={0.1}><div style={{ ...s.card, overflow: "hidden", borderRadius: 16 }}>
+          <LiveAppPreview appUrl={item.appUrl} t={t} color={c} isMobile={isMobile} title={item.title} />
+          <div style={{ padding: "20px 28px", textAlign: "center", borderTop: `1px solid ${t.border}` }}>
+            <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Launch {item.title} {"\u2192"}</a>
+          </div>
+        </div></R>}
       </div></section>
     </>);
   };
