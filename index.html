@@ -439,42 +439,129 @@ function Portfolio() {
   // === PAGE: PRODUCT DETAIL ===
   const ProductPage = ({ item }) => {
     const c = colorMap[item.color];
+    const detail = item.detail;
+    const layerColorMap = { blue: t.blue, amber: t.amber, green: t.green, purple: t.blue };
+
+    // Fallback layout if no detail object
+    if (!detail) {
+      return (<>
+        <section style={{ padding: "120px 24px 0" }}><div style={s.container}><Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work", onClick: () => go("work") }, { label: item.title }]} /></div></section>
+        <section style={{ padding: "0 24px 80px" }}><div style={s.narrow}>
+          <R><div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
+            <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6 }}>{item.domain}</span>
+            {statusBadge(item.status)}
+          </div></R>
+          <R delay={0.05}><h1 style={{ fontFamily: font, fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0, marginBottom: 16 }}>{item.title}</h1></R>
+          <R delay={0.1}><p style={{ ...s.tBody, fontSize: 18, marginBottom: 32 }}>{item.summary}</p></R>
+          {item.appUrl && <R delay={0.15}><a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Try {item.title} {"\u2192"}</a></R>}
+        </div></section>
+      </>);
+    }
+
     return (<>
+      {/* ── BREADCRUMB ── */}
       <section style={{ padding: "120px 24px 0" }}><div style={s.container}><Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work", onClick: () => go("work") }, { label: item.title }]} /></div></section>
+
+      {/* ── SECTION 1: HERO STATEMENT ── */}
       <section style={{ padding: "0 24px 80px" }}><div style={s.narrow}>
         <R><div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
           <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6 }}>{item.domain}</span>
           {statusBadge(item.status)}
         </div></R>
-        <R delay={0.05}><h1 style={{ fontFamily: font, fontSize: "clamp(32px, 5vw, 44px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0, marginBottom: 16 }}>{item.title}</h1></R>
-        <R delay={0.1}><p style={{ ...s.tBody, fontSize: 18, marginBottom: 32 }}>{item.summary}</p></R>
-        {item.appUrl && <R delay={0.15}><a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Try {item.title} {"\u2192"}</a></R>}
-      </div></section>
-      <div style={s.divider} />
-      <section style={{ padding: "80px 24px" }}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 60 }}>
-        <R><div><span style={s.tLabel}>The Problem</span><p style={s.tBody}>{item.problem}</p></div></R>
-        <R delay={0.1}><div><span style={s.tLabel}>The Approach</span><p style={s.tBody}>{item.approach}</p></div></R>
-      </div></section>
-      <div style={s.divider} />
-      <section style={{ padding: "80px 24px" }}><div style={s.container}>
-        <R><span style={s.tLabel}>Architecture Pillars</span><h2 style={{ ...s.tSection, marginBottom: 24 }}>What's under the hood.</h2>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>{(item.pillars || []).map(p => <span key={p} style={{ fontSize: 13, color: t.t1, background: t.bg1, border: `1px solid ${t.border}`, padding: "8px 16px", borderRadius: 8, fontWeight: 500 }}>{p}</span>)}</div></R>
-        <R delay={0.1}><div style={{ ...s.card, padding: "24px 28px", marginTop: 32, display: "flex", justifyContent: "space-around", textAlign: "center", flexWrap: "wrap", gap: 24 }}>
-          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{item.stats?.views}</span><span style={{ fontSize: 12, color: t.t2 }}>Views</span></div>
-          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{item.stats?.agents}</span><span style={{ fontSize: 12, color: t.t2 }}>AI Agents</span></div>
-          <div><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>Yes</span><span style={{ fontSize: 12, color: t.t2 }}>Guided Tour</span></div>
+        <R delay={0.05}><h1 style={{ ...s.tSection, fontSize: "clamp(28px, 4vw, 40px)", marginBottom: 20 }}>{item.title}</h1></R>
+        <R delay={0.1}><p style={{ ...s.tBody, maxWidth: 640, marginBottom: 32 }}>{detail.heroStatement}</p></R>
+        <R delay={0.15}><div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+          {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Explore {item.title} {"\u2192"}</a>}
+          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }}>Or book a 30-minute walkthrough</a>
         </div></R>
       </div></section>
       <div style={s.divider} />
-      <section style={{ padding: "80px 24px", background: t.bg1 }}><div style={{ maxWidth: 1080, margin: "0 auto" }}>
-        <R><div style={{ textAlign: "center", marginBottom: 32 }}><h2 style={{ ...s.tSection, textAlign: "center" }}>See it in action.</h2>
-        <p style={{ ...s.tBody, textAlign: "center" }}>This is a working prototype with a guided tour. Click through the full decision lifecycle.</p></div></R>
-        {item.appUrl && <R delay={0.1}><div style={{ ...s.card, overflow: "hidden", borderRadius: 16 }}>
-          <LiveAppPreview appUrl={item.appUrl} t={t} color={c} isMobile={isMobile} title={item.title} />
-          <div style={{ padding: "20px 28px", textAlign: "center", borderTop: `1px solid ${t.border}` }}>
-            <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: c, color: "#fff", fontSize: 15, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Launch {item.title} {"\u2192"}</a>
+
+      {/* ── SECTION 2: ARCHITECTURE SNAPSHOT ── */}
+      {detail.architectureSnapshot && <><section style={s.section}><div style={s.container}>
+        <R><span style={s.tLabel}>Architecture {"\u00b7"} 10-80-10 Framework</span><h2 style={{ ...s.tSection, marginBottom: 24 }}>What's under the hood.</h2></R>
+        <R delay={0.1}><div style={{ ...s.card, padding: 0, overflow: "hidden" }}>
+          {detail.architectureSnapshot.layers.map((layer, i) => {
+            const lc = layerColorMap[layer.color] || t.blue;
+            return (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 16, padding: 16, borderBottom: i < detail.architectureSnapshot.layers.length - 1 ? `1px solid ${t.border}` : "none", borderLeft: `4px solid ${lc}` }}>
+                <div style={{ minWidth: isMobile ? 120 : 200, flexShrink: 0 }}>
+                  <span style={{ fontFamily: mono, fontSize: 13, fontWeight: 600, color: t.t0 }}>{layer.name}</span>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {layer.items.map(item => <span key={item} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 10px", borderRadius: 5 }}>{item}</span>)}
+                </div>
+              </div>
+            );
+          })}
+        </div></R>
+        {detail.architectureSnapshot.framework && <R delay={0.15}><p style={{ fontSize: 14, color: t.t1, fontStyle: "italic", padding: 16, background: t.bg1, borderRadius: 8, marginTop: 16, border: `1px solid ${t.border}` }}>{detail.architectureSnapshot.framework}</p></R>}
+      </div></section>
+      <div style={s.divider} /></>}
+
+      {/* ── SECTION 3: PATTERN TRANSFER ── */}
+      {detail.patternTransfer && <><section style={s.section}><div style={s.container}>
+        <R><span style={s.tLabel}>Pattern Transfer</span><h2 style={{ ...s.tSection, marginBottom: 16 }}>Same architecture. Different domain.</h2>
+        <p style={{ ...s.tBody, marginBottom: 24, maxWidth: 640 }}>{detail.patternTransfer.text}</p></R>
+        <R delay={0.1}><div style={{ ...s.card, padding: 0, overflow: "hidden" }}>
+          {/* Header row */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "140px 1fr 1fr", borderBottom: `1px solid ${t.border}` }}>
+            <div style={{ padding: "10px 16px", fontFamily: mono, fontSize: 11, color: t.t2, textTransform: "uppercase", letterSpacing: "0.08em" }}></div>
+            <div style={{ padding: "10px 16px", fontFamily: mono, fontSize: 11, color: t.t2, textTransform: "uppercase", letterSpacing: "0.08em", borderLeft: `1px solid ${t.border}` }}>{item.title}</div>
+            <div style={{ padding: "10px 16px", fontFamily: mono, fontSize: 11, color: t.t2, textTransform: "uppercase", letterSpacing: "0.08em", borderLeft: `1px solid ${t.border}` }}>{allWork.find(w => w.slug === detail.patternTransfer.siblingSlug)?.title || detail.patternTransfer.siblingSlug}</div>
           </div>
-        </div></R>}
+          {/* Body row */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "140px 1fr 1fr" }}>
+            <div style={{ padding: "14px 16px", fontFamily: mono, fontSize: 11, color: t.t2, textTransform: "uppercase", letterSpacing: "0.08em" }}>{detail.patternTransfer.comparisonRow.dimension}</div>
+            <div style={{ padding: "14px 16px", fontSize: 14, color: t.t1, lineHeight: 1.5, borderLeft: `1px solid ${t.border}` }}>{detail.patternTransfer.comparisonRow.thisProduct}</div>
+            <div style={{ padding: "14px 16px", fontSize: 14, color: t.t1, lineHeight: 1.5, borderLeft: `1px solid ${t.border}` }}>{detail.patternTransfer.comparisonRow.sibling}</div>
+          </div>
+        </div></R>
+        <R delay={0.15}><span onClick={() => go("detail", detail.patternTransfer.siblingSlug)} style={{ display: "inline-block", marginTop: 16, fontSize: 13, color: t.blue, fontWeight: 500, cursor: "pointer" }}>See {allWork.find(w => w.slug === detail.patternTransfer.siblingSlug)?.title || "sibling product"} {"\u2192"}</span></R>
+      </div></section>
+      <div style={s.divider} /></>}
+
+      {/* ── SECTION 4: KEY METRICS ── */}
+      {detail.keyMetrics && <><section style={s.section}><div style={s.container}>
+        <R><span style={s.tLabel}>Key Metrics</span><h2 style={{ ...s.tSection, marginBottom: 24 }}>By the numbers.</h2></R>
+        <R delay={0.05}><div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 16, marginBottom: detail.caseStudy ? 48 : 0 }}>
+          {detail.keyMetrics.map((m, i) => (
+            <div key={i} style={{ ...s.card, padding: "24px 20px", textAlign: "center" }}>
+              <span style={{ fontFamily: font, fontSize: 32, color: t.t0, display: "block", marginBottom: 8 }}>{m.value}</span>
+              <span style={{ fontSize: 13, color: t.t2, lineHeight: 1.4 }}>{m.label}</span>
+            </div>
+          ))}
+        </div></R>
+
+        {/* Case Study */}
+        {detail.caseStudy && <>
+          <div style={{ height: 1, background: t.border, margin: "0 0 48px 0" }} />
+          <div style={s.narrow}>
+            <R><span style={s.tLabel}>Case Study</span><h2 style={{ ...s.tSection, marginBottom: 12 }}>{detail.caseStudy.title}</h2>
+            <p style={{ fontSize: 16, color: t.t1, fontStyle: "italic", marginBottom: 40, lineHeight: 1.6 }}>{detail.caseStudy.subtitle}</p></R>
+            {detail.caseStudy.sections.map((sec, i) => (
+              <R key={i} delay={0.05 * i}>
+                <h3 style={{ fontFamily: font, fontSize: 20, fontWeight: 400, color: t.t0, marginTop: i === 0 ? 0 : 40, marginBottom: 12 }}>{sec.heading}</h3>
+                {sec.body.split('\n\n').map((para, j) => (
+                  <p key={j} style={{ ...s.tBody, lineHeight: 1.7, marginBottom: 16 }}>{para}</p>
+                ))}
+              </R>
+            ))}
+          </div>
+        </>}
+      </div></section>
+      <div style={s.divider} /></>}
+
+      {/* ── SECTION 5: CTA ── */}
+      <section style={{ ...s.section, background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
+        <R><h2 style={{ ...s.tSection, marginBottom: 24 }}>Ready to see it live?</h2>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+          {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Explore {item.title} {"\u2192"}</a>}
+          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }}>Or book a 30-minute walkthrough</a>
+        </div>
+        <div style={{ marginTop: 32 }}>
+          <span onClick={() => go("work")} style={{ fontSize: 13, color: t.t1, cursor: "pointer" }}>{"\u2190"} Back to all work</span>
+        </div></R>
       </div></section>
     </>);
   };
