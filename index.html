@@ -231,7 +231,7 @@ function Portfolio() {
   const [mobileNav, setMobileNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const t = themes[mode];
-  useReveal(page + slug);
+  useReveal(page + slug + mode);
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
 
@@ -246,8 +246,8 @@ function Portfolio() {
   const s = {
     page: { background: t.bg, color: t.t0, fontFamily: sans, fontSize: 16, lineHeight: 1.65, minHeight: "100vh", transition: "background 0.4s, color 0.4s" },
     container: { maxWidth: 1080, margin: "0 auto", padding: "0 24px" },
-    narrow: { maxWidth: 780, margin: "0 auto" },
-    section: { padding: isMobile ? "80px 20px" : "120px 24px" },
+    narrow: { maxWidth: 840, margin: "0 auto" },
+    section: { padding: isMobile ? "80px 20px" : "96px 24px" },
     tHero: { fontFamily: font, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0 },
     tSection: { fontFamily: font, fontSize: "clamp(24px, 3.2vw, 32px)", fontWeight: 400, lineHeight: 1.25, letterSpacing: "-0.015em", color: t.t0, marginBottom: 12 },
     tBody: { fontSize: 16, color: t.t1, lineHeight: 1.65 },
@@ -343,14 +343,17 @@ function Portfolio() {
           </div></R>)}
         </div>
         {/* Methodology */}
-        <R delay={0.2}><div style={{ ...s.card, padding: isMobile ? "24px 20px" : "28px 32px", marginTop: 40, maxWidth: 1080 }}>
-          <span style={s.tLabel}>How I Work</span><h3 style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 20 }}>Prototype-First Discovery</h3>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
-            {[{ step: "01", ch: "Discover with software", color: t.blue, text: "Instead of months of requirements docs and wireframes, build a working prototype during discovery. Stakeholders react to real software, not slide decks. Hard questions surface in weeks, not quarters." }, { step: "02", ch: "Design for adoption", color: t.amber, text: "Apply HCAI principles from day one. Humans stay in control. AI decisions are transparent. Trust is designed into the product, not patched in after launch. This is what separates products that ship from products that stick." }, { step: "03", ch: "Fail fast, fail cheap", color: t.green, text: "If the product hypothesis is wrong, you find out before the engineering budget is committed. If it's right, you hand off a production-grade prototype with validated requirements. Either outcome saves months and significant cost." }].map(lens => (
-              <div key={lens.ch} style={{ background: t.bg2, borderRadius: 10, padding: "20px 22px", borderLeft: `3px solid ${lens.color}` }}><div style={{ fontSize: 11, fontWeight: 600, color: lens.color, marginBottom: 8, fontFamily: mono, letterSpacing: "0.08em", textTransform: "uppercase" }}>{lens.step}. {lens.ch}</div><div style={{ fontSize: 14, color: t.t1, lineHeight: 1.6 }}>{lens.text}</div></div>
+        <div style={{ marginTop: 40 }}>
+          <R delay={0.15}><div style={{ marginBottom: 20 }}><span style={s.tLabel}>How I Work</span><h3 style={{ fontFamily: font, fontSize: 18, color: t.t0 }}>Prototype-First Discovery</h3></div></R>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {[{ step: "01", ch: "Discover with software", color: t.blue, text: "Instead of months of requirements docs and wireframes, build a working prototype during discovery. Stakeholders react to real software, not slide decks. Hard questions surface in weeks, not quarters." }, { step: "02", ch: "Design for adoption", color: t.green, text: "Apply HCAI principles from day one. Humans stay in control. AI decisions are transparent. Trust is designed into the product, not patched in after launch. This is what separates products that ship from products that stick." }, { step: "03", ch: "Fail fast, fail cheap", color: t.amber, text: "If the product hypothesis is wrong, you find out before the engineering budget is committed. If it's right, you hand off a production-grade prototype with validated requirements. Either outcome saves months and significant cost." }].map((lens, i) => (
+              <R key={lens.ch} delay={0.05 * i}><div style={{ ...s.card, padding: "24px 28px", display: "grid", gridTemplateColumns: "44px 1fr", gap: 16 }} onMouseEnter={e => e.currentTarget.style.borderColor = lens.color + "40"} onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
+                <span style={{ fontFamily: mono, fontSize: 14, color: lens.color, paddingTop: 3 }}>{lens.step}</span>
+                <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 8 }}>{lens.ch}</div><div style={{ fontSize: 15, color: t.t1, lineHeight: 1.6 }}>{lens.text}</div></div>
+              </div></R>
             ))}
           </div>
-        </div></R>
+        </div>
       </div></section>
       <div style={s.divider} />
 
