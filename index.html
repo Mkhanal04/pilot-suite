@@ -101,13 +101,14 @@ function useReveal(dep) {
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.style.opacity = "1"; e.target.style.transform = "translateY(0)"; io.unobserve(e.target); } }),
       { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
     );
-    document.querySelectorAll("[data-reveal]").forEach((el) => { el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el); });
-    // Immediate check: reveal elements already in viewport (fixes filter/route-change race)
-    requestAnimationFrame(() => {
-      document.querySelectorAll("[data-reveal]").forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) { el.style.opacity = "1"; el.style.transform = "translateY(0)"; io.unobserve(el); }
-      });
+    // Inline viewport check: reveal immediately if already visible, otherwise hide and observe
+    document.querySelectorAll("[data-reveal]").forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.style.opacity = "1"; el.style.transform = "translateY(0)";
+      } else {
+        el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el);
+      }
     });
     return () => io.disconnect();
   }, [dep]);
@@ -231,7 +232,7 @@ function Portfolio() {
   const [mobileNav, setMobileNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const t = themes[mode];
-  useReveal(page + slug + mode);
+  useReveal(page + slug + mode + filter);
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
 
