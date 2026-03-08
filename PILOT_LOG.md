@@ -44,3 +44,21 @@ Implemented `specs/pilot-apps-design-consistency.md` (commit `ab43774`). All six
 - **Fix 6** (LOW): TalentPilot mobile hero headline `22px` → `24px` to match TradePilot.
 
 Files modified: `talentpilot/index.html`, `tradepilot/index.html`. Both apps load, theme toggle works, all views render.
+
+## 2026-03-08 — Cody (Session 6)
+
+Implemented `specs/positioning-messaging-overhaul.md` (commit `a7dbe00`). All 13 changes deployed to pilot-suite-sigma.vercel.app.
+
+**Title/identity:** "AI Product Builder" → "AI Product Strategist" everywhere: page title, meta/og tags, hero status line, footer.
+
+**Hero:** Headline replaced with single-idea value prop ("I help enterprises validate AI product bets / before they commit the engineering budget."). Two body paragraphs → one tight paragraph. Stats row removed ("10+, 2, 5+, 1" undercut confidence).
+
+**Story:** Entire chapter-cards + Prototype-First Discovery methodology (~40% of page) replaced with 3-row timeline: year | colored label | one-liner. Mobile stacks single-column.
+
+**Work section:** Architecture Pillars banner removed (redundant with Thesis). Coming soon cards (HealthPilot, AutoPilot) hidden from Work listing page — still present in Thesis domain table as "(next)". Tags: TradePilot → Decision Queue / Glass Box / 10-80-10 Workflow; TalentPilot → Decision Queue / Glass Box / Bias Monitoring.
+
+**Thesis:** 3 paragraphs → 2. CTA "Start a conversation" → "Book a 30-minute demo".
+
+**Contact:** "Let's find your domain" → "Let's talk about your AI product bet." Body updated to speak directly to target buyer (VP/Director with AI budget).
+
+No design system changes. Dark mode, light mode, and mobile all verified.
