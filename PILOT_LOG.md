@@ -31,3 +31,16 @@ Implemented `specs/portfolio-nav-flow-fixes.md` Fix 1 (commit `ef76f49`). Work p
 **Root cause:** `filter` was missing from `useReveal`'s dependency array. When filter changed, React re-rendered new `[data-reveal]` elements but `useReveal` never re-ran to observe them — they stayed at `opacity: 0`. Adding `filter` to the dep fixes the re-run. The existing `requestAnimationFrame`-based reveal also had a race: `WorkPage` is defined inside `Portfolio`, so it remounts on every Portfolio re-render. The rAF fired before React finished committing the new elements. Replaced the two-step set-to-0-then-rAF approach with a single inline synchronous viewport check inside the `forEach` — elements in viewport get opacity:1 immediately, elements below fold get opacity:0 and are observed. Tested all three filter states (All, Products, Case Studies) — zero in-viewport-hidden elements after each switch.
 
 **Fixes 2, 3, 4 status:** All confirmed already in code from a prior session. Fix 2 (dual CTAs on homepage): live. Fix 3 (Try it on Work cards): live. Fix 4 (Coming soon / Prototype in progress badge): live.
+
+## 2026-03-07 — Cody (Session 5)
+
+Implemented `specs/pilot-apps-design-consistency.md` (commit `ab43774`). All six fixes deployed to pilot-suite-sigma.vercel.app:
+
+- **Fix 1** (HIGH): TalentPilot `.story-tab` + `.ch-tab` converted from underline to fill style. Both containers had `border-bottom` removed. Active state: `bg:var(--text-0)/color:var(--bg-0)` light, `bg:var(--blue)/color:#fff` dark. Hover state added.
+- **Fix 2** (MEDIUM): TalentPilot sliders (`.pd-weight-slider`, `.cc-slider`) updated — track 4px→6px/2px→3px radius, thumb 14px→18px, box-shadow 0 1px 3px→4px.
+- **Fix 3** (LOW): TalentPilot `.cc-agent-card` border-radius 12px→14px (Tier 2B feature card spec).
+- **Fix 4** (LOW): TradePilot `.qr-priority-bar` height `36px` → `100%` with `min-height:36px` (adopted TalentPilot's superior approach per spec).
+- **Fix 5** (LOW): Added `.d7{animation-delay:.4s}` stagger class to TalentPilot.
+- **Fix 6** (LOW): TalentPilot mobile hero headline `22px` → `24px` to match TradePilot.
+
+Files modified: `talentpilot/index.html`, `tradepilot/index.html`. Both apps load, theme toggle works, all views render.
