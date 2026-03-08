@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milan Khanal — AI Product Builder</title>
-<meta name="description" content="I've delivered enterprise products for a decade. Now I build AI products designed to actually get adopted. 10+ years enterprise delivery, Human-Centered AI, live prototypes.">
-<meta property="og:title" content="Milan Khanal — AI Product Builder">
-<meta property="og:description" content="Strategy to prototype. Enterprise delivery meets Human-Centered AI.">
+<title>Milan Khanal — AI Product Strategist</title>
+<meta name="description" content="I help enterprises validate AI product bets before committing the engineering budget. Working prototypes in weeks, not months. Human-Centered AI architecture that transfers across domains.">
+<meta property="og:title" content="Milan Khanal — AI Product Strategist">
+<meta property="og:description" content="Validate your AI product concept with a working prototype before you commit the engineering budget.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pilot-suite-sigma.vercel.app">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +68,7 @@ const allWork = [
     approach: "Built a 6-view prototype with 5 AI agents that detect patterns across supplier data, surface decision-relevant signals, and recommend actions. Every recommendation comes with source evidence and a confidence score. Humans approve, reject, or modify. The system learns from every decision.",
     pillars: ["Agentic AI", "Glass Box", "Decision Lifecycle", "Intelligence Mining", "Human-in-the-Loop"],
     stats: { views: 6, agents: 5, tour: true }, appUrl: "/tradepilot/",
-    tags: ["Agentic AI", "Glass Box", "Decision Lifecycle", "5 AI Agents", "Learning Loops"],
+    tags: ["Decision Queue", "Glass Box", "10-80-10 Workflow"],
   },
   {
     slug: "talentpilot", type: "product", title: "TalentPilot", domain: "Recruiting", color: "amber", status: "live", date: "2026-03",
@@ -78,7 +78,7 @@ const allWork = [
     approach: "Applied the same architecture from TradePilot to recruiting. Decision enrichment replaces candidate scoring (because scoring implies the AI makes the call). Bias monitoring is built into the decision flow, not bolted on as a report. 4 AI agents, same Glass Box transparency.",
     pillars: ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
     stats: { views: 7, agents: 4, tour: true }, appUrl: "/talentpilot/",
-    tags: ["Decision Enrichment", "Bias Dashboard", "Pipeline Monitor", "4 AI Agents"],
+    tags: ["Decision Queue", "Glass Box", "Bias Monitoring"],
   },
   {
     slug: "healthcare-billing", type: "case-study", title: "Healthcare Billing Modernization", domain: "Healthcare", color: "green", status: "completed", date: "2025-11",
@@ -307,7 +307,7 @@ function Portfolio() {
 
   const Footer = () => (
     <footer style={{ padding: "28px 24px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1080, margin: "0 auto", fontSize: 12, color: t.t2, flexWrap: "wrap", gap: 8 }}>
-      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} AI Product Builder</span><span>{"\u00a9"} 2026</span>
+      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} AI Product Strategist</span><span>{"\u00a9"} 2026</span>
     </footer>
   );
 
@@ -319,41 +319,32 @@ function Portfolio() {
         <div style={s.container}>
           <R delay={0.05}><div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
             <div style={{ width: 56, height: 56, borderRadius: "50%", background: `linear-gradient(135deg, ${t.blue}, ${t.green})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#fff", flexShrink: 0 }}>MK</div>
-            <div><div style={{ fontWeight: 600, fontSize: 16, color: t.t0 }}>Milan Khanal</div><div style={{ ...s.tCaption, display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: t.green, display: "inline-block" }} />AI Product Builder {"\u00b7"} McKinney, TX</div></div>
+            <div><div style={{ fontWeight: 600, fontSize: 16, color: t.t0 }}>Milan Khanal</div><div style={{ ...s.tCaption, display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: t.green, display: "inline-block" }} />AI Product Strategist {"\u00b7"} McKinney, TX</div></div>
           </div></R>
-          <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>I've delivered enterprise products for a decade.<br /><span style={{ display: "block", marginTop: 8 }}><em style={{ fontStyle: "italic", color: t.t1 }}>Now I build AI products designed to actually get adopted.</em></span></h1></R>
+          <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>I help enterprises validate AI product bets<br /><span style={{ display: "block", marginTop: 8 }}><em style={{ fontStyle: "italic", color: t.t1 }}>before they commit the engineering budget.</em></span></h1></R>
           <R delay={0.18}><div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, marginBottom: 20 }}>{["Healthcare", "Supply Chain", "Automotive", "Energy", "ESG"].map(ind => <span key={ind} style={{ fontSize: 11, fontFamily: mono, color: t.t2, background: t.bg2, padding: "4px 12px", borderRadius: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{ind}</span>)}</div></R>
           <R delay={0.2}>
-            <p style={{ ...s.tBody, marginBottom: 16, maxWidth: 640 }}>I've taken products from zero to production at Toyota, Dell, World Kinect, and CRC Group as a BA, product owner, and delivery lead. That track record is what I bring to AI.</p>
-            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>Enterprises are rushing to adopt it, but without human-centered design, most AI products will fail: users won't trust them, workflows won't change, and the investment won't stick. I apply HCAI principles through rapid prototyping so organizations can validate whether their AI product works before committing the full engineering budget.</p>
+            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>Ten years delivering enterprise products at Toyota, Dell, World Kinect, and CRC Group taught me what it takes to ship. A degree in Human-Centered AI taught me why most AI products fail after they ship. I combine both: working prototypes in weeks that let you validate the concept before committing the budget.</p>
           </R>
-          <R delay={0.28}><div style={{ display: "flex", gap: isMobile ? 20 : 32, flexWrap: "wrap", paddingTop: 32, borderTop: `1px solid ${t.border}` }}>
-            {[{ val: "10+", lbl: "Years in Enterprise" }, { val: "2", lbl: "Live Prototypes" }, { val: "5+", lbl: "Industries Delivered" }, { val: "1", lbl: "Transferable Architecture" }].map(st => <div key={st.lbl}><span style={{ fontFamily: font, fontSize: 28, color: t.t0, display: "block" }}>{st.val}</span><span style={{ fontSize: 12, color: t.t2 }}>{st.lbl}</span></div>)}
-          </div></R>
         </div>
       </section>
       <div style={s.divider} />
 
       {/* STORY */}
       <section id="story" style={s.section}><div style={s.container}>
-        <R><SectionHeader label="The Story" title="How I got here." body="Three chapters. Each one sharpened the next." t={t} s={s} /></R>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 32 }}>
-          {chapters.map((ch, i) => <R key={ch.num} delay={0.05 * i}><div style={{ ...s.card, padding: "24px 28px", display: "grid", gridTemplateColumns: "44px 1fr", gap: 16 }} onMouseEnter={e => e.currentTarget.style.borderColor = ch.color + "40"} onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
-            <span style={{ fontFamily: mono, fontSize: 14, color: ch.color, paddingTop: 3 }}>{ch.num}</span>
-            <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 2 }}>{ch.title}: <span style={{ color: t.t1, fontStyle: "italic" }}>{ch.subtitle}</span></div><div style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 12 }}>{ch.body}</div><div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{ch.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 10px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div></div>
-          </div></R>)}
-        </div>
-        {/* Methodology */}
-        <div style={{ marginTop: 40 }}>
-          <R delay={0.15}><div style={{ marginBottom: 20 }}><span style={s.tLabel}>How I Work</span><h3 style={{ fontFamily: font, fontSize: 18, color: t.t0 }}>Prototype-First Discovery</h3></div></R>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {[{ step: "01", ch: "Discover with software", color: t.blue, text: "Instead of months of requirements docs and wireframes, build a working prototype during discovery. Stakeholders react to real software, not slide decks. Hard questions surface in weeks, not quarters." }, { step: "02", ch: "Design for adoption", color: t.green, text: "Apply HCAI principles from day one. Humans stay in control. AI decisions are transparent. Trust is designed into the product, not patched in after launch. This is what separates products that ship from products that stick." }, { step: "03", ch: "Fail fast, fail cheap", color: t.amber, text: "If the product hypothesis is wrong, you find out before the engineering budget is committed. If it's right, you hand off a production-grade prototype with validated requirements. Either outcome saves months and significant cost." }].map((lens, i) => (
-              <R key={lens.ch} delay={0.05 * i}><div style={{ ...s.card, padding: "24px 28px", display: "grid", gridTemplateColumns: "44px 1fr", gap: 16 }} onMouseEnter={e => e.currentTarget.style.borderColor = lens.color + "40"} onMouseLeave={e => e.currentTarget.style.borderColor = t.border}>
-                <span style={{ fontFamily: mono, fontSize: 14, color: lens.color, paddingTop: 3 }}>{lens.step}</span>
-                <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 8 }}>{lens.ch}</div><div style={{ fontSize: 15, color: t.t1, lineHeight: 1.6 }}>{lens.text}</div></div>
-              </div></R>
-            ))}
-          </div>
+        <R><SectionHeader label="The Story" title="How I got here." t={t} s={s} /></R>
+        <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 0 }}>
+          {[
+            { year: "2015–2024", label: "Enterprise", text: "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead", color: t.blue },
+            { year: "2023–2025", label: "Education", text: "Texas Tech B.S. Human-Centered AI · Cornell AI Certification", color: t.amber },
+            { year: "2025–now", label: "Building", text: "TradePilot (supply chain) + TalentPilot (recruiting) — same architecture, different domains", color: t.green },
+          ].map((row, i) => (
+            <R key={row.label} delay={0.05 * i}><div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 100px 1fr", gap: isMobile ? 4 : 16, padding: "16px 0", borderBottom: i < 2 ? `1px solid ${t.border}` : "none", alignItems: "baseline" }}>
+              <span style={{ fontFamily: mono, fontSize: 12, color: t.t2 }}>{row.year}</span>
+              <span style={{ fontSize: 14, fontWeight: 600, color: row.color }}>{row.label}</span>
+              <span style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.text}</span>
+            </div></R>
+          ))}
         </div>
       </div></section>
       <div style={s.divider} />
@@ -394,21 +385,15 @@ function Portfolio() {
         </div>
         {/* See all work link */}
         <R delay={0.15}><div style={{ textAlign: "center", marginTop: 24 }}><span onClick={() => go("work")} style={{ fontSize: 14, color: t.blue, cursor: "pointer", fontWeight: 500 }}>View all work {"\u2192"}</span></div></R>
-        {/* Architecture box */}
-        <R delay={0.2}><div style={{ ...s.card, padding: isMobile ? "20px" : "24px 28px", marginTop: 32, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-          <div><div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 4 }}>Same architecture. Different domain. That's the test.</div><div style={{ fontSize: 14, color: t.t1, maxWidth: 440 }}>Six shared pillars. If the pattern is real, adding a new domain shouldn't require rethinking the foundation.</div></div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{["Agentic AI", "Human-in-the-Loop", "Glass Box", "Intelligence Mining", "Learning Loops", "Decision Lifecycle"].map(p => <span key={p} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "5px 12px", borderRadius: 6, fontWeight: 500 }}>{p}</span>)}</div>
-        </div></R>
       </div></section>
       <div style={s.divider} />
 
       {/* THESIS */}
       <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
         <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Make it cheap to find out if your product will work.</h2>
-          <p style={{ ...s.tBody, marginBottom: 16 }}>Most enterprise AI products fail because the first time a real user touches working software is month six. By then the budget is committed and the team is hired. You're not discovering whether the product works. You're defending why it should.</p>
-          <p style={{ ...s.tBody, marginBottom: 16 }}>Prototype-first discovery changes the math. Validate with working software during discovery, not after. If you're wrong, you find out early and cheap. If you're right, you hand off something real.</p>
-          <p style={{ ...s.tBody, marginBottom: 24, fontWeight: 500, color: t.t0 }}>The architecture transfers. The methodology compresses. The risk drops.</p>
-          <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Start a conversation {"\u2192"}</a>
+          <p style={{ ...s.tBody, marginBottom: 16 }}>Most enterprise AI products fail because the first time a real user touches working software is month six. By then the budget is committed. You're not discovering whether the product works — you're defending why it should.</p>
+          <p style={{ ...s.tBody, marginBottom: 24 }}>Prototype-first discovery changes the math. Validate with working software during discovery, not after. The architecture transfers across domains. The risk drops.</p>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute demo {"\u2192"}</a>
         </div></R>
         <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
           <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: t.t2, marginBottom: 20 }}>Architecture {"\u00b7"} Applied Across Domains</div>
@@ -423,8 +408,8 @@ function Portfolio() {
 
       {/* CONTACT */}
       <section id="contact" style={{ ...s.section, background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
-        <R><span style={{ ...s.tLabel, textAlign: "center" }}>Get in Touch</span><h2 style={{ ...s.tSection, textAlign: "center" }}>Let's find your domain.</h2>
-          <p style={{ ...s.tBody, marginBottom: 32, textAlign: "center" }}>I'm looking for the next domain to prove the pattern in. If you're building AI products, let's talk.</p>
+        <R><span style={{ ...s.tLabel, textAlign: "center" }}>Get in Touch</span><h2 style={{ ...s.tSection, textAlign: "center" }}>Let's talk about your AI product bet.</h2>
+          <p style={{ ...s.tBody, marginBottom: 32, textAlign: "center" }}>I help enterprises go from AI strategy to validated prototype in weeks. If you have budget but no clear product vision, let's talk.</p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>milan.khanal25@gmail.com {"\u2192"}</a>
             <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>LinkedIn</a>
@@ -436,7 +421,7 @@ function Portfolio() {
 
   // === PAGE: WORK LISTING ===
   const WorkPage = () => {
-    const filtered = filter === "all" ? allWork : allWork.filter(w => filter === "products" ? w.type === "product" : w.type === "case-study");
+    const filtered = (filter === "all" ? allWork : allWork.filter(w => filter === "products" ? w.type === "product" : w.type === "case-study")).filter(w => w.status !== "coming");
     return (
       <section style={{ padding: "120px 24px 80px" }}><div style={s.container}>
         <Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work" }]} />
