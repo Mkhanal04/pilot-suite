@@ -62,3 +62,25 @@ Implemented `specs/positioning-messaging-overhaul.md` (commit `a7dbe00`). All 13
 **Contact:** "Let's find your domain" → "Let's talk about your AI product bet." Body updated to speak directly to target buyer (VP/Director with AI budget).
 
 No design system changes. Dark mode, light mode, and mobile all verified.
+
+## 2026-03-08 — Cody (Session 7)
+
+Implemented `specs/bio-timeline-corrections.md` (commit `d062914`). Three text-only corrections to `index.html`:
+
+- Timeline Enterprise: `2015–2024` → `2016–now`
+- Timeline Education: `2023–2025` → `2023–2026`, added `(expected 2026)` to text
+- Hero paragraph: "A degree in Human-Centered AI taught me" → "Studying Human-Centered AI at Texas Tech taught me"
+- Chapters data: updated degree reference to in-progress ("are giving me the frameworks", added `(expected 2026)`)
+- Meta description already accurate — no change needed
+
+No layout changes. All 7 acceptance criteria verified.
+
+## 2026-03-08 — Cody (Session 8)
+
+Implemented `specs/remove-about-me-add-back-nav-suppress-tour.md` (commit `2223fb6`). Changes across both prototype apps:
+
+**TradePilot:** Removed About nav section (About label + About Me nav item). Moved collapse-toggle to System nav section. Added `← Portfolio` link at top of sidebar (uses `nav-item` class + `nav-text` span so it collapses correctly). Added `if (window.self !== window.top) return;` at top of `initTour()`. Added `tourLaunchBtn` display:none in iframe context after DOMContentLoaded.
+
+**TalentPilot:** Removed About Me nav item and "About" label (Product Story + collapse-toggle kept). Deleted entire `view-builder` div and orphaned content (~115 lines). Removed `builder: 'About Me'` from breadcrumb names. Same iframe tour suppression pattern as TradePilot.
+
+Both apps verified: ← Portfolio link visible in sidebar, no About Me, tour launches on direct visit, Product Story kept in TalentPilot.
