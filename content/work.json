@@ -140,10 +140,10 @@
           }
         },
         "keyMetrics": [
-          { "value": "87%", "label": "AI match confidence with full Glass Box evidence visible" },
-          { "value": "Real-time", "label": "bias monitoring at point of decision, not after" },
-          { "value": "4/5ths rule", "label": "OFCCP compliance checked per-decision automatically" },
-          { "value": "37 yrs", "label": "institutional expertise encoded via weight calibration" }
+          { "value": "87% → 94%", "label": "match confidence improved after Weight Calibration with recruiter expertise" },
+          { "value": "1 bias alert", "label": "gender disparity flagged in engineering pipeline before interview stage" },
+          { "value": "2 compliance actions", "label": "LL 144 notice and IL audit prep surfaced proactively" },
+          { "value": "8 decisions", "label": "across 4 clients — active decisions managed with full evidence chains" }
         ],
         "caseStudy": null
       }

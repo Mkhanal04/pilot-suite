@@ -3063,8 +3063,8 @@ function initTour() {
   document.getElementById('tourOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeTour();
   });
-  // Auto-launch on first load
-  setTimeout(function() { openTour(); }, 400);
+  var launchBtn = document.getElementById('tourLaunchBtn');
+  if (launchBtn) launchBtn.style.display = 'flex';
 }
 
 function openTour() {

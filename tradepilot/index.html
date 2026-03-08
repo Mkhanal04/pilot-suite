@@ -1828,7 +1828,8 @@ function initTour() {
     dot.onclick = function() { goToTourStep(i); };
     dotsEl.appendChild(dot);
   }
-  setTimeout(function() { openTour(); }, 400);
+  var launchBtn = document.getElementById('tourLaunchBtn');
+  if (launchBtn) launchBtn.style.display = 'flex';
 }
 
 function openTour() {

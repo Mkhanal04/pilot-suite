@@ -198,7 +198,7 @@ function Portfolio() {
   const [isMobile, setIsMobile] = useState(false);
   const [content, setContent] = useState(null);
   const t = themes[mode];
-  useReveal(page + slug + mode + filter);
+  useReveal(page + slug + mode + filter + (content ? '1' : '0'));
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
   useEffect(() => { fetch('/content/work.json').then(r => r.json()).then(data => setContent(data)).catch(() => console.error('Failed to load content')); }, []);
@@ -393,7 +393,7 @@ function Portfolio() {
         <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Make it cheap to find out if your product will work.</h2>
           <p style={{ ...s.tBody, marginBottom: 16 }}>Most enterprise AI products fail because the first time a real user touches working software is month six. By then the budget is committed. You're not discovering whether the product works — you're defending why it should.</p>
           <p style={{ ...s.tBody, marginBottom: 24 }}>Prototype-first discovery changes the math. Validate with working software during discovery, not after. The architecture transfers across domains. The risk drops.</p>
-          <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute demo {"\u2192"}</a>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute walkthrough {"\u2192"}</a>
         </div></R>
         <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
           <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: t.t2, marginBottom: 20 }}>Architecture {"\u00b7"} Applied Across Domains</div>
@@ -459,10 +459,13 @@ function Portfolio() {
                   <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{item.summary}</p>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{(item.tags || []).slice(0, 4).map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{tag}</span>)}</div>
                   {item.date && <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</div>}
-                  {item.appUrl && item.status === "live" && (
+                  {item.status === "live" && (
                     <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontSize: 12, color: t.t2 }}>{item.stats?.views || 0} views {"\u00b7"} {item.stats?.agents || 0} agents</span>
-                      <a href={item.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 12, color: t.blue, fontWeight: 500, textDecoration: "none" }}>Try it {"\u2192"}</a>
+                      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                        <span style={{ fontSize: 12, color: t.t1, fontWeight: 500, cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); go("detail", item.slug); }}>View details {"\u2192"}</span>
+                        {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 12, color: t.blue, fontWeight: 500, textDecoration: "none" }}>Try it {"\u2192"}</a>}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -510,7 +513,7 @@ function Portfolio() {
         <R delay={0.1}><p style={{ ...s.tBody, maxWidth: 640, marginBottom: 32 }}>{detail.heroStatement}</p></R>
         <R delay={0.15}><div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Explore {item.title} {"\u2192"}</a>}
-          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }}>Or book a 30-minute walkthrough</a>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t1, textDecoration: "none", borderBottom: `1px solid ${t.border}`, paddingBottom: 1, transition: "color 0.2s, border-color 0.2s" }} onMouseEnter={e => { e.target.style.color = t.blue; e.target.style.borderColor = t.blue; }} onMouseLeave={e => { e.target.style.color = t.t1; e.target.style.borderColor = t.border; }}>Or book a 30-minute walkthrough</a>
         </div></R>
       </div></section>
       <div style={s.divider} />
@@ -595,7 +598,7 @@ function Portfolio() {
         <R><h2 style={{ ...s.tSection, marginBottom: 24 }}>Ready to see it live?</h2>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
           {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>Explore {item.title} {"\u2192"}</a>}
-          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }}>Or book a 30-minute walkthrough</a>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, color: t.t1, textDecoration: "none", borderBottom: `1px solid ${t.border}`, paddingBottom: 1, transition: "color 0.2s, border-color 0.2s" }} onMouseEnter={e => { e.target.style.color = t.blue; e.target.style.borderColor = t.blue; }} onMouseLeave={e => { e.target.style.color = t.t1; e.target.style.borderColor = t.border; }}>Or book a 30-minute walkthrough</a>
         </div>
         <div style={{ marginTop: 32 }}>
           <span onClick={() => go("work")} style={{ fontSize: 13, color: t.t1, cursor: "pointer" }}>{"\u2190"} Back to all work</span>
