@@ -84,3 +84,13 @@ Implemented `specs/remove-about-me-add-back-nav-suppress-tour.md` (commit `2223f
 **TalentPilot:** Removed About Me nav item and "About" label (Product Story + collapse-toggle kept). Deleted entire `view-builder` div and orphaned content (~115 lines). Removed `builder: 'About Me'` from breadcrumb names. Same iframe tour suppression pattern as TradePilot.
 
 Both apps verified: ← Portfolio link visible in sidebar, no About Me, tour launches on direct visit, Product Story kept in TalentPilot.
+
+## 2026-03-08 — Cody (Session 9)
+
+Implemented `specs/data-layer-json-refactor.md` (commit `4971cbe`). Extracted all portfolio content from hardcoded JavaScript into a JSON data layer.
+
+**Created:** `content/work.json` — single source of truth for work/product data. Includes full `detail` objects (heroStatement, architectureSnapshot, patternTransfer, keyMetrics, caseStudy) for TradePilot and TalentPilot, ready for future detail page spec. TradePilot case study (5 sections) fully written in JSON.
+
+**Modified:** `index.html` — replaced `const allWork = [...]` (34 lines) and `const chapters = [...]` with a `fetch('/content/work.json')` on mount. Added loading state. Derived `allWork` from `content.work`. Timeline rows from `content.timeline` (color strings mapped via `colorMap`). Domain table from `content.domainTable`. Coming-soon entries (HealthPilot, AutoPilot) removed from `allWork` — they only appear via `domainTable` in the Thesis section.
+
+Site renders identically. Work listing: 3 items. Domain table: 4 rows. No console errors. Dark/light mode verified.
