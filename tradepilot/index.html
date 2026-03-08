@@ -647,6 +647,7 @@
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileSidebar()"></div>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
+    <a href="/" class="nav-item" style="font-size:11px;color:var(--text-3);text-decoration:none;opacity:0.7;border-bottom:1px solid var(--border);border-radius:0;margin-bottom:0;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.7'"><span class="icon">←</span><span class="nav-text"> Portfolio</span></a>
     <div class="logo" onclick="showView('today')" style="cursor:pointer"><h1><span class="logo-full">TradePilot</span><span class="logo-mark">TP</span></h1><span class="sub">Decision Intelligence</span></div>
     <nav class="nav-section">
       <div class="nav-label">Operations</div>
@@ -658,10 +659,6 @@
     <nav class="nav-section">
       <div class="nav-label">System</div>
       <div class="nav-item" id="nav-control" onclick="showView('control')" title="Control Center"><span class="icon">⚙</span><span class="nav-text"> Control Center</span></div>
-    </nav>
-    <nav class="nav-section">
-      <div class="nav-label">About</div>
-      <div class="nav-item" onclick="window.location.href='/about/'" title="About Me"><span class="icon">◉</span><span class="nav-text"> About Me</span></div>
       <button class="collapse-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
         <span class="collapse-icon">«</span><span class="collapse-text">Collapse</span>
       </button>
@@ -1822,6 +1819,7 @@ let tourStep = 0;
 let tourSeen = false;
 
 function initTour() {
+  if (window.self !== window.top) return;
   const dotsEl = document.getElementById('tourDots');
   for (let i = 0; i < TOUR_TOTAL; i++) {
     const dot = document.createElement('div');
@@ -1873,6 +1871,10 @@ function updateTourSlide() {
 }
 
 document.addEventListener('DOMContentLoaded', initTour);
+if (window.self !== window.top) {
+  var tourBtn = document.getElementById('tourLaunchBtn');
+  if (tourBtn) tourBtn.style.display = 'none';
+}
 document.addEventListener('keydown', function(e) {
   if (!document.getElementById('tourOverlay').classList.contains('active')) return;
   if (e.key === 'Escape') closeTour();

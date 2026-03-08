@@ -1099,6 +1099,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileSidebar()"></div>
 <div class="layout">
   <aside class="sidebar" id="sidebar">
+    <a href="/" class="nav-item" style="font-size:11px;color:var(--text-3);text-decoration:none;opacity:0.7;border-bottom:1px solid var(--border);border-radius:0;margin-bottom:0;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.7'"><span class="icon">←</span><span class="nav-text"> Portfolio</span></a>
     <div class="logo" onclick="showView('today')" style="cursor:pointer"><h1><span class="logo-full">TalentPilot</span><span class="logo-mark">TP</span></h1><span class="sub">Decision Intelligence</span></div>
     <nav class="nav-section">
       <div class="nav-label">Recruiting</div>
@@ -1114,9 +1115,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
       <div class="nav-item" id="nav-chat" onclick="showView('chat')" title="Chat Intelligence"><span class="icon">💬</span><span class="nav-text"> Chat</span></div>
     </nav>
     <nav class="nav-section">
-      <div class="nav-label">About</div>
       <div class="nav-item" id="nav-story" onclick="showView('story')" title="Product Story"><span class="icon">◆</span><span class="nav-text"> Product Story</span></div>
-      <div class="nav-item" id="nav-builder" onclick="showView('builder')" title="About Me"><span class="icon">◉</span><span class="nav-text"> About Me</span></div>
       <button class="collapse-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
         <span class="collapse-icon">«</span><span class="collapse-text">Collapse</span>
       </button>
@@ -3297,124 +3296,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
       </div>
     </div>
 
-    <!-- ═══ BUILDER PROFILE VIEW ═══ -->
-    <div class="view" id="view-builder">
-      <div class="hero" style="padding-bottom:24px">
-        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
-          <div style="width:72px;height:72px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:white;flex-shrink:0">MK</div>
-          <div style="flex:1;min-width:200px">
-            <h1 style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--hero-text);margin-bottom:4px">Milan Khanal</h1>
-            <p style="font-size:14px;color:var(--hero-muted)">Delivery Lead &amp; Product Designer</p>
-            <p style="font-size:12px;color:var(--hero-muted);margin-top:4px">McKinney, TX</p>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <span style="font-size:11px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.1);color:var(--hero-text);font-weight:500;border:1px solid rgba(255,255,255,.15)">Cornell AI</span>
-            <span style="font-size:11px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.1);color:var(--hero-text);font-weight:500;border:1px solid rgba(255,255,255,.15)">SAFe 5 PO/PM</span>
-            <span style="font-size:11px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.1);color:var(--hero-text);font-weight:500;border:1px solid rgba(255,255,255,.15)">AWS Certified</span>
-            <span style="font-size:11px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.1);color:var(--hero-text);font-weight:500;border:1px solid rgba(255,255,255,.15)">Texas Tech HCAI</span>
-          </div>
-        </div>
-      </div>
-      <div style="padding:0 48px 40px">
-        <!-- Stats -->
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:28px;margin-bottom:32px">
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text-0)">10+</div>
-            <div style="font-size:12px;color:var(--text-3)">Years Enterprise Delivery</div>
-          </div>
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text-0)">2</div>
-            <div style="font-size:12px;color:var(--text-3)">Live AI Products</div>
-          </div>
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text-0)">$3M+</div>
-            <div style="font-size:12px;color:var(--text-3)">Platform Under Management</div>
-          </div>
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center">
-            <div style="font-family:'DM Serif Display',serif;font-size:28px;color:var(--text-0)">5</div>
-            <div style="font-size:12px;color:var(--text-3)">Industry Verticals</div>
-          </div>
-        </div>
-
-        <!-- Bio -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
-          <p style="font-size:14px;color:var(--text-1);line-height:1.7">I build enterprise AI products that put humans in the loop, not as a compliance checkbox, but because it's how these systems actually earn trust and get adopted. My career spans healthcare billing modernization, supply chain optimization, ESG analytics, and automotive operations. I'm pursuing formal education in Human-Centered AI because I believe the next generation of enterprise tools needs people who understand both the technology and the organizational dynamics of adoption.</p>
-        </div>
-
-        <!-- Professional Journey (collapsed by default) -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px">
-          <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.pj-chevron').textContent=this.nextElementSibling.style.display==='none'?'▸':'▾'" style="padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none">
-            <div style="display:flex;align-items:center;gap:10px">
-              <span style="font-size:16px">📋</span>
-              <span style="font-size:14px;font-weight:600;color:var(--text-0)">Professional Journey</span>
-              <span style="font-size:11px;color:var(--text-3)">10+ years across 5 verticals</span>
-            </div>
-            <span class="pj-chevron" style="font-size:12px;color:var(--text-3)">▸</span>
-          </div>
-          <div style="display:none;border-top:1px solid var(--border);padding:0">
-            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start">
-              <div style="min-width:100px;font-size:11px;color:var(--text-3);padding-top:2px">2025 - Present</div>
-              <div style="flex:1">
-                <div style="font-size:13px;font-weight:600;color:var(--text-0)">Delivery Lead &amp; Product Designer</div>
-                <div style="font-size:12px;color:var(--text-2)">CRC Benefit Group, Dallas, TX</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">Leading $3M healthcare billing platform modernization. Wearing multiple hats: product management, business analysis, scrum facilitation, and UX design across 7,000+ customer groups.</div>
-              </div>
-              <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--green-bg);color:var(--green);white-space:nowrap">Current</span>
-            </div>
-            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start">
-              <div style="min-width:100px;font-size:11px;color:var(--text-3);padding-top:2px">2024 - 2025</div>
-              <div style="flex:1">
-                <div style="font-size:13px;font-weight:600;color:var(--text-0)">Delivery Lead</div>
-                <div style="font-size:12px;color:var(--text-2)">Toyota Motor North America, Plano, TX</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">Global Supply Chain Platform (GPS) for demand and supply planning. McKinsey as implementation partner. Integrated lean Kanban principles.</div>
-              </div>
-            </div>
-            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start">
-              <div style="min-width:100px;font-size:11px;color:var(--text-3);padding-top:2px">2022 - 2023</div>
-              <div style="flex:1">
-                <div style="font-size:13px;font-weight:600;color:var(--text-0)">Product Owner</div>
-                <div style="font-size:12px;color:var(--text-2)">Dell Technologies, Remote</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">ESG Analytics Platform. Owned product vision and roadmap for self-service Power BI analytics. Drove enterprise adoption.</div>
-              </div>
-            </div>
-            <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:16px;align-items:flex-start">
-              <div style="min-width:100px;font-size:11px;color:var(--text-3);padding-top:2px">2021 - 2022</div>
-              <div style="flex:1">
-                <div style="font-size:13px;font-weight:600;color:var(--text-0)">Sr. Business Analyst</div>
-                <div style="font-size:12px;color:var(--text-2)">FleetPride, Irving, TX</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">ERP integration and data migration for Karmak Fusion during multi-branch M&amp;A consolidation.</div>
-              </div>
-            </div>
-            <div style="padding:16px 20px;display:flex;gap:16px;align-items:flex-start">
-              <div style="min-width:100px;font-size:11px;color:var(--text-3);padding-top:2px">2016 - 2021</div>
-              <div style="flex:1">
-                <div style="font-size:13px;font-weight:600;color:var(--text-0)">Sr. Business Analyst &amp; Scrum Master</div>
-                <div style="font-size:12px;color:var(--text-2)">World Kinect Services, Miami, FL</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">Digital transformation of Order-to-Cash. Customer Self-Service Portal reduced manual intervention 80%. Fee Engine, Price Engine.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Building Approach -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px">
-          <h3 style="font-size:15px;font-weight:600;color:var(--text-0);margin-bottom:16px">What I Build &amp; How</h3>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--blue)">⚡</div><div><strong>TradePilot + TalentPilot</strong> - two working products prototyped during discovery using AI-assisted development, reducing alignment risk and proving architecture transferability across domains.</div></div>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--purple)">⬡</div><div><strong>HCAI-first design</strong> - bias monitoring isn't bolted on. It's integrated into the decision workflow from day one. Counter-factual panels, proxy variable checks, weight calibration are native features.</div></div>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--green)">◈</div><div><strong>Enterprise-grade thinking</strong> - approval flows, multi-role access, compliance checkpoints, audit trails. Built by someone who ships real enterprise systems, not just prototypes.</div></div>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--teal)">🔄</div><div><strong>Prototype-first discovery</strong> - stakeholders interact with a working product during discovery, not after months of sprints. This collapses alignment cycles, surfaces requirements gaps early, and de-risks delivery before significant investment.</div></div>
-        </div>
-
-        <!-- Engagement Models -->
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px">
-          <h3 style="font-size:15px;font-weight:600;color:var(--text-0);margin-bottom:16px">Engagement Models</h3>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--amber)">1</div><div><strong>Advisor</strong> - architectural guidance on agentic AI patterns, HCAI controls, and decision intelligence design for product and engineering teams.</div></div>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--amber)">2</div><div><strong>Build Internally</strong> - lead a team building AI products for internal operations. TalentPilot becomes the starting point for recruiting intelligence.</div></div>
-          <div class="ba-item"><div class="ba-icon" style="color:var(--amber)">3</div><div><strong>Build for Clients</strong> - apply the architecture pattern to build vertical AI products for enterprise clients (automotive, healthcare, financial services, staffing).</div></div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -3541,6 +3422,7 @@ let tourStep = 0;
 let tourSeen = false;
 
 function initTour() {
+  if (window.self !== window.top) return;
   // Build dots
   const dotsEl = document.getElementById('tourDots');
   for (let i = 0; i < TOUR_TOTAL; i++) {
@@ -3608,6 +3490,10 @@ function updateTourSlide() {
 
 // Initialize tour on page load
 document.addEventListener('DOMContentLoaded', initTour);
+if (window.self !== window.top) {
+  var tourBtn = document.getElementById('tourLaunchBtn');
+  if (tourBtn) tourBtn.style.display = 'none';
+}
 
 // ESC key closes tour
 document.addEventListener('keydown', function(e) {
@@ -3641,7 +3527,7 @@ function showView(view) {
   // Breadcrumb
   const names = {
     today: 'Today', queue: 'Decision Queue', detail: 'Decision Detail',
-    intel: 'Client Health', control: 'Control Center', bias: 'Bias Dashboard', chat: 'Chat Intelligence', story: 'Product Story', builder: 'About Me'
+    intel: 'Client Health', control: 'Control Center', bias: 'Bias Dashboard', chat: 'Chat Intelligence', story: 'Product Story'
   };
   document.getElementById('bc-current').textContent = names[view] || view;
 
