@@ -58,41 +58,6 @@ const themes = {
   },
 };
 
-// --- CONTENT DATA ---
-const allWork = [
-  {
-    slug: "tradepilot", type: "product", title: "TradePilot", domain: "Supply Chain", color: "blue", status: "live", date: "2026-02",
-    summary: "Decision intelligence for supply chain. AI agents surface signals, enrich context, and recommend. Humans decide.",
-    desc: "Supply chain teams make high-stakes sourcing decisions on stale data and gut feel. TradePilot is an experiment: what if AI agents surfaced the signals, enriched the context, and recommended, but humans always made the call?",
-    problem: "Supply chain teams make high-stakes sourcing decisions on stale data and gut feel. Institutional knowledge lives in spreadsheets and the heads of senior buyers. When someone leaves, the knowledge leaves with them.",
-    approach: "Built a 6-view prototype with 5 AI agents that detect patterns across supplier data, surface decision-relevant signals, and recommend actions. Every recommendation comes with source evidence and a confidence score. Humans approve, reject, or modify. The system learns from every decision.",
-    pillars: ["Agentic AI", "Glass Box", "Decision Lifecycle", "Intelligence Mining", "Human-in-the-Loop"],
-    stats: { views: 6, agents: 5, tour: true }, appUrl: "/tradepilot/",
-    tags: ["Decision Queue", "Glass Box", "10-80-10 Workflow"],
-  },
-  {
-    slug: "talentpilot", type: "product", title: "TalentPilot", domain: "Recruiting", color: "amber", status: "live", date: "2026-03",
-    summary: "Same architecture, different domain. Tests whether the framework holds when you swap the industry.",
-    desc: "Same architecture, different domain. Recruiting has the same broken pattern: decisions made on incomplete data, bias invisible in the process, institutional knowledge siloed. TalentPilot tests whether the framework holds when you swap the industry.",
-    problem: "Recruiting decisions are made on incomplete data, bias is invisible in the process, and institutional knowledge about what makes a good hire is siloed in individual recruiters' heads.",
-    approach: "Applied the same architecture from TradePilot to recruiting. Decision enrichment replaces candidate scoring (because scoring implies the AI makes the call). Bias monitoring is built into the decision flow, not bolted on as a report. 4 AI agents, same Glass Box transparency.",
-    pillars: ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
-    stats: { views: 7, agents: 4, tour: true }, appUrl: "/talentpilot/",
-    tags: ["Decision Queue", "Glass Box", "Bias Monitoring"],
-  },
-  {
-    slug: "healthcare-billing", type: "case-study", title: "Healthcare Billing Modernization", domain: "Healthcare", color: "green", status: "completed", date: "2025-11",
-    summary: "Led discovery and rapid prototyping for a $2M+ legacy billing platform replacement. 17 screens, 10 screen groups, production data.",
-    context: "A healthcare benefits company was running critical billing operations on a 20+ year old IBM mainframe system. The platform processed 500K+ monthly billing records across 7,000 customer groups. Staff relied on green-screen terminals and tribal knowledge.",
-    problem: "The legacy system was becoming unmaintainable. Key operators were approaching retirement. No documentation existed for complex billing logic. Previous modernization attempts had stalled because requirements were too abstract to validate.",
-    approach: "Spent 3 months in deep discovery with the Sr. Director of Billing Operations (27-year veteran). Instead of writing requirements docs, I built a working prototype with real production data that the team could react to. 17 screens across 10 screen groups, covering AR/AP billing, commissions, carrier remittance, and error handling.",
-    outcome: 'The Sr. Director called the prototype "phenomenal" and scheduled a VP of Product demo. The prototype captured institutional knowledge that had never been documented. It became the reference artifact for the engineering team.',
-    learnings: "Discovery doesn't have to end with a document. It can end with working software. When domain experts interact with a prototype, they surface edge cases and business rules they couldn't articulate in interviews alone. The prototype becomes the specification.",
-    tags: ["Legacy Modernization", "Healthcare", "Rapid Prototyping", "Discovery", "Production Data"],
-  },
-  { slug: "healthpilot", type: "product", title: "HealthPilot", domain: "Healthcare", color: "green", status: "coming", date: null, summary: "The billing modernization case study, redesigned as a Pilot Suite product with the full intelligence architecture.", tags: ["Healthcare", "Coming Soon"] },
-  { slug: "autopilot", type: "product", title: "AutoPilot", domain: "Automotive", color: "blue", status: "coming", date: null, summary: "Car buying intelligence. Consumer and dealer dashboards powered by the same decision architecture.", tags: ["Automotive", "Coming Soon"] },
-];
 
 // --- SCROLL REVEAL ---
 function useReveal(dep) {
@@ -231,10 +196,16 @@ function Portfolio() {
   const [filter, setFilter] = useState("all");
   const [mobileNav, setMobileNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [content, setContent] = useState(null);
   const t = themes[mode];
   useReveal(page + slug + mode + filter);
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
+  useEffect(() => { fetch('/content/work.json').then(r => r.json()).then(data => setContent(data)).catch(() => console.error('Failed to load content')); }, []);
+
+  if (!content) return <div style={{ minHeight: "100vh", background: t.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: t.t2, letterSpacing: "0.1em", textTransform: "uppercase" }}>Loading...</div>;
+
+  const allWork = content.work;
 
   const font = "'Newsreader', Georgia, serif";
   const sans = "'Outfit', system-ui, sans-serif";
@@ -275,11 +246,6 @@ function Portfolio() {
     </div>
   );
 
-  const chapters = [
-    { num: "01", title: "Enterprise", subtitle: "The Track Record", color: t.blue, body: "Toyota. Dell. FleetPride. World Kinect. CRC Group. Ten years taking products from zero to production as a BA, product owner, and delivery lead. I learned what it actually takes to ship: cross-functional coordination, stakeholder alignment, and knowing when to push back on scope.", tags: ["Toyota", "Dell", "FleetPride", "World Kinect", "CRC Group", "SAFe 5 PO/PM", "Systems Design", "Cross-Functional Delivery"] },
-    { num: "02", title: "Education", subtitle: "The Framework", color: t.amber, body: "Enterprises are adopting AI fast, but most aren't designing for how humans actually make decisions. A B.S. in Human-Centered AI at Texas Tech (expected 2026) and a Cornell AI certification are giving me the frameworks to bridge that gap: when to keep humans in the loop, what needs to be transparent, and how to build trust into the product. Not a career change. A lens upgrade.", tags: ["Texas Tech HCAI", "Cornell AI", "10-80-10 Framework", "Glass Box Transparency", "AWS"] },
-    { num: "03", title: "Building", subtitle: "The Proof", color: t.green, body: "If the framework is real, it should work across domains. TradePilot applies it to supply chain decisions. TalentPilot applies the same architecture to recruiting. Each experiment tests the pattern in a new industry. These are working prototypes you can click, not slide decks.", tags: ["TradePilot", "TalentPilot", "Pilot Suite", "Prototype-Driven Discovery", "Domain Transfer"] },
-  ];
 
   const typeLabels = { product: "Product", "case-study": "Case Study" };
 
@@ -334,11 +300,7 @@ function Portfolio() {
       <section id="story" style={s.section}><div style={s.container}>
         <R><SectionHeader label="The Story" title="How I got here." t={t} s={s} /></R>
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 0 }}>
-          {[
-            { year: "2016–now", label: "Enterprise", text: "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead", color: t.blue },
-            { year: "2023–2026", label: "Education", text: "Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification", color: t.amber },
-            { year: "2025–now", label: "Building", text: "TradePilot (supply chain) + TalentPilot (recruiting) — same architecture, different domains", color: t.green },
-          ].map((row, i) => (
+          {content.timeline.map((row, i) => ({ ...row, color: colorMap[row.color] })).map((row, i) => (
             <R key={row.label} delay={0.05 * i}><div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 100px 1fr", gap: isMobile ? 4 : 16, padding: "16px 0", borderBottom: i < 2 ? `1px solid ${t.border}` : "none", alignItems: "baseline" }}>
               <span style={{ fontFamily: mono, fontSize: 12, color: t.t2 }}>{row.year}</span>
               <span style={{ fontSize: 14, fontWeight: 600, color: row.color }}>{row.label}</span>
@@ -397,9 +359,9 @@ function Portfolio() {
         </div></R>
         <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
           <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: t.t2, marginBottom: 20 }}>Architecture {"\u00b7"} Applied Across Domains</div>
-          {[{ domain: "Supply Chain", product: "TradePilot", live: true }, { domain: "Recruiting", product: "TalentPilot", live: true }, { domain: "Healthcare", product: "HealthPilot (next)", live: false }, { domain: "Automotive", product: "AutoPilot (next)", live: false }].map((row, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 24px 1fr", alignItems: "center", padding: "12px 0", borderBottom: i < 3 ? `1px solid ${t.border}` : "none", fontSize: 14 }}>
-              <span style={{ color: t.t1 }}>{row.domain}</span><span style={{ color: t.blue, textAlign: "center", fontFamily: mono, fontSize: 12 }}>{"\u2192"}</span><span style={{ color: row.live ? t.t0 : t.t2, fontWeight: row.live ? 500 : 400, textAlign: "right", fontStyle: row.live ? "normal" : "italic" }}>{row.product}</span>
+          {content.domainTable.map((row, i) => (
+            <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 24px 1fr", alignItems: "center", padding: "12px 0", borderBottom: i < content.domainTable.length - 1 ? `1px solid ${t.border}` : "none", fontSize: 14 }}>
+              <span style={{ color: t.t1 }}>{row.domain}</span><span style={{ color: t.blue, textAlign: "center", fontFamily: mono, fontSize: 12 }}>{"\u2192"}</span><span style={{ color: row.status === "live" ? t.t0 : t.t2, fontWeight: row.status === "live" ? 500 : 400, textAlign: "right", fontStyle: row.status === "live" ? "normal" : "italic" }}>{row.status === "next" ? row.product + " (next)" : row.product}</span>
             </div>
           ))}
         </div></R>

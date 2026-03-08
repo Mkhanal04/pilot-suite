@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "lastUpdated": "2026-03-08",
+    "version": "1.0"
+  },
+  "profile": {
+    "name": "Milan Khanal",
+    "title": "AI Product Strategist",
+    "location": "McKinney, TX",
+    "email": "milan.khanal25@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/milankhanal41"
+  },
+  "timeline": [
+    {
+      "year": "2016–now",
+      "label": "Enterprise",
+      "text": "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead",
+      "color": "blue"
+    },
+    {
+      "year": "2023–2026",
+      "label": "Education",
+      "text": "Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification",
+      "color": "amber"
+    },
+    {
+      "year": "2025–now",
+      "label": "Building",
+      "text": "TradePilot (supply chain) + TalentPilot (recruiting) — same architecture, different domains",
+      "color": "green"
+    }
+  ],
+  "work": [
+    {
+      "slug": "tradepilot",
+      "type": "product",
+      "title": "TradePilot",
+      "domain": "Supply Chain",
+      "color": "blue",
+      "status": "live",
+      "date": "2026-02",
+      "appUrl": "/tradepilot/",
+      "summary": "Decision intelligence for supply chain. AI agents detect risk, quantify exposure, and recommend — with full transparency.",
+      "desc": "Supply chains don't fail because of bad data. They fail because the right signal reaches the wrong person too late. TradePilot puts AI agents between the signal and the decision, with Glass Box transparency so you can see exactly why the system recommends what it recommends.",
+      "problem": "Supply chain decisions are reactive, fragmented, and opaque. When a tariff changes or a supplier misses a deadline, the response depends on who happens to notice first. Cross-department impact is invisible until it hits the P&L.",
+      "approach": "Built a decision intelligence layer with 5 specialized AI agents — each monitoring different signal sources (trade policy, logistics, payments, inventory, sourcing). Agents detect, quantify in dollars, and recommend. Humans review through a Glass Box evidence chain and approve or override. The 10-80-10 framework: humans set thresholds (10%), AI handles monitoring and analysis (80%), humans make final decisions (10%).",
+      "tags": ["Decision Queue", "Glass Box", "10-80-10 Workflow"],
+      "pillars": ["Agentic AI", "Human-in-the-Loop", "Glass Box", "Intelligence Mining", "Learning Loops", "Decision Lifecycle"],
+      "stats": { "views": 6, "agents": 5, "tour": true },
+      "detail": {
+        "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend — with full transparency into why. Humans stay in control of every decision.",
+        "architectureSnapshot": {
+          "layers": [
+            { "name": "Data Layer", "items": ["Federal Register", "Supplier APIs", "ERP Data", "Logistics Feeds", "Market Data"], "color": "blue" },
+            { "name": "Agent Layer — 5 AI Agents", "items": ["Trade Policy Analyst", "Logistics Agent", "AP Controller", "Inventory Guard", "Sourcing Agent"], "color": "blue" },
+            { "name": "Glass Box Layer", "items": ["Evidence Chain", "Confidence Scoring", "Ripple Effect Analysis", "Compliance Gate"], "color": "green" },
+            { "name": "Human Decision Layer", "items": ["Sarah (Ops)", "James (Finance)", "Decision Queue"], "color": "amber" },
+            { "name": "Learning Loop", "items": ["Decision Outcome Tracking", "Model Accuracy Feedback", "Weight Adjustment"], "color": "green" }
+          ],
+          "framework": "10-80-10: Humans set thresholds (10%) → AI agents monitor & analyze (80%) → Humans review & approve (10%)"
+        },
+        "patternTransfer": {
+          "text": "Same architecture that powers TalentPilot for recruiting. Different domain, same decision intelligence patterns.",
+          "siblingSlug": "talentpilot",
+          "comparisonRow": {
+            "dimension": "Core Pattern",
+            "thisProduct": "Tariff exposure → dollar-quantified impact → cross-department ripple → human approval",
+            "sibling": "Candidate assessment → bias-checked recommendation → evidence chain → human decision"
+          }
+        },
+        "keyMetrics": [
+          { "value": "$112,500", "label": "tariff exposure detected in under 6 hours" },
+          { "value": "$79,000", "label": "cross-department ripple quantified automatically" },
+          { "value": "4-step", "label": "action plan generated with assigned owners" },
+          { "value": "95%", "label": "AI confidence with full evidence chain visible" }
+        ],
+        "caseStudy": {
+          "title": "When Tariffs Hit: A Supply Chain Simulation",
+          "subtitle": "What happens when a 15% tariff increase hits your Chinese suppliers overnight — and your system detects it before your team arrives at work.",
+          "sections": [
+            {
+              "heading": "The Scenario",
+              "body": "At 2:47 AM, the Federal Register publishes a final rule: 15% tariff increase on Chinese-manufactured steel components, effective in 30 days. By 6:15 AM, before Sarah Chen (VP Supply Chain Operations) has opened her laptop, TradePilot's Trade Policy Analyst agent has already parsed the filing, cross-referenced it against 847 active purchase orders, and identified three with direct exposure."
+            },
+            {
+              "heading": "How TradePilot Responds",
+              "body": "Hour 1 — Detection & Quantification: Three purchase orders flagged. PO-1045 ($45,000 steel housings from Shenzhen Metalworks), PO-1046 ($38,500 precision bearings from Guangzhou Industrial), PO-1047 ($29,000 connector assemblies from Suzhou Components). Combined exposure: $112,500. The system doesn't stop at identification. Each PO gets a confidence score — 95% for PO-1045 (direct tariff code match), 87% for PO-1046 (component contains Chinese-origin steel), 72% for PO-1047 (assembly uses tariff-affected subcomponents, requires supply chain verification).\n\nHour 3 — Cross-Department Ripple: The Logistics Agent flags that PO-1045 shares a container booking with two unaffected orders — rebooking the container to reroute sourcing would impact $23,000 in other shipments. The AP Controller calculates payment timing: $67,000 in payments are scheduled within the 30-day window, creating a cash flow decision point. Inventory Guard identifies that current safety stock covers 18 days of production at current run rate — sourcing alternatives need to be locked in within 12 days to avoid line stoppage.\n\nHour 6 — Decision Package: When Sarah opens TradePilot, she doesn't see an alert. She sees a complete decision package: the exposure ($112,500), the cross-department impact ($79,000 in ripple effects across logistics, AP, and inventory), and a 4-step recommended action plan with assigned owners and deadlines."
+            },
+            {
+              "heading": "The Counterfactual",
+              "body": "Without TradePilot, here's the realistic timeline: Day 1-3: Someone in procurement reads a trade publication article about the tariff change. Day 4-7: Manual review of supplier contracts to identify affected POs. Day 8-12: Cross-department emails to assess logistics, payment, and inventory impact. Day 14-18: First meeting with all stakeholders in the same room. Day 20+: Decision made, action initiated — with 10 days until the tariff takes effect. The 6-hour detection and analysis that TradePilot completed would take 2-3 weeks through normal enterprise channels."
+            },
+            {
+              "heading": "The Economics of Speed",
+              "body": "The difference isn't just time. It's optionality. At hour 6, Sarah has 29 days and 18 hours to act. She can renegotiate with existing suppliers (strongest position — they haven't been approached by competitors yet). She can activate pre-qualified alternative suppliers. She can adjust inventory orders to build buffer stock at current prices. She can restructure the container booking to optimize logistics costs. At day 20 (the manual timeline), most of these options are gone. Alternative suppliers have been approached by competitors. Current-price inventory windows have closed. The container booking is locked. The $112,500 in direct exposure becomes $112,500 plus an unknowable amount in lost optionality."
+            },
+            {
+              "heading": "What This Demonstrates",
+              "body": "This isn't a case study — it's a simulation built on real-world parameters. The tariff scenario is modeled on actual 2024-2025 trade policy changes. The PO amounts reflect realistic mid-market procurement volumes. The agent response chain (detection → quantification → cross-department analysis → decision package) runs in the live prototype.\n\nThe question this prototype answers: can an AI-augmented decision layer compress the enterprise response cycle from weeks to hours? The answer, at least at the prototype level: yes. The next question — can it do it with real supplier data, real ERP integration, and real procurement workflows — is what a 4-week pilot engagement would validate."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "slug": "talentpilot",
+      "type": "product",
+      "title": "TalentPilot",
+      "domain": "Recruiting",
+      "color": "amber",
+      "status": "live",
+      "date": "2026-03",
+      "appUrl": "/talentpilot/",
+      "summary": "Same architecture, different domain. Decision intelligence for recruiting with native bias monitoring.",
+      "desc": "Same architecture, different domain. Recruiting has the same broken pattern: decisions made on incomplete data, bias invisible in the process, institutional knowledge siloed. TalentPilot tests whether the framework holds when you swap the industry.",
+      "problem": "Recruiting decisions are made on incomplete data, bias is invisible in the process, and institutional knowledge about what makes a good hire is siloed in individual recruiters' heads.",
+      "approach": "Applied the same architecture from TradePilot to recruiting. Decision enrichment replaces candidate scoring (because scoring implies the AI makes the call). Bias monitoring is built into the decision flow, not bolted on as a report. 4 AI agents, same Glass Box transparency.",
+      "tags": ["Decision Queue", "Glass Box", "Bias Monitoring"],
+      "pillars": ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
+      "stats": { "views": 7, "agents": 4, "tour": true },
+      "detail": {
+        "heroStatement": "Decision intelligence for recruiting. TalentPilot sits between AI matching and human judgment — enriching every recommendation with bias checks, compliance gates, and evidence chains. The recruiter stays in control. The AI makes their judgment visible and auditable.",
+        "architectureSnapshot": {
+          "layers": [
+            { "name": "Data Layer", "items": ["ATS/CRM Data", "LinkedIn API", "GitHub Signals", "Market Data", "Client History", "Interview Transcripts"], "color": "amber" },
+            { "name": "Agent Layer — 4 AI Agents", "items": ["Decision Enrichment", "Pipeline Monitor", "Compliance Guardian", "Signal Scout"], "color": "blue" },
+            { "name": "Glass Box Layer", "items": ["Evidence Chain", "Counter-Factual Analysis", "Bias Check", "Weight Calibration", "Compliance Gate"], "color": "purple" },
+            { "name": "Human Decision Layer", "items": ["Sarah (Recruiter)", "Gavin (Account Mgr)", "David (VP Ops)"], "color": "amber" },
+            { "name": "Learning Loop", "items": ["Placement Outcome Tracking", "Attrition Pattern Analysis", "Weight Accuracy Feedback", "Model Self-Correction"], "color": "green" }
+          ],
+          "framework": "10-80-10: Recruiters configure agents & set guardrails (10%) → AI agents scan, enrich, and monitor (80%) → Recruiters review through Glass Box & decide (10%)"
+        },
+        "patternTransfer": {
+          "text": "Same architecture that powers TradePilot for supply chain. Different domain, same decision intelligence patterns.",
+          "siblingSlug": "tradepilot",
+          "comparisonRow": {
+            "dimension": "Core Pattern",
+            "thisProduct": "Candidate assessment → bias-checked recommendation → evidence chain → human decision",
+            "sibling": "Tariff exposure → dollar-quantified impact → cross-department ripple → human approval"
+          }
+        },
+        "keyMetrics": [
+          { "value": "87%", "label": "AI match confidence with full Glass Box evidence visible" },
+          { "value": "Real-time", "label": "bias monitoring at point of decision, not after" },
+          { "value": "4/5ths rule", "label": "OFCCP compliance checked per-decision automatically" },
+          { "value": "37 yrs", "label": "institutional expertise encoded via weight calibration" }
+        ],
+        "caseStudy": null
+      }
+    },
+    {
+      "slug": "healthcare-billing",
+      "type": "case-study",
+      "title": "Healthcare Billing Modernization",
+      "domain": "Healthcare",
+      "color": "green",
+      "status": "completed",
+      "date": "2025-11",
+      "appUrl": null,
+      "summary": "Led discovery and rapid prototyping for a $2M+ legacy billing platform replacement. 17 screens, 10 screen groups, production data.",
+      "desc": "Led discovery and rapid prototyping for a $2M+ legacy billing platform replacement. 17 screens, 10 screen groups, production data.",
+      "context": "A healthcare benefits company was running critical billing operations on a 20+ year old IBM mainframe system. The platform processed 500K+ monthly billing records across 7,000 customer groups. Staff relied on green-screen terminals and tribal knowledge.",
+      "problem": "The legacy system was becoming unmaintainable. Key operators were approaching retirement. No documentation existed for complex billing logic. Previous modernization attempts had stalled because requirements were too abstract to validate.",
+      "approach": "Spent 3 months in deep discovery with the Sr. Director of Billing Operations (27-year veteran). Instead of writing requirements docs, I built a working prototype with real production data that the team could react to. 17 screens across 10 screen groups, covering AR/AP billing, commissions, carrier remittance, and error handling.",
+      "outcome": "The Sr. Director called the prototype \"phenomenal\" and scheduled a VP of Product demo. The prototype captured institutional knowledge that had never been documented. It became the reference artifact for the engineering team.",
+      "learnings": "Discovery doesn't have to end with a document. It can end with working software. When domain experts interact with a prototype, they surface edge cases and business rules they couldn't articulate in interviews alone. The prototype becomes the specification.",
+      "tags": ["Legacy Modernization", "Healthcare", "Rapid Prototyping", "Discovery", "Production Data"],
+      "pillars": null,
+      "stats": null,
+      "detail": null
+    }
+  ],
+  "domainTable": [
+    { "domain": "Supply Chain", "product": "TradePilot", "status": "live", "slug": "tradepilot" },
+    { "domain": "Recruiting", "product": "TalentPilot", "status": "live", "slug": "talentpilot" },
+    { "domain": "Healthcare", "product": "HealthPilot", "status": "next", "slug": null },
+    { "domain": "Automotive", "product": "AutoPilot", "status": "next", "slug": null }
+  ]
+}
