@@ -277,7 +277,7 @@ function Portfolio() {
 
   const chapters = [
     { num: "01", title: "Enterprise", subtitle: "The Track Record", color: t.blue, body: "Toyota. Dell. FleetPride. World Kinect. CRC Group. Ten years taking products from zero to production as a BA, product owner, and delivery lead. I learned what it actually takes to ship: cross-functional coordination, stakeholder alignment, and knowing when to push back on scope.", tags: ["Toyota", "Dell", "FleetPride", "World Kinect", "CRC Group", "SAFe 5 PO/PM", "Systems Design", "Cross-Functional Delivery"] },
-    { num: "02", title: "Education", subtitle: "The Framework", color: t.amber, body: "Enterprises are adopting AI fast, but most aren't designing for how humans actually make decisions. A B.S. in Human-Centered AI at Texas Tech and a Cornell AI certification gave me the frameworks to bridge that gap: when to keep humans in the loop, what needs to be transparent, and how to build trust into the product. Not a career change. A lens upgrade.", tags: ["Texas Tech HCAI", "Cornell AI", "10-80-10 Framework", "Glass Box Transparency", "AWS"] },
+    { num: "02", title: "Education", subtitle: "The Framework", color: t.amber, body: "Enterprises are adopting AI fast, but most aren't designing for how humans actually make decisions. A B.S. in Human-Centered AI at Texas Tech (expected 2026) and a Cornell AI certification are giving me the frameworks to bridge that gap: when to keep humans in the loop, what needs to be transparent, and how to build trust into the product. Not a career change. A lens upgrade.", tags: ["Texas Tech HCAI", "Cornell AI", "10-80-10 Framework", "Glass Box Transparency", "AWS"] },
     { num: "03", title: "Building", subtitle: "The Proof", color: t.green, body: "If the framework is real, it should work across domains. TradePilot applies it to supply chain decisions. TalentPilot applies the same architecture to recruiting. Each experiment tests the pattern in a new industry. These are working prototypes you can click, not slide decks.", tags: ["TradePilot", "TalentPilot", "Pilot Suite", "Prototype-Driven Discovery", "Domain Transfer"] },
   ];
 
@@ -324,7 +324,7 @@ function Portfolio() {
           <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>I help enterprises validate AI product bets<br /><span style={{ display: "block", marginTop: 8 }}><em style={{ fontStyle: "italic", color: t.t1 }}>before they commit the engineering budget.</em></span></h1></R>
           <R delay={0.18}><div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, marginBottom: 20 }}>{["Healthcare", "Supply Chain", "Automotive", "Energy", "ESG"].map(ind => <span key={ind} style={{ fontSize: 11, fontFamily: mono, color: t.t2, background: t.bg2, padding: "4px 12px", borderRadius: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{ind}</span>)}</div></R>
           <R delay={0.2}>
-            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>Ten years delivering enterprise products at Toyota, Dell, World Kinect, and CRC Group taught me what it takes to ship. A degree in Human-Centered AI taught me why most AI products fail after they ship. I combine both: working prototypes in weeks that let you validate the concept before committing the budget.</p>
+            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>Ten years delivering enterprise products at Toyota, Dell, World Kinect, and CRC Group taught me what it takes to ship. Studying Human-Centered AI at Texas Tech taught me why most AI products fail after they ship. I combine both: working prototypes in weeks that let you validate the concept before committing the budget.</p>
           </R>
         </div>
       </section>
@@ -335,8 +335,8 @@ function Portfolio() {
         <R><SectionHeader label="The Story" title="How I got here." t={t} s={s} /></R>
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 0 }}>
           {[
-            { year: "2015–2024", label: "Enterprise", text: "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead", color: t.blue },
-            { year: "2023–2025", label: "Education", text: "Texas Tech B.S. Human-Centered AI · Cornell AI Certification", color: t.amber },
+            { year: "2016–now", label: "Enterprise", text: "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead", color: t.blue },
+            { year: "2023–2026", label: "Education", text: "Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification", color: t.amber },
             { year: "2025–now", label: "Building", text: "TradePilot (supply chain) + TalentPilot (recruiting) — same architecture, different domains", color: t.green },
           ].map((row, i) => (
             <R key={row.label} delay={0.05 * i}><div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 100px 1fr", gap: isMobile ? 4 : 16, padding: "16px 0", borderBottom: i < 2 ? `1px solid ${t.border}` : "none", alignItems: "baseline" }}>
