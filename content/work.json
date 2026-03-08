@@ -145,6 +145,24 @@
           { "value": "2 compliance actions", "label": "LL 144 notice and IL audit prep surfaced proactively" },
           { "value": "8 decisions", "label": "across 4 clients — active decisions managed with full evidence chains" }
         ],
+        "differentiator": {
+          "text": "Unlike most AI recruiting platforms, bias monitoring isn't an add-on — it's a core view. The Bias Dashboard runs counter-factual analysis, proxy variable detection, and 4/5ths rule checks on every decision, in real time.",
+          "label": "What makes this different"
+        },
+        "scenarios": {
+          "heading": "What TalentPilot Catches",
+          "intro": "These scenarios walk through what the prototype actually demonstrates — specific situations where the system surfaces problems before they become expensive.",
+          "items": [
+            {
+              "title": "Bias Detection Before It Becomes a Problem",
+              "body": "A senior ML engineer opening shows an 87% match confidence for Marcus Rivera. But the Bias Dashboard flags that the engineering pipeline has a gender disparity drift. TalentPilot surfaces this at point of decision — before the hire, not in a quarterly audit. The recruiter sees the flag, the counter-factual analysis, and the evidence chain. They can adjust or document their rationale."
+            },
+            {
+              "title": "Compliance Surfaced Proactively",
+              "body": "An LL 144 notice and IL audit prep deadline are approaching. Instead of the compliance team discovering this reactively, the Compliance Guardian agent surfaces these as active compliance actions with deadlines and required steps. The recruiter and account manager see the impact on their active pipeline before it becomes a fire drill."
+            }
+          ]
+        },
         "caseStudy": null
       }
     },

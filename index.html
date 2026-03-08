@@ -311,7 +311,12 @@ function Portfolio() {
 
   const Footer = () => (
     <footer style={{ padding: "28px 24px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1080, margin: "0 auto", fontSize: 12, color: t.t2, flexWrap: "wrap", gap: 8 }}>
-      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} AI Product Strategist</span><span>{"\u00a9"} 2026</span>
+      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} AI Product Strategist</span>
+      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+        <a href="mailto:milan.khanal25@gmail.com" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
+        <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
+        <span>{"\u00a9"} 2026</span>
+      </div>
     </footer>
   );
 
@@ -326,7 +331,7 @@ function Portfolio() {
             <div><div style={{ fontWeight: 600, fontSize: 16, color: t.t0 }}>Milan Khanal</div><div style={{ ...s.tCaption, display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: t.green, display: "inline-block" }} />AI Product Strategist {"\u00b7"} McKinney, TX</div></div>
           </div></R>
           <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>I help enterprises validate AI product bets<br /><span style={{ display: "block", marginTop: 8 }}><em style={{ fontStyle: "italic", color: t.t1 }}>before they commit the engineering budget.</em></span></h1></R>
-          <R delay={0.18}><div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, marginBottom: 20 }}>{["Healthcare", "Supply Chain", "Automotive", "Energy", "ESG"].map(ind => <span key={ind} style={{ fontSize: 11, fontFamily: mono, color: t.t2, background: t.bg2, padding: "4px 12px", borderRadius: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{ind}</span>)}</div></R>
+          <R delay={0.18}><div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 20, marginBottom: 20 }}>{["Healthcare", "Supply Chain", "Recruiting", "Automotive", "Energy", "ESG"].map(ind => <span key={ind} style={{ fontSize: 11, fontFamily: mono, color: t.t2, background: t.bg2, padding: "4px 12px", borderRadius: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{ind}</span>)}</div></R>
           <R delay={0.2}>
             <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>Ten years delivering enterprise products at Toyota, Dell, World Kinect, and CRC Group taught me what it takes to ship. Studying Human-Centered AI at Texas Tech taught me why most AI products fail after they ship. I combine both: working prototypes in weeks that let you validate the concept before committing the budget.</p>
           </R>
@@ -440,8 +445,11 @@ function Portfolio() {
             return (
               <R key={item.slug}><div onClick={() => clickable && go("detail", item.slug)} style={{ ...s.card, padding: 0, overflow: "hidden", cursor: clickable ? "pointer" : "default", opacity: item.status === "coming" ? 0.6 : 1, transition: "border-color 0.3s, transform 0.3s" }} onMouseEnter={e => { if (clickable) { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; }}} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
                 {item.type === "product" && item.status === "live" && (
-                  <div style={{ height: 120, background: t.bg2, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <AppWireframe t={t} color={c} isMobile={isMobile} />
+                  <div style={{ height: 140, background: `linear-gradient(135deg, ${c}08, ${c}15)`, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 10, background: `linear-gradient(135deg, ${c}30, ${c}10)`, border: `1px solid ${c}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontFamily: mono, fontSize: 13, color: c, fontWeight: 600 }}>{item.title.substring(0,2).toUpperCase()}</span>
+                    </div>
+                    <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c }}>{item.status === "live" ? "Live Prototype" : item.status}</span>
                   </div>
                 )}
                 <div style={{ padding: "20px 24px 24px" }}>
@@ -540,6 +548,20 @@ function Portfolio() {
       </div></section>
       <div style={s.divider} /></>}
 
+      {/* ── DIFFERENTIATOR CALLOUT ── */}
+      {detail.differentiator && (
+        <section style={{ padding: "0 24px 48px" }}>
+          <div style={s.narrow}>
+            <R>
+              <div style={{ padding: "24px 28px", background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 12, borderLeft: `3px solid ${t.blue}` }}>
+                <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: t.blue, display: "block", marginBottom: 8 }}>{detail.differentiator.label}</span>
+                <p style={{ fontSize: 15, color: t.t0, lineHeight: 1.65, margin: 0 }}>{detail.differentiator.text}</p>
+              </div>
+            </R>
+          </div>
+        </section>
+      )}
+
       {/* ── SECTION 3: PATTERN TRANSFER ── */}
       {detail.patternTransfer && <><section style={s.section}><div style={s.container}>
         <R><span style={s.tLabel}>Pattern Transfer</span><h2 style={{ ...s.tSection, marginBottom: 16 }}>Same architecture. Different domain.</h2>
@@ -592,6 +614,27 @@ function Portfolio() {
         </>}
       </div></section>
       <div style={s.divider} /></>}
+
+      {/* ── SCENARIOS ── */}
+      {detail.scenarios && (
+        <><section style={s.section}>
+          <div style={s.narrow}>
+            <R>
+              <span style={s.tLabel}>{detail.scenarios.heading}</span>
+              <p style={{ ...s.tBody, marginBottom: 32 }}>{detail.scenarios.intro}</p>
+            </R>
+            {detail.scenarios.items.map((scenario, i) => (
+              <R key={i} delay={i * 0.08}>
+                <div style={{ marginBottom: 24, padding: "24px 28px", background: t.bg1, border: `1px solid ${t.border}`, borderRadius: 12 }}>
+                  <h4 style={{ fontSize: 16, fontWeight: 600, color: t.t0, marginBottom: 10 }}>{scenario.title}</h4>
+                  <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.65 }}>{scenario.body}</p>
+                </div>
+              </R>
+            ))}
+          </div>
+        </section>
+        <div style={s.divider} /></>
+      )}
 
       {/* ── SECTION 5: CTA ── */}
       <section style={{ ...s.section, background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
