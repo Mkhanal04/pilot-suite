@@ -94,3 +94,13 @@ Implemented `specs/data-layer-json-refactor.md` (commit `4971cbe`). Extracted al
 **Modified:** `index.html` — replaced `const allWork = [...]` (34 lines) and `const chapters = [...]` with a `fetch('/content/work.json')` on mount. Added loading state. Derived `allWork` from `content.work`. Timeline rows from `content.timeline` (color strings mapped via `colorMap`). Domain table from `content.domainTable`. Coming-soon entries (HealthPilot, AutoPilot) removed from `allWork` — they only appear via `domainTable` in the Thesis section.
 
 Site renders identically. Work listing: 3 items. Domain table: 4 rows. No console errors. Dark/light mode verified.
+
+## 2026-03-08 — Cody (Session 10)
+
+Implemented `specs/detail-pages-tradepilot-talentpilot.md` (commit `441c999`). Replaced the old minimal `ProductPage` component with a full 5-section detail page.
+
+**5 sections:** Hero Statement (domain + status badges, heroStatement from detail, Explore CTA + mailto), Architecture Snapshot (layered card with 4px color-coded left borders, items as chips, framework callout), Pattern Transfer (3-col comparison table, sibling link via `go()`), Key Metrics (4-card grid, Newsreader 32px values), CTA (bg1 centered section, Explore + mailto + Back to work).
+
+**Case study:** Renders below metrics when `detail.caseStudy !== null`. TradePilot shows all 5 case study sections with `\n\n` → paragraph breaks. TalentPilot shows no case study (caseStudy: null). Healthcare Billing still routes to existing `CaseStudyPage` unchanged.
+
+**Fallback:** If `item.detail` is null, falls back to old minimal layout (summary + Try button). Cross-linking works: TradePilot ↔ TalentPilot sibling links navigate correctly. All content from `content/work.json`. Dark/light mode and mobile verified.
