@@ -4,6 +4,16 @@
 
 ---
 
+## 2026-03-09 — Cody (Session 17)
+
+Implemented `specs/mobile-sidebar-fix-and-headshot.md` (commit `57f3f4c`).
+
+**Mobile sidebar fix (both prototypes):** `toggleSidebar()` now checks `window.innerWidth < 1024` and delegates to `toggleMobileSidebar()` on mobile — so tapping "Collapse" closes the sidebar entirely instead of collapsing to 68px icon mode. `toggleMobileSidebar()` now strips `.collapsed` when opening to ensure full-width 240px state. Desktop collapse/expand unchanged.
+
+**Portfolio headshot:** Cropped `ProfileImage.PNG` (1320×2868) to 1320×1320 square from top, resized to 224×224, saved as `content/headshot.jpg` (22KB). Replaced the `MK` gradient circle avatar in `index.html` hero with `<img>` using `objectFit: cover`, `borderRadius: 50%`, and `border: 2px solid t.border`. Green availability dot unaffected. Verified dark/light mode at 375px mobile.
+
+No console errors.
+
 ## 2026-03-09 — Cody (Session 16)
 
 Two commits: `9465558` (must-fix) + `a0479ca` (should-fix polish), both pushed to origin/main.
