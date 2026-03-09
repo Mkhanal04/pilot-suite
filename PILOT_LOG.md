@@ -4,6 +4,83 @@
 
 ---
 
+## 2026-03-09 — Cody (Session 16)
+
+Two commits: `9465558` (must-fix) + `a0479ca` (should-fix polish), both pushed to origin/main.
+
+**Must-fix (prior agent's uncommitted work, commit `9465558`):**
+- Mobile rendering fix: 1.5s safety timer in `useReveal()` force-reveals hidden `[data-reveal]` elements
+- Light mode contrast: `t1` `#52525B` → `#3F3F46`, `t2` `#A1A1AA` → `#71717A` (Zinc scale, WCAG AA)
+- Focus indicators: `*:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px }`
+
+**Should-fix polish (commit `a0479ca`):**
+- Section spacing: `s.section` 96px → 72px desktop, 80px → 56px mobile; hero bottom 120px → 80px desktop, 80px → 56px mobile
+- Tour button hide: both TradePilot and TalentPilot `showView()` now hide `#tourLaunchBtn` when action bar is visible on detail pages; reappears on other views
+- LiveAppPreview framing: outer container gets `borderRadius:12`, `border:1px solid t.border`, `boxShadow:0 8px 32px rgba(0,0,0,0.18)` + 32px browser chrome bar (3 dots + URL bar shape) above iframe
+- Body text: `.dhb-desc` and `.tour-desc` 14px → 15px in both TradePilot and TalentPilot
+
+No console errors. Dark mode, light mode, desktop, mobile all verified.
+
+## 2026-03-08 — Cody (Session 15)
+
+Implemented `specs/tour-parity-alignment.md` (commit `2678f6b`) + hid Chat Intelligence stub.
+
+**TalentPilot tour (4 changes):**
+- Slide 0: Highlight label "How it works" → "The 10-80-10 framework"; text now names first 10% / 80% / final 10% beats explicitly
+- Slide 3: Step label "Account Manager View" → "Multi-Role Intelligence"; title/desc/highlight rewritten to cover all 4 agents and 3 stakeholder views (recruiter, account manager, VP)
+- Slide 4: Replaced Bias & Compliance slide with "Architecture That Transfers" — mentions TradePilot, native bias monitoring as differentiator, "What transfers + what's unique" highlight
+- Slide 5: Removed Competitive Positioning/Roadmap slide entirely. TOUR_TOTAL 6 → 5. "Start Exploring" now appears on slide 4.
+
+**TalentPilot Chat stub:** Added `display:none` to `#view-chat` — hidden from external reviewers.
+
+**TradePilot tour (1 change):** Slide 4 highlight updated: "Bias and compliance monitoring" → "Bias and compliance monitoring (TalentPilot adds real-time bias checking at point of decision — a feature no matching platform offers)."
+
+Both tours verified: 5 slides, 5 dots, correct final button text, no console errors.
+
+## 2026-03-08 — Cody (Session 14)
+
+Implemented `specs/talentpilot-ripple-effect.md` (commit `dddefd1`). Added Cross-Impact Analysis section to TalentPilot's Decision Detail view — ripple effect parity with TradePilot.
+
+**CSS (Step 1):** Added `.ripple-container`, `.ripple-alert`, `.ripple-row`, `.rr-domain` (client/pipeline/compliance/team color classes), `.rr-info`, `.rr-owner`, `.rr-owner-avatar`, `.rr-owner-name`, `.rr-metric` styles after Audit Section CSS. Responsive overrides: tablet hides `.rr-owner`, sets 3-column grid; mobile stacks single column.
+
+**HTML section (Step 2):** Inserted "This decision affects 3 other areas" section with 4 impact rows between Action Plan and Compliance Checkpoint in `#view-detail`. 4 rows: Client Health (Gavin Parker, -18 pts), Pipeline (Sarah Chen, 0 backups), Compliance (Compliance Guardian, 4/5ths watch), Team Comp (David Park, -25% velocity). Amber alert banner (not red — recruiting cross-impact is awareness, not alarm).
+
+**Queue badge (Step 3):** Added `⚡ Affects 3 areas` amber badge to Marcus Rivera "Candidate Flight Risk" row in Decision Queue. Other decisions unaffected.
+
+Light/dark mode verified, no console errors. TradePilot untouched.
+
+## 2026-03-08 — Cody (Session 13)
+
+Implemented `specs/linkedin-ready-polish.md` (commit `b50c5cf`). 5 code changes (Changes 5+6 were verify-only):
+
+**TalentPilot scenarios (Change 1):** Added `scenarios` field to TalentPilot detail in `work.json`. Two scenario cards render between Key Metrics and bottom CTA. TradePilot unaffected.
+
+**Differentiator callout (Change 2):** Added `differentiator` field to TalentPilot detail. Blue callout box (blueS bg, 3px blue left accent) renders between Architecture Snapshot and Pattern Transfer. TradePilot unaffected.
+
+**Recruiting domain tag (Change 3):** Added "Recruiting" to hero. Now 6 tags: Healthcare, Supply Chain, Recruiting, Automotive, Energy, ESG.
+
+**Footer links (Change 4):** Added Email (mailto) and LinkedIn links to footer alongside © 2026. Both have hover state.
+
+**Work index previews (Change 7):** Replaced grey AppWireframe with colored gradient preview — accent color gradient background, 44px branded icon, "LIVE PROTOTYPE" mono label.
+
+Changes 5 (Contact section) and 6 (walkthrough CTAs) verified: already correct, no code changes needed. No console errors.
+
+## 2026-03-08 — Cody (Session 12)
+
+Implemented `specs/outreach-blockers-jeff-session7.md` (commit `d5c7c37`). All 5 P0 blockers resolved:
+
+**Dark mode hero visibility (Change 1):** Root cause was `content` missing from `useReveal` dep. When `setContent(data)` triggered re-render, hero elements reset to `opacity: 0` but `useReveal` didn't re-run (dep string unchanged). Fixed by appending `(content ? '1' : '0')` to dep string — useReveal now re-runs after JSON loads and reveals all above-fold elements.
+
+**TalentPilot metrics (Change 2):** Replaced feature-description metrics with outcome metrics in `content/work.json`. New values: "87% → 94%", "1 bias alert", "2 compliance actions", "8 decisions".
+
+**Tour suppression (Change 3):** Removed `setTimeout(function() { openTour(); }, 400)` from `initTour()` in both prototypes. Added `launchBtn.style.display = 'flex'` so button is visible immediately on direct visits. Iframe suppression unchanged — button still hidden in iframe context.
+
+**Walkthrough link styling (Change 4):** Both "Or book a 30-minute walkthrough" links on detail pages updated: `t.t2` → `t.t1`, added `borderBottom: 1px solid t.border`, `paddingBottom: 1`, `transition: color 0.2s, border-color 0.2s`, blue hover state. Thesis CTA updated: "demo" → "walkthrough".
+
+**Work index View details (Change 5):** WorkPage card footer now shows both "View details →" (navigates to detail page) and "Try it →" (opens prototype). Changed condition from `item.appUrl && item.status === "live"` to `item.status === "live"`.
+
+All verification checks passed. No console errors.
+
 ## 2026-03-07 — Cody
 
 Implemented `specs/portfolio-design-fixes.md` (commit `b9a44c5`). All four fixes deployed to pilot-suite-sigma.vercel.app:
@@ -94,6 +171,24 @@ Implemented `specs/data-layer-json-refactor.md` (commit `4971cbe`). Extracted al
 **Modified:** `index.html` — replaced `const allWork = [...]` (34 lines) and `const chapters = [...]` with a `fetch('/content/work.json')` on mount. Added loading state. Derived `allWork` from `content.work`. Timeline rows from `content.timeline` (color strings mapped via `colorMap`). Domain table from `content.domainTable`. Coming-soon entries (HealthPilot, AutoPilot) removed from `allWork` — they only appear via `domainTable` in the Thesis section.
 
 Site renders identically. Work listing: 3 items. Domain table: 4 rows. No console errors. Dark/light mode verified.
+
+## 2026-03-08 — Cody (Session 11)
+
+Implemented `specs/routing-fixes-cleanup-qa.md` (commit `71356c7`). All 6 changes deployed:
+
+**Hash routing (`index.html`):** Added mount `useEffect` to parse `window.location.hash` on initial load. Added `hashchange` listener for back/forward support. Updated `go()` to sync URL hash on every navigation. Nav items Story/Thesis/Contact use `go("home") + setTimeout(scrollIntoView, 150ms)` pattern. `/#home` and `/` → Homepage, `/#work` → Work, `/#detail/{slug}` → Detail pages.
+
+**Loading state (`index.html`):** Replaced unstyled `<div>Loading...</div>` with themed centered loading — correct bg/text colors in both dark and light mode.
+
+**Product Story removal (`talentpilot/index.html`):** Removed `nav-story` nav item, entire `view-story` block (371 lines), tour-goto story anchor, `story: 'Product Story'` from breadcrumb names, and `showStoryTab()` function. Total 382 lines removed.
+
+**Portfolio back-links:** Updated `href="/"` → `href="/#work"` in both TradePilot and TalentPilot sidebar ← Portfolio links so navigation lands on Work page (not blank loading state).
+
+**About Me:** Already removed in Session 8 — confirmed still absent in both prototypes.
+
+**Iframe tour suppression:** Already implemented in Session 8 — confirmed working: both iframes show `tourOverlay.active=false`, `tourLaunchBtn.display=none` on portfolio homepage.
+
+25/25 verification steps PASS. No console errors in any of the 3 files.
 
 ## 2026-03-08 — Cody (Session 10)
 
