@@ -3298,11 +3298,15 @@ function filterQueue(filter) {
 
 // ═══ SIDEBAR ═══
 function toggleSidebar() {
+  if (window.innerWidth < 1024) { toggleMobileSidebar(); return; }
   document.getElementById('sidebar').classList.toggle('collapsed');
 }
 function toggleMobileSidebar() {
-  document.getElementById('sidebar').classList.toggle('mobile-open');
-  document.getElementById('mobileOverlay').classList.toggle('show');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  if (!sidebar.classList.contains('mobile-open')) sidebar.classList.remove('collapsed');
+  sidebar.classList.toggle('mobile-open');
+  overlay.classList.toggle('show');
 }
 
 // ═══ THEME ═══

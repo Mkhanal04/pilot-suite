@@ -1926,6 +1926,7 @@ function showView(viewName) {
 
 // ═══ SIDEBAR COLLAPSE ═══
 function toggleSidebar() {
+  if (window.innerWidth < 1024) { toggleMobileSidebar(); return; }
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('collapsed');
   const actionBar = document.getElementById('actionBar');
@@ -1934,6 +1935,7 @@ function toggleSidebar() {
 function toggleMobileSidebar() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('mobileOverlay');
+  if (!sidebar.classList.contains('mobile-open')) sidebar.classList.remove('collapsed');
   sidebar.classList.toggle('mobile-open');
   overlay.classList.toggle('show');
 }
