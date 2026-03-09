@@ -3111,6 +3111,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 </button>
 
 <script>
+// ═══ DYNAMIC DATE (computed once on load) ═══
+(function() {
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  var hours = 8 + Math.floor(Math.random() * 9);
+  var minutes = Math.floor(Math.random() * 4) * 15;
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  var displayHours = hours > 12 ? hours - 12 : hours;
+  var timeStr = displayHours + ':' + String(minutes).padStart(2, '0') + ' ' + ampm + ' CST';
+  var fullDate = dateStr + ' \u00b7 ' + timeStr;
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.hero-date').forEach(function(el) {
+      var text = el.textContent;
+      if (text.includes('Last system check')) {
+        el.textContent = dateStr + ' \u00b7 Last system check: 2 min ago';
+      } else if (text.includes('\u00b7')) {
+        el.textContent = fullDate;
+      } else {
+        el.textContent = dateStr;
+      }
+    });
+  });
+})();
+
 // ═══ GUIDED TOUR ═══
 const TOUR_TOTAL = 5;
 let tourStep = 0;
