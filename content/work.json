@@ -165,7 +165,7 @@
         },
         "caseStudy": null
       }
-    },
+    }
   ],
   "domainTable": [
     { "domain": "Supply Chain", "product": "TradePilot", "status": "live", "slug": "tradepilot" },
