@@ -417,6 +417,26 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .audit-label{font-size:12px;font-weight:600;color:var(--text-1);min-width:120px;flex-shrink:0}
 .audit-value{font-size:12px;color:var(--text-0)}
 
+/* === RIPPLE / CROSS-IMPACT ANALYSIS === */
+.ripple-container{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.ripple-alert{background:var(--amber-bg);border-bottom:1px solid var(--amber-border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.ripple-alert-left{font-size:12px;font-weight:600;color:var(--amber);display:flex;align-items:center;gap:6px}
+.ripple-alert-right{font-size:13px;color:var(--text-1);font-weight:500}
+.ripple-row{display:grid;grid-template-columns:100px 1fr auto auto;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid var(--border-light);transition:background .15s}
+.ripple-row:last-child{border-bottom:none}
+.ripple-row:hover{background:var(--bg-2)}
+.rr-domain{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.rr-domain.client{color:var(--amber)}
+.rr-domain.pipeline{color:var(--blue)}
+.rr-domain.compliance{color:var(--red)}
+.rr-domain.team{color:var(--teal)}
+.rr-info h4{font-size:13px;font-weight:500;color:var(--text-0);margin-bottom:2px}
+.rr-info p{font-size:12px;color:var(--text-2)}
+.rr-owner{display:flex;align-items:center;gap:6px}
+.rr-owner-avatar{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:white;flex-shrink:0}
+.rr-owner-name{font-size:11px;color:var(--text-2)}
+.rr-metric{font-size:14px;font-weight:600;color:var(--text-0);text-align:right;white-space:nowrap}
+
 /* Action Bar */
 .action-bar{position:fixed;bottom:0;left:240px;right:0;background:var(--card);border-top:1px solid var(--border);padding:16px 48px;display:none;align-items:center;justify-content:space-between;z-index:50;box-shadow:0 -4px 12px rgba(0,0,0,.04);transition:left .25s}
 .sidebar.collapsed ~ .main .action-bar,.sidebar.collapsed ~ .action-bar{left:68px}
@@ -901,10 +921,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
   .sb-deadline{text-align:left}
   .ap-step{grid-template-columns:36px 1fr auto}
   .ap-deadline{display:none}
+  .ripple-row{grid-template-columns:90px 1fr auto}
+  .rr-owner{display:none}
 }
 @media(max-width:767px){
   .detail-content{padding:16px 16px 140px}
   .detail-title{font-size:24px}
+  .ripple-row{grid-template-columns:1fr;gap:8px}
   .stats{grid-template-columns:1fr}
   .stat-value{font-size:22px}
   .pipeline-stage{min-width:60px}
@@ -1326,7 +1349,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
             <tbody id="queueBody">
               <tr class="queue-row" data-domain="signal" data-priority="critical" data-flags="none" onclick="showView('detail')">
                 <td class="qr-priority"><div class="qr-priority-bar critical"></div></td>
-                <td><div class="qr-decision"><span class="qr-decision-title">Candidate Flight Risk - Marcus Rivera</span><span class="qr-decision-desc">LinkedIn activity surge, 0 backup candidates, Acme Corp ML Engineer</span></div></td>
+                <td><div class="qr-decision"><span class="qr-decision-title">Candidate Flight Risk - Marcus Rivera</span><span class="qr-decision-desc">LinkedIn activity surge, 0 backup candidates, Acme Corp ML Engineer</span></div><span class="badge" style="background:var(--amber-bg);color:var(--amber);font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600;display:inline-block;margin-top:4px">⚡ Affects 3 areas</span></td>
                 <td><span class="qr-deadline urgent">48 hrs</span></td>
                 <td style="font-size:13px">Acme Corp</td>
                 <td><span class="qr-domain domain-signal"><span class="dot"></span> Signal Scout</span></td>
@@ -1745,6 +1768,68 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
             <div class="ap-step"><div class="ap-num">2</div><div class="ap-content"><h4>Expedite Acme Corp interview scheduling</h4><p>Request fast-track to final round. Share candidate flight risk context with hiring manager</p></div><div class="ap-owner">Sarah Chen</div><div class="ap-deadline">Mar 3</div></div>
             <div class="ap-step"><div class="ap-num">3</div><div class="ap-content"><h4>Prepare client-specific interview coaching</h4><p>Brief Marcus on Acme's "culture fit" evaluation patterns. Focus on communication style alignment</p></div><div class="ap-owner">Sarah Chen</div><div class="ap-deadline">Mar 3</div></div>
             <div class="ap-step"><div class="ap-num">4</div><div class="ap-content"><h4>Activate backup sourcing for ML Engineer pipeline</h4><p>Even if Marcus advances, pipeline has zero backup. Signal Scout to prioritize ML candidate identification</p></div><div class="ap-owner">Decision Enrichment</div><div class="ap-deadline">Mar 5</div></div>
+          </div>
+        </div>
+
+        <!-- ═══ CROSS-IMPACT ANALYSIS (RIPPLE EFFECT) ═══ -->
+        <div class="section fade-in d5">
+          <div class="section-header">
+            <h2>This decision affects 3 other areas</h2>
+            <span class="badge" style="background:var(--amber-bg);color:var(--amber)">⚡ Cross-Impact</span>
+          </div>
+          <div class="ripple-container">
+            <div class="ripple-alert">
+              <span class="ripple-alert-left">⚡ Cross-functional impact detected</span>
+              <span class="ripple-alert-right">4 stakeholders · 2 clients affected</span>
+            </div>
+            <div class="ripple-row">
+              <span class="rr-domain client">Client Health</span>
+              <div class="rr-info">
+                <h4>Acme Corp Placement at Risk</h4>
+                <p>Marcus Rivera departure triggers 90-day replacement SLA — client health score drops from 92 to 74</p>
+              </div>
+              <div class="rr-owner">
+                <div class="rr-owner-avatar" style="background:#D97706">GP</div>
+                <span class="rr-owner-name">Gavin Parker</span>
+              </div>
+              <span class="rr-metric">-18 pts</span>
+            </div>
+            <div class="ripple-row">
+              <span class="rr-domain pipeline">Pipeline</span>
+              <div class="rr-info">
+                <h4>ML Engineer Pipeline Needs Immediate Sourcing</h4>
+                <p>0 backup candidates for Acme Corp role — Signal Scout flagged 3 passive candidates requiring outreach</p>
+              </div>
+              <div class="rr-owner">
+                <div class="rr-owner-avatar" style="background:#2563EB">SC</div>
+                <span class="rr-owner-name">Sarah Chen</span>
+              </div>
+              <span class="rr-metric">0 backups</span>
+            </div>
+            <div class="ripple-row">
+              <span class="rr-domain compliance">Compliance</span>
+              <div class="rr-info">
+                <h4>Selection Rate Review Triggered</h4>
+                <p>Engineering pipeline already flagged for gender disparity — replacement hire enters a monitored pipeline with 4/5ths rule tracking active</p>
+              </div>
+              <div class="rr-owner">
+                <div class="rr-owner-avatar" style="background:#DC2626">CG</div>
+                <span class="rr-owner-name">Compliance Guardian</span>
+              </div>
+              <span class="rr-metric">4/5ths watch</span>
+            </div>
+            <div class="ripple-row">
+              <span class="rr-domain team">Team Comp</span>
+              <div class="rr-info">
+                <h4>Acme Corp Engineering Team Gap</h4>
+                <p>Team drops from 4 to 3 engineers — sprint velocity impact estimated at 25% until backfill, affecting Q2 deliverables</p>
+              </div>
+              <div class="rr-owner">
+                <div class="rr-owner-avatar" style="background:#7C3AED">DP</div>
+                <span class="rr-owner-name">David Park</span>
+              </div>
+              <span class="rr-metric">-25% velocity</span>
+            </div>
           </div>
         </div>
 
