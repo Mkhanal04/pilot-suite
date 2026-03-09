@@ -162,7 +162,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .dhb-domain{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;display:inline-flex;align-items:center;gap:6px;margin-bottom:8px}
 .dhb-domain .dot{width:6px;height:6px;border-radius:50%}
 .dhb-title{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;color:var(--text-0);letter-spacing:-.02em;margin-bottom:6px;line-height:1.2}
-.dhb-desc{font-size:14px;color:var(--text-2);max-width:540px;line-height:1.5;margin-bottom:16px}
+.dhb-desc{font-size:15px;color:var(--text-2);max-width:540px;line-height:1.5;margin-bottom:16px}
 .dhb-people{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .person{display:flex;align-items:center;gap:8px}
 .person-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;flex-shrink:0}
@@ -1066,7 +1066,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .tour-icon{width:56px;height:56px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
 .tour-step-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:8px}
 .tour-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text-0);line-height:1.3;margin-bottom:12px}
-.tour-desc{font-size:14px;color:var(--text-1);line-height:1.7;max-width:520px;margin:0 auto}
+.tour-desc{font-size:15px;color:var(--text-1);line-height:1.7;max-width:520px;margin:0 auto}
 .tour-desc strong{color:var(--text-0)}
 .tour-highlight{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:16px auto 0;max-width:480px;font-size:13px;color:var(--text-2);line-height:1.6;text-align:left}
 .tour-highlight .th-label{font-size:11px;font-weight:600;color:var(--text-0);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -3237,14 +3237,19 @@ function showView(view) {
 
   // Action bar visibility
   const actionBar = document.getElementById('detailActionBar');
-  if (actionBar) {
+  const actionBarVisible = view === 'detail' && (() => {
     const banner = document.getElementById('detailApprovedBanner');
-    if (view === 'detail' && banner && !banner.classList.contains('show')) {
+    return banner && !banner.classList.contains('show');
+  })();
+  if (actionBar) {
+    if (actionBarVisible) {
       actionBar.classList.add('visible');
     } else {
       actionBar.classList.remove('visible');
     }
   }
+  const tourBtn = document.getElementById('tourLaunchBtn');
+  if (tourBtn) tourBtn.style.display = actionBarVisible ? 'none' : '';
 
   // Map detail nav highlight to queue
   if (view === 'detail') {

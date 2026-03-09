@@ -121,38 +121,48 @@ function LiveAppPreview({ appUrl, t, color, isMobile, title }) {
   const scaleVal = isMobile ? 0.34 : 0.62;
 
   return (
-    <div style={{ width: "100%", height: containerH, position: "relative", overflow: "hidden", background: t.bg2, borderRadius: 0 }}>
-      {/* Loading skeleton */}
-      {!loaded && (
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, zIndex: 1 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 8, background: `linear-gradient(135deg, ${color}30, ${color}10)`, border: `1px solid ${color}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: color, fontWeight: 600 }}>{title ? title.substring(0,2).toUpperCase() : "AP"}</span>
-          </div>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: t.t2, letterSpacing: "0.1em", textTransform: "uppercase" }}>Loading preview...</span>
-        </div>
-      )}
-      {/* Scaled iframe */}
-      <div style={{
-        width: iframeW, height: iframeH,
-        transform: `scale(${scaleVal})`,
-        transformOrigin: "top left",
-        position: "absolute", top: 0, left: isMobile ? -(iframeW * scaleVal * 0.05) : 0,
-        pointerEvents: "none",
-        opacity: loaded ? 1 : 0,
-        transition: "opacity 0.6s ease"
-      }}>
-        <iframe
-          src={appUrl}
-          title={`${title} Preview`}
-          width={iframeW}
-          height={iframeH}
-          style={{ border: "none", borderRadius: 0, background: "#fff" }}
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
-        />
+    <div style={{ width: "100%", borderRadius: 12, overflow: "hidden", border: `1px solid ${t.border}`, boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}>
+      {/* Browser chrome bar */}
+      <div style={{ height: 32, background: t.bg3, borderBottom: `1px solid ${t.border}`, display: "flex", alignItems: "center", padding: "0 12px", gap: 6 }}>
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: t.t3 }} />
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: t.t3 }} />
+        <div style={{ width: 8, height: 8, borderRadius: "50%", background: t.t3 }} />
+        <div style={{ flex: 1, height: 16, background: t.bg2, borderRadius: 4, marginLeft: 8, marginRight: 8 }} />
       </div>
-      {/* Bottom fade gradient */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: `linear-gradient(transparent, ${t.bg2})`, pointerEvents: "none" }} />
+      {/* Iframe container */}
+      <div style={{ width: "100%", height: containerH, position: "relative", overflow: "hidden", background: t.bg2 }}>
+        {/* Loading skeleton */}
+        {!loaded && (
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12, zIndex: 1 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 8, background: `linear-gradient(135deg, ${color}30, ${color}10)`, border: `1px solid ${color}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: color, fontWeight: 600 }}>{title ? title.substring(0,2).toUpperCase() : "AP"}</span>
+            </div>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: t.t2, letterSpacing: "0.1em", textTransform: "uppercase" }}>Loading preview...</span>
+          </div>
+        )}
+        {/* Scaled iframe */}
+        <div style={{
+          width: iframeW, height: iframeH,
+          transform: `scale(${scaleVal})`,
+          transformOrigin: "top left",
+          position: "absolute", top: 0, left: isMobile ? -(iframeW * scaleVal * 0.05) : 0,
+          pointerEvents: "none",
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.6s ease"
+        }}>
+          <iframe
+            src={appUrl}
+            title={`${title} Preview`}
+            width={iframeW}
+            height={iframeH}
+            style={{ border: "none", borderRadius: 0, background: "#fff" }}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+          />
+        </div>
+        {/* Bottom fade gradient */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, background: `linear-gradient(transparent, ${t.bg2})`, pointerEvents: "none" }} />
+      </div>
     </div>
   );
 }
@@ -279,7 +289,7 @@ function Portfolio() {
     page: { background: t.bg, color: t.t0, fontFamily: sans, fontSize: 16, lineHeight: 1.65, minHeight: "100vh", transition: "background 0.4s, color 0.4s" },
     container: { maxWidth: 1080, margin: "0 auto", padding: "0 24px" },
     narrow: { maxWidth: 840, margin: "0 auto" },
-    section: { padding: isMobile ? "80px 20px" : "96px 24px" },
+    section: { padding: isMobile ? "56px 20px" : "72px 24px" },
     tHero: { fontFamily: font, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, lineHeight: 1.15, letterSpacing: "-0.02em", color: t.t0 },
     tSection: { fontFamily: font, fontSize: "clamp(24px, 3.2vw, 32px)", fontWeight: 400, lineHeight: 1.25, letterSpacing: "-0.015em", color: t.t0, marginBottom: 12 },
     tBody: { fontSize: 16, color: t.t1, lineHeight: 1.65 },
@@ -346,7 +356,7 @@ function Portfolio() {
   const HomePage = () => (
     <>
       {/* HERO */}
-      <section style={{ padding: isMobile ? "100px 20px 80px" : "140px 24px 120px" }}>
+      <section style={{ padding: isMobile ? "100px 20px 56px" : "140px 24px 80px" }}>
         <div style={s.container}>
           <R delay={0.05}><div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
             <div style={{ width: 56, height: 56, borderRadius: "50%", background: `linear-gradient(135deg, ${t.blue}, ${t.green})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#fff", flexShrink: 0 }}>MK</div>

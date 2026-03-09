@@ -190,7 +190,7 @@
   .domain-sourcing .dot{background:var(--amber)}.domain-sourcing{color:var(--amber)}
   .domain-inventory .dot{background:var(--purple)}.domain-inventory{color:var(--purple)}
   .dhb-title{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;color:var(--text-0);letter-spacing:-.02em;margin-bottom:6px;line-height:1.2}
-  .dhb-desc{font-size:14px;color:var(--text-2);max-width:540px;line-height:1.5;margin-bottom:16px}
+  .dhb-desc{font-size:15px;color:var(--text-2);max-width:540px;line-height:1.5;margin-bottom:16px}
   .dhb-people{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .person{display:flex;align-items:center;gap:8px}
   .person-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;flex-shrink:0}
@@ -604,7 +604,7 @@
 .tour-icon{width:56px;height:56px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
 .tour-step-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);margin-bottom:8px}
 .tour-title{font-family:'DM Serif Display',serif;font-size:24px;color:var(--text-0);line-height:1.3;margin-bottom:12px}
-.tour-desc{font-size:14px;color:var(--text-1);line-height:1.7;max-width:520px;margin:0 auto}
+.tour-desc{font-size:15px;color:var(--text-1);line-height:1.7;max-width:520px;margin:0 auto}
 .tour-desc strong{color:var(--text-0)}
 .tour-highlight{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:16px auto 0;max-width:480px;font-size:13px;color:var(--text-2);line-height:1.6;text-align:left}
 .tour-highlight .th-label{font-size:11px;font-weight:600;color:var(--text-0);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
@@ -1906,6 +1906,8 @@ function showView(viewName) {
   const navMap = { today: 'nav-today', queue: 'nav-decisions', detail: 'nav-decisions', records: 'nav-records', intel: 'nav-intel', control: 'nav-control' };
   if (navMap[viewName]) document.getElementById(navMap[viewName]).classList.add('active');
   document.getElementById('actionBar').classList.toggle('visible', viewName === 'detail' && !tariffApproved);
+  const tourBtn = document.getElementById('tourLaunchBtn');
+  if (tourBtn) tourBtn.style.display = (viewName === 'detail' && !tariffApproved) ? 'none' : '';
   // Update breadcrumbs
   const bcNames = { today: 'Today', queue: 'Decision Queue', detail: 'Decision Detail', records: 'Records', intel: 'Intelligence Feed', control: 'Control Center' };
   const bcEl = document.getElementById('bc-current');
