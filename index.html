@@ -22,6 +22,18 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  /* Keyboard focus indicators — WCAG AA */
+  *:focus-visible {
+    outline: 2px solid #3B82F6;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Remove focus ring for mouse/touch clicks */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
 </style>
 </head>
 <body>
@@ -50,7 +62,7 @@ const themes = {
   light: {
     bg: "#FAFAFA", bg1: "#FFFFFF", bg2: "#F4F4F5", bg3: "#E4E4E7",
     border: "rgba(0,0,0,0.06)", borderH: "rgba(0,0,0,0.12)",
-    t0: "#18181B", t1: "#52525B", t2: "#A1A1AA", t3: "#D4D4D8",
+    t0: "#18181B", t1: "#3F3F46", t2: "#71717A", t3: "#D4D4D8",
     blue: "#2563EB", blueS: "rgba(37,99,235,0.06)", blueB: "rgba(37,99,235,0.14)",
     green: "#16A34A", greenS: "rgba(22,163,74,0.06)", greenB: "rgba(22,163,74,0.14)",
     amber: "#CA8A04", amberS: "rgba(202,138,4,0.06)", amberB: "rgba(202,138,4,0.14)",
@@ -75,7 +87,17 @@ function useReveal(dep) {
         el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el);
       }
     });
-    return () => io.disconnect();
+    // Safety net: force-reveal any still-hidden elements after 1.5s (fixes mobile where
+    // IntersectionObserver may not fire due to layout differences at narrow viewports)
+    const safetyTimer = setTimeout(() => {
+      document.querySelectorAll("[data-reveal]").forEach((el) => {
+        if (el.style.opacity === "0") {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        }
+      });
+    }, 1500);
+    return () => { io.disconnect(); clearTimeout(safetyTimer); };
   }, [dep]);
 }
 
