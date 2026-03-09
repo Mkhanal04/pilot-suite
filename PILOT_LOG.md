@@ -4,6 +4,18 @@
 
 ---
 
+## 2026-03-09 — Cody (Session 18)
+
+Implemented `specs/jordan-must-fix-preoutreach.md` (commit `f22caf3`).
+
+**Fix 1 — Security headers (`vercel.json` created):** 5 headers via Vercel config: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`. CSP intentionally omitted (Babel Standalone uses `eval()`).
+
+**Fix 2 — Dynamic dates (both prototypes):** IIFE at top of each `<script>` block computes today's date + random business-hours time (8–16h, 15-min intervals) once on load, then sets all `.hero-date` elements via `DOMContentLoaded`. TalentPilot handles 3 formats: full datetime, date + "Last system check: 2 min ago", date-only. Verified: both show March 9, 2026.
+
+**Fix 3 — Lazy iframes:** `loading="lazy"` already present on portfolio `LiveAppPreview` iframe. No changes needed.
+
+No console errors.
+
 ## 2026-03-09 — Cody (Session 17)
 
 Implemented `specs/mobile-sidebar-fix-and-headshot.md` (commit `57f3f4c`).
