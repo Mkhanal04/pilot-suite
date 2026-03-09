@@ -2999,7 +2999,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 
 
     <!-- ═══ CHAT (Phase 4 Stub) ═══ -->
-    <div class="view" id="view-chat">
+    <div class="view" id="view-chat" style="display:none">
       <div class="stub-content">
         <div class="stub-icon">💬</div>
         <div class="stub-title">Chat Intelligence</div>
@@ -3027,8 +3027,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
         <div class="tour-title">Decision intelligence for recruiting.<br>Not a replacement - a multiplier.</div>
         <div class="tour-desc">AI matching platforms tell recruiters <strong>who</strong> to consider. TalentPilot tells them <strong>why</strong> - and checks for bias, flags risks, and makes every decision transparent and auditable. It sits between AI matching and human judgment, making the space in between intelligent.</div>
         <div class="tour-highlight">
-          <div class="th-label">How it works</div>
-          AI matching (e.g., TalentMatch) generates candidates. <strong>TalentPilot's 4 AI agents</strong> enrich each recommendation with beyond-the-resume intelligence, monitor pipelines, check compliance, and scan for market signals. Humans review through a <strong>Glass Box</strong> - full evidence chain, counter-factual analysis, and bias check - then decide.
+          <div class="th-label">The 10-80-10 framework</div>
+          Recruiters configure matching weights, set guardrails, and define what "good" looks like (first 10%). 4 AI agents scan signals, enrich candidate profiles, monitor pipelines, and check compliance (the 80%). Recruiters review through a <strong>Glass Box</strong> - full evidence chain, counter-factual analysis, and bias check - then decide (final 10%). Every decision is traceable and auditable.
         </div>
       </div>
     </div>
@@ -3063,48 +3063,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
       </div>
     </div>
 
-    <!-- Slide 4: Client Health (AM View) -->
+    <!-- Slide 4: Multi-Role Intelligence -->
     <div class="tour-slide" id="tour-3">
       <div class="tour-visual">
         <div class="tour-icon" style="background:var(--teal-bg);border:1px solid rgba(13,148,136,.2)"><span style="color:var(--teal)">📡</span></div>
-        <div class="tour-step-label">Account Manager View</div>
-        <div class="tour-title">Client portfolio health.<br>Revenue protection in real time.</div>
-        <div class="tour-desc">Account managers see a different product - <strong>client-centric intelligence</strong>. Portfolio health scores, revenue at risk, dual-signal monitoring that compares what workers report against what clients say. When those signals diverge, TalentPilot flags it before the client calls to complain.</div>
+        <div class="tour-step-label">Multi-Role Intelligence</div>
+        <div class="tour-title">Different roles, same intelligence layer.<br>Everyone sees what they need.</div>
+        <div class="tour-desc">Recruiters see candidate decisions. Account managers see portfolio health and dual-signal monitoring — when a placed worker's self-assessment diverges from client feedback, TalentPilot catches it before the client calls. VP Ops sees aggregate pipeline health and compliance exposure. 4 specialized AI agents power all three views: Signal Scout detects risks, Decision Enrichment confirms matches, Pipeline Monitor tracks SLAs, and Compliance Guardian watches regulations.</div>
         <div class="tour-highlight">
-          <div class="th-label">Dual-signal placement monitoring</div>
-          Worker says: "Great sprint, shipped ahead of schedule." Client says: "We've had some communication challenges." That mismatch is invisible in an ATS. TalentPilot catches it, flags the risk, and recommends proactive intervention - protecting the placement and the client relationship.
+          <div class="th-label">4 AI agents, 3 stakeholder views</div>
+          Signal Scout: Detects flight risk, competing offers, market shifts. Decision Enrichment: Confirms AI matches with beyond-the-resume intelligence. Pipeline Monitor: Tracks SLA breaches, stalled pipelines, velocity drops. Compliance Guardian: Watches LL 144, 4/5ths rule, IL HB 3773 deadlines. Each agent feeds all three stakeholder dashboards — recruiter, account manager, and VP.
         </div>
         <a class="tour-goto" onclick="closeTour();showView('intel')">Go to Client Health &#8594;</a>
       </div>
     </div>
 
-    <!-- Slide 5: Bias & Compliance -->
+    <!-- Slide 5: Architecture Transfer -->
     <div class="tour-slide" id="tour-4">
       <div class="tour-visual">
-        <div class="tour-icon" style="background:var(--red-bg);border:1px solid rgba(220,38,38,.2)"><span style="color:var(--red)">&#11045;</span></div>
-        <div class="tour-step-label">Bias Monitoring</div>
-        <div class="tour-title">Real-time fairness checking.<br>A compliance moat, not a checkbox.</div>
-        <div class="tour-desc">Most platforms audit for bias after the fact. TalentPilot monitors <strong>at the point of decision</strong> - before a biased submittal goes out. Proxy variable detection identifies when seemingly neutral criteria correlate with protected characteristics. Counter-factual analysis shows what would change if the candidate's demographic profile were different.</div>
-        <div class="tour-highlight">
-          <div class="th-label">Why this matters for client retention</div>
-          OFCCP-audited clients and enterprises with DEI commitments increasingly require vendors to demonstrate bias controls. An agency that can show real-time bias monitoring and auditable decision trails has a structural advantage in RFPs and contract renewals.
-        </div>
-        <a class="tour-goto" onclick="closeTour();showView('bias')">Go to Bias Dashboard &#8594;</a>
-      </div>
-    </div>
-
-    <!-- Slide 6: What Makes This Different + Explore -->
-    <div class="tour-slide" id="tour-5">
-      <div class="tour-visual">
         <div class="tour-icon" style="background:linear-gradient(135deg,var(--green-bg),var(--blue-bg));border:1px solid rgba(37,99,235,.15)"><span style="color:var(--green)">&#9670;</span></div>
-        <div class="tour-step-label">Competitive Positioning</div>
-        <div class="tour-title">What AI matching does,<br>plus what nobody else does.</div>
-        <div class="tour-desc">Platforms like Eightfold, Phenom, and Beamery focus on talent acquisition and matching - competing with the AI matching layer, not with TalentPilot. None offer <strong>Glass Box transparency</strong> into why a recommendation was made, <strong>real-time bias checking</strong> at point of human decision, or <strong>counter-factual analysis</strong>. TalentPilot is a different category.</div>
+        <div class="tour-step-label">Architecture That Transfers</div>
+        <div class="tour-title">Same pattern. Different domain.<br>Bias monitoring that nobody else does.</div>
+        <div class="tour-desc">TalentPilot and its sister product TradePilot (supply chain decision intelligence) share the same core architecture: domain-agnostic decision framework, specialized AI agents, evidence-based transparency, and human-in-the-loop controls. What makes TalentPilot unique is native bias monitoring — not a quarterly report, but real-time checking at point of decision. Counter-factual analysis, proxy variable detection, and 4/5ths rule enforcement built into every recommendation.</div>
         <div class="tour-highlight">
-          <div class="th-label">On the roadmap</div>
-          <strong>Phase 2:</strong> Screening intelligence - consuming interview transcripts to enrich submittal decisions with signal no matching algorithm has.<br>
-          <strong>Phase 3:</strong> Conversational analytics - ask natural language questions about your agency's decision data.<br>
-          Each phase feeds the others. The learning loop gets tighter over time.
+          <div class="th-label">What transfers + what's unique</div>
+          Shared architecture: Decision queue with urgency ranking. Evidence chain with expandable detail. Cross-impact analysis. Agent fleet with independent configuration. Human override with learning loops. TalentPilot adds: Real-time bias monitoring at point of decision. Counter-factual analysis for every candidate. OFCCP compliance as a feature, not an afterthought. Glass Box transparency that no matching platform offers.
         </div>
       </div>
     </div>
@@ -3129,7 +3112,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 
 <script>
 // ═══ GUIDED TOUR ═══
-const TOUR_TOTAL = 6;
+const TOUR_TOTAL = 5;
 let tourStep = 0;
 let tourSeen = false;
 
