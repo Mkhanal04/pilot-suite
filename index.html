@@ -34,6 +34,16 @@
   *:focus:not(:focus-visible) {
     outline: none;
   }
+
+  /* Scroll reveal system — CSS-driven to survive React re-renders */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  [data-reveal].revealed {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
 </style>
 </head>
 <body>
@@ -75,25 +85,24 @@ const themes = {
 function useReveal(dep) {
   useEffect(() => {
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.style.opacity = "1"; e.target.style.transform = "translateY(0)"; io.unobserve(e.target); } }),
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("revealed"); io.unobserve(e.target); } }),
       { threshold: 0.08, rootMargin: "0px 0px -30px 0px" }
     );
     // Inline viewport check: reveal immediately if already visible, otherwise hide and observe
     document.querySelectorAll("[data-reveal]").forEach((el) => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.style.opacity = "1"; el.style.transform = "translateY(0)";
-      } else {
-        el.style.opacity = "0"; el.style.transform = "translateY(24px)"; io.observe(el);
+        el.classList.add("revealed");
+      } else if (!el.classList.contains("revealed")) {
+        io.observe(el);
       }
     });
     // Safety net: force-reveal any still-hidden elements after 1.5s (fixes mobile where
     // IntersectionObserver may not fire due to layout differences at narrow viewports)
     const safetyTimer = setTimeout(() => {
       document.querySelectorAll("[data-reveal]").forEach((el) => {
-        if (el.style.opacity === "0") {
-          el.style.opacity = "1";
-          el.style.transform = "translateY(0)";
+        if (!el.classList.contains("revealed")) {
+          el.classList.add("revealed");
         }
       });
     }, 1500);
@@ -102,7 +111,7 @@ function useReveal(dep) {
 }
 
 function R({ children, delay = 0, style = {} }) {
-  return <div data-reveal style={{ opacity: 0, transform: "translateY(24px)", transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`, ...style }}>{children}</div>;
+  return <div data-reveal style={{ transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`, ...style }}>{children}</div>;
 }
 
 function SectionHeader({ label, title, body, t, s, narrow }) {
@@ -230,7 +239,7 @@ function Portfolio() {
   const [isMobile, setIsMobile] = useState(false);
   const [content, setContent] = useState(null);
   const t = themes[mode];
-  useReveal(page + slug + mode + filter + (content ? '1' : '0'));
+  useReveal(page + slug + mode + filter + (content ? '1' : '0') + isMobile);
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
   useEffect(() => { fetch('/content/work.json').then(r => r.json()).then(data => setContent(data)).catch(() => console.error('Failed to load content')); }, []);
