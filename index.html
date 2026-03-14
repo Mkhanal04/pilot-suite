@@ -249,7 +249,7 @@ function Portfolio() {
     const hash = window.location.hash.replace('#', '');
     if (hash === 'work') { setPage('work'); setSlug(null); }
     else if (hash.startsWith('detail/')) { setPage('detail'); setSlug(hash.split('/')[1]); }
-    else if (['story', 'thesis', 'contact'].includes(hash)) {
+    else if (['story', 'thesis', 'contact', 'pattern'].includes(hash)) {
       setPage('home');
       setTimeout(() => { const el = document.getElementById(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100);
     } else { setPage('home'); setSlug(null); }
@@ -261,7 +261,7 @@ function Portfolio() {
       const hash = window.location.hash.replace('#', '');
       if (hash === 'work') { setPage('work'); setSlug(null); window.scrollTo(0, 0); }
       else if (hash.startsWith('detail/')) { setPage('detail'); setSlug(hash.split('/')[1]); window.scrollTo(0, 0); }
-      else if (['story', 'thesis', 'contact'].includes(hash)) {
+      else if (['story', 'thesis', 'contact', 'pattern'].includes(hash)) {
         setPage('home'); setSlug(null);
         setTimeout(() => { const el = document.getElementById(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100);
       } else { setPage('home'); setSlug(null); window.scrollTo(0, 0); }
@@ -334,7 +334,7 @@ function Portfolio() {
       <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span onClick={() => go("home")} style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", cursor: "pointer", color: t.t0 }}>Milan Khanal</span>
         <div style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 24 }}>
-          {[{ l: "Story", a: () => { go("home"); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Work", a: () => go("work") }, { l: "Thesis", a: () => { go("home"); setTimeout(() => document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Contact", a: () => { go("home"); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 150); } }].map(n => (
+          {[{ l: "Story", a: () => { go("home"); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Work", a: () => go("work") }, { l: "Pattern", a: () => { go("home"); setTimeout(() => document.getElementById('pattern')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Thesis", a: () => { go("home"); setTimeout(() => document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Contact", a: () => { go("home"); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 150); } }].map(n => (
             <span key={n.l} onClick={n.a} style={{ fontSize: 13, color: (page === "work" && n.l === "Work") ? t.t0 : t.t2, cursor: "pointer", fontWeight: (page === "work" && n.l === "Work") ? 500 : 400, transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => { if (!(page === "work" && n.l === "Work")) e.target.style.color = t.t2; }}>{n.l}</span>
           ))}
           <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
@@ -362,7 +362,7 @@ function Portfolio() {
   );
 
   // === PAGE: HOME ===
-  const HomePage = () => (
+  const HomePage = () => { const ac = content.architectureComparison; return (
     <>
       {/* HERO */}
       <section style={{ padding: isMobile ? "100px 20px 56px" : "140px 24px 80px" }}>
@@ -433,6 +433,90 @@ function Portfolio() {
       </div></section>
       <div style={s.divider} />
 
+      {/* THE PATTERN — architecture comparison */}
+      <section id="pattern" style={s.section}><div style={s.container}>
+        <R><SectionHeader label={ac.sectionLabel} title={ac.title} body={ac.body} t={t} s={s} /></R>
+        {!isMobile ? (
+          <div style={{ marginTop: 40 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, marginBottom: 20, alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 10, height: 10, borderRadius: "50%", background: t.blue, display: "inline-block", flexShrink: 0 }} />
+                <div><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>Supply Chain</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>TradePilot</div></div>
+              </div>
+              <div />
+              <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "flex-end" }}>
+                <div style={{ textAlign: "right" }}><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>Recruiting</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>TalentPilot</div></div>
+                <span style={{ width: 10, height: 10, borderRadius: "50%", background: t.amber, display: "inline-block", flexShrink: 0 }} />
+              </div>
+            </div>
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", width: 2, background: t.border, transform: "translateX(-50%)", zIndex: 0 }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {ac.rows.map((row, i) => {
+                  const icons = [
+                    <svg key="dq" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9 12 11 14 15 10"/></svg>,
+                    <svg key="ag" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg>,
+                    <svg key="ec" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
+                    <svg key="hc" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  ];
+                  return (
+                    <R key={i} delay={0.05 * i}>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, alignItems: "center" }}>
+                        <div style={{ background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 10, padding: "18px 22px", textAlign: "right" }}>
+                          <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.blue, marginBottom: 6 }}>{row.layer}</div>
+                          <div style={{ fontSize: 15, color: t.t1, lineHeight: 1.5 }}>{row.left}</div>
+                          {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 1 }}>
+                          <div style={{ width: 40, height: 40, background: t.bg2, border: `1px solid ${t.border}`, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>{icons[i]}</div>
+                        </div>
+                        <div style={{ background: t.amberS, border: `1px solid ${t.amberB}`, borderRadius: 10, padding: "18px 22px" }}>
+                          <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.amber, marginBottom: 6 }}>{row.layer}</div>
+                          <div style={{ fontSize: 15, color: t.t1, lineHeight: 1.5 }}>{row.right}</div>
+                          {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                        </div>
+                      </div>
+                    </R>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.blue, display: "inline-block" }} />
+                <div><div style={{ fontSize: 14, fontWeight: 600, color: t.t0 }}>Supply Chain</div><div style={{ fontFamily: mono, fontSize: 10, color: t.t2 }}>TradePilot</div></div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ textAlign: "right" }}><div style={{ fontSize: 14, fontWeight: 600, color: t.t0 }}>Recruiting</div><div style={{ fontFamily: mono, fontSize: 10, color: t.t2 }}>TalentPilot</div></div>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.amber, display: "inline-block" }} />
+              </div>
+            </div>
+            {ac.rows.map((row, i) => (
+              <R key={i} delay={0.05 * i}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.t2, textAlign: "center" }}>{row.layer}</div>
+                  <div style={{ background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 10, padding: "14px 16px" }}>
+                    <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.blue, marginBottom: 4 }}>TradePilot</div>
+                    <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.left}</div>
+                    {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                  </div>
+                  <div style={{ background: t.amberS, border: `1px solid ${t.amberB}`, borderRadius: 10, padding: "14px 16px" }}>
+                    <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.amber, marginBottom: 4 }}>TalentPilot</div>
+                    <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.right}</div>
+                    {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                  </div>
+                </div>
+              </R>
+            ))}
+          </div>
+        )}
+        <R delay={0.2}><p style={{ fontSize: 15, color: t.t2, fontStyle: "italic", textAlign: "center", marginTop: 40 }}>{ac.closing}</p></R>
+      </div></section>
+      <div style={s.divider} />
+
       {/* THESIS */}
       <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
         <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Design for the decision, not just the data.</h2>
@@ -462,7 +546,7 @@ function Portfolio() {
         </R>
       </div></section>
     </>
-  );
+  ); };
 
   // === PAGE: WORK LISTING ===
   const WorkPage = () => {
