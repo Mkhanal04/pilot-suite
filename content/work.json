@@ -5,7 +5,7 @@
   },
   "profile": {
     "name": "Milan Khanal",
-    "title": "Enterprise Delivery × AI Product Building",
+    "title": "Human-Centered AI · Trust & Decision Intelligence",
     "location": "McKinney, TX",
     "email": "milan.khanal25@gmail.com",
     "linkedin": "https://www.linkedin.com/in/milankhanal41"
@@ -14,13 +14,13 @@
     {
       "year": "2016–now",
       "label": "Enterprise",
-      "text": "Toyota, Dell, World Kinect, CRC Group — BA, product owner, delivery lead",
+      "text": "F500 Automotive, Global Tech, Global Logistics, Enterprise Healthcare — BA, product owner, delivery lead",
       "color": "blue"
     },
     {
       "year": "2023–2026",
       "label": "Education",
-      "text": "Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification",
+      "text": "After a decade of enterprise delivery (F500 Automotive, Dell), I returned to academia to master the human factors of AI. Most companies focus entirely on the LLM technology and ignore the psychology of user adoption—which is why enterprise AI fails. Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification",
       "color": "amber"
     },
     {
@@ -48,7 +48,7 @@
       "pillars": ["Agentic AI", "Human-in-the-Loop", "Glass Box", "Intelligence Mining", "Learning Loops", "Decision Lifecycle"],
       "stats": { "views": 6, "agents": 5, "tour": true },
       "detail": {
-        "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend — with full transparency into why. Humans stay in control of every decision.",
+        "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend — with full transparency into why. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
         "architectureSnapshot": {
           "layers": [
             { "name": "Data Layer", "items": ["Federal Register", "Supplier APIs", "ERP Data", "Logistics Feeds", "Market Data"], "color": "blue" },
@@ -119,7 +119,7 @@
       "pillars": ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
       "stats": { "views": 7, "agents": 4, "tour": true },
       "detail": {
-        "heroStatement": "Decision intelligence for recruiting. TalentPilot sits between AI matching and human judgment — enriching every recommendation with bias checks, compliance gates, and evidence chains. The recruiter stays in control. The AI makes their judgment visible and auditable.",
+        "heroStatement": "Decision intelligence for recruiting. TalentPilot sits between AI matching and human judgment — enriching every recommendation with bias checks, compliance gates, and evidence chains. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
         "architectureSnapshot": {
           "layers": [
             { "name": "Data Layer", "items": ["ATS/CRM Data", "LinkedIn API", "GitHub Signals", "Market Data", "Client History", "Interview Transcripts"], "color": "amber" },
