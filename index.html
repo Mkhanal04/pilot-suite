@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milan Khanal — Human-Centered AI · Trust & Decision Intelligence</title>
-<meta name="description" content="I design decision intelligence systems with transparent reasoning, human-in-the-loop controls, and real-time bias monitoring. Domain-agnostic HCAI architecture applied across industries.">
+<meta name="description" content="I design decision intelligence systems with transparent reasoning, human-in-the-loop controls, and real-time bias monitoring. Domain-agnostic HCAI architecture proven across supply chain, recruiting, and financial data reconciliation.">
 <meta property="og:title" content="Milan Khanal — Human-Centered AI · Trust & Decision Intelligence">
-<meta property="og:description" content="Decision intelligence systems designed for trust, explainability, and human oversight. See the proof of concepts live.">
+<meta property="og:description" content="Decision intelligence systems designed for trust, explainability, and human oversight. Three industries. One framework. See the proof of concepts live.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pilot-suite-sigma.vercel.app">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,6 +67,7 @@ const themes = {
     blue: "#3B82F6", blueS: "rgba(59,130,246,0.08)", blueB: "rgba(59,130,246,0.18)",
     green: "#22C55E", greenS: "rgba(34,197,94,0.08)", greenB: "rgba(34,197,94,0.18)",
     amber: "#EAB308", amberS: "rgba(234,179,8,0.08)", amberB: "rgba(234,179,8,0.18)",
+    teal: "#0D9488", tealS: "rgba(13,148,136,0.08)", tealB: "rgba(13,148,136,0.18)",
     navBg: "rgba(9,9,11,0.85)",
   },
   light: {
@@ -76,6 +77,7 @@ const themes = {
     blue: "#2563EB", blueS: "rgba(37,99,235,0.06)", blueB: "rgba(37,99,235,0.14)",
     green: "#16A34A", greenS: "rgba(22,163,74,0.06)", greenB: "rgba(22,163,74,0.14)",
     amber: "#CA8A04", amberS: "rgba(202,138,4,0.06)", amberB: "rgba(202,138,4,0.14)",
+    teal: "#0D9488", tealS: "rgba(13,148,136,0.06)", tealB: "rgba(13,148,136,0.14)",
     navBg: "rgba(250,250,250,0.88)",
   },
 };
@@ -231,7 +233,7 @@ function AppWireframe({ t, color, isMobile, large }) {
 
 // --- MAIN APP ---
 function Portfolio() {
-  const [mode, setMode] = useState("dark");
+  const [mode, setMode] = useState("light");
   const [page, setPage] = useState("home");
   const [slug, setSlug] = useState(null);
   const [filter, setFilter] = useState("all");
@@ -249,7 +251,7 @@ function Portfolio() {
     const hash = window.location.hash.replace('#', '');
     if (hash === 'work') { setPage('work'); setSlug(null); }
     else if (hash.startsWith('detail/')) { setPage('detail'); setSlug(hash.split('/')[1]); }
-    else if (['story', 'thesis', 'contact', 'pattern'].includes(hash)) {
+    else if (['story', 'method', 'thesis', 'contact', 'framework', 'pattern'].includes(hash)) {
       setPage('home');
       setTimeout(() => { const el = document.getElementById(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100);
     } else { setPage('home'); setSlug(null); }
@@ -261,7 +263,7 @@ function Portfolio() {
       const hash = window.location.hash.replace('#', '');
       if (hash === 'work') { setPage('work'); setSlug(null); window.scrollTo(0, 0); }
       else if (hash.startsWith('detail/')) { setPage('detail'); setSlug(hash.split('/')[1]); window.scrollTo(0, 0); }
-      else if (['story', 'thesis', 'contact', 'pattern'].includes(hash)) {
+      else if (['story', 'method', 'thesis', 'contact', 'framework', 'pattern'].includes(hash)) {
         setPage('home'); setSlug(null);
         setTimeout(() => { const el = document.getElementById(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100);
       } else { setPage('home'); setSlug(null); window.scrollTo(0, 0); }
@@ -283,7 +285,7 @@ function Portfolio() {
   const font = "'Newsreader', Georgia, serif";
   const sans = "'Outfit', system-ui, sans-serif";
   const mono = "'JetBrains Mono', monospace";
-  const colorMap = { blue: t.blue, amber: t.amber, green: t.green };
+  const colorMap = { blue: t.blue, amber: t.amber, green: t.green, teal: t.teal };
 
   const go = (p, s) => {
     setPage(p); setSlug(s || null); setMobileNav(false); window.scrollTo(0, 0);
@@ -309,7 +311,7 @@ function Portfolio() {
   };
 
   const statusBadge = (status) => {
-    const map = { live: { c: t.green, bg: t.greenS, b: t.greenB, l: "Live", dot: true }, completed: { c: t.blue, bg: t.blueS, b: t.blueB, l: "Completed", dot: false }, coming: { c: t.t3, bg: t.bg2, b: t.border, l: "Coming", dot: false } };
+    const map = { live: { c: t.green, bg: t.greenS, b: t.greenB, l: "Live", dot: true }, building: { c: t.teal, bg: t.tealS, b: t.tealB, l: "Building", dot: true }, completed: { c: t.blue, bg: t.blueS, b: t.blueB, l: "Completed", dot: false }, coming: { c: t.t3, bg: t.bg2, b: t.border, l: "Coming", dot: false } };
     const v = map[status] || map.coming;
     return <span style={{ fontFamily: mono, fontSize: 10, color: v.c, background: v.bg, border: `1px solid ${v.b}`, padding: "3px 10px", borderRadius: 12, display: "flex", alignItems: "center", gap: 4 }}>{v.dot && <span style={{ width: 5, height: 5, borderRadius: "50%", background: v.c }} />}{v.l}</span>;
   };
@@ -334,7 +336,7 @@ function Portfolio() {
       <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span onClick={() => go("home")} style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", cursor: "pointer", color: t.t0 }}>Milan Khanal</span>
         <div style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 24 }}>
-          {[{ l: "Story", a: () => { go("home"); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Work", a: () => go("work") }, { l: "Pattern", a: () => { go("home"); setTimeout(() => document.getElementById('pattern')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Thesis", a: () => { go("home"); setTimeout(() => document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Contact", a: () => { go("home"); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 150); } }].map(n => (
+          {[{ l: "Story", a: () => { go("home"); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Method", a: () => { go("home"); setTimeout(() => document.getElementById('method')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Work", a: () => go("work") }, { l: "Framework", a: () => { go("home"); setTimeout(() => document.getElementById('framework')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Thesis", a: () => { go("home"); setTimeout(() => document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }), 150); } }, { l: "Contact", a: () => { go("home"); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 150); } }].map(n => (
             <span key={n.l} onClick={n.a} style={{ fontSize: 13, color: (page === "work" && n.l === "Work") ? t.t0 : t.t2, cursor: "pointer", fontWeight: (page === "work" && n.l === "Work") ? 500 : 400, transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => { if (!(page === "work" && n.l === "Work")) e.target.style.color = t.t2; }}>{n.l}</span>
           ))}
           <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
@@ -356,6 +358,7 @@ function Portfolio() {
       <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
         <a href="mailto:milan.khanal25@gmail.com" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
         <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
+        <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
         <span>{"\u00a9"} 2026</span>
       </div>
     </footer>
@@ -373,7 +376,7 @@ function Portfolio() {
           </div></R>
           <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>Enterprise AI fails when nobody designs for the moment a user decides whether to trust it.</h1></R>
           <R delay={0.2}>
-            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>I design decision intelligence systems where every AI recommendation comes with a visible evidence chain, human approval controls, and real-time bias monitoring. The architecture is domain-agnostic: each proof of concept applies the same HCAI framework to a different industry. Supply chain and recruiting are live. More are coming.</p>
+            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>I design decision intelligence systems where every AI recommendation comes with a visible evidence chain, human approval controls, and real-time bias monitoring. The architecture is domain-agnostic: each proof of concept applies the same HCAI framework to a different industry. Supply chain, recruiting, and financial data reconciliation -- three industries, one framework.</p>
           </R>
         </div>
       </section>
@@ -394,11 +397,38 @@ function Portfolio() {
       </div></section>
       <div style={s.divider} />
 
+      {/* HOW I WORK */}
+      <section id="method" style={s.section}><div style={s.container}>
+        <R><SectionHeader label="How I Work" title="Four pillars. Each one prevents a different failure mode." body="Most PMs show you a strategy deck. I show you a working prototype. This methodology is built from 10+ years of enterprise delivery -- from Toyota's global planning systems to a $900M healthcare billing platform. Each pillar exists because I've seen what happens without it." t={t} s={s} /></R>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginTop: 32 }}>
+          {[
+            { num: "01", title: "Prototype-First Discovery", body: "Don't write a 50-page requirements doc. Build something real and let stakeholders react to it. Working software forces decisions that documents defer. At CRC Group, a functional prototype during discovery shifted a $900M billing rebuild from \"system replacement\" to \"enterprise product\" -- and accelerated the MVP by 3+ months.", prevents: "We built the wrong thing." },
+            { num: "02", title: "AI-Enabled Development", body: "When the PM can build a proof of concept independently, the feedback loop goes from \"let me write a ticket\" to \"let me show you.\" 2,000+ hours of applied AI prototyping -- three working products across three industries, each built in weeks. Engineering builds what's already been proven to matter.", prevents: "We ran out of time for discovery." },
+            { num: "03", title: "OKR-Driven Prioritization", body: "The question isn't \"what features should we build?\" It's \"what needle are we trying to move?\" At Dell, this meant killing technically interesting features that didn't move ESG metrics. At CRC Group, framing the problem as \"where is money leaking?\" revealed $2M in optimization that a feature-first approach would have missed.", prevents: "We shipped features nobody needed." },
+            { num: "04", title: "Adoption-First Design", body: "Build for the person who uses it 8 hours a day, not the executive who approves the budget. At World Kinect, driver ride-alongs revealed why a technically sound mobile app was failing -- leading to 80% less manual processing. In FinPilot, the auto-resolve threshold is set at 70%, not 95% -- because in regulated finance, trust is earned through conservative defaults, not aggressive automation.", prevents: "We built it but nobody uses it." }
+          ].map((pillar, i) => (
+            <R key={i} delay={0.08 * i}>
+              <div style={{ ...s.card, padding: isMobile ? "20px" : "24px", display: "flex", flexDirection: "column", height: "100%" }}>
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
+                  <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 8px", borderRadius: 5, flexShrink: 0, marginTop: 2 }}>{pillar.num}</span>
+                  <h3 style={{ fontSize: 16, fontWeight: 600, color: t.t0, lineHeight: 1.3 }}>{pillar.title}</h3>
+                </div>
+                <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.65, flex: 1 }}>{pillar.body}</p>
+                <div style={{ marginTop: 16, paddingTop: 12, borderTop: `1px solid ${t.border}` }}>
+                  <span style={{ fontFamily: mono, fontSize: 11, color: t.t2, fontStyle: "italic" }}>Prevents: "{pillar.prevents}"</span>
+                </div>
+              </div>
+            </R>
+          ))}
+        </div>
+      </div></section>
+      <div style={s.divider} />
+
       {/* WORK */}
       <section id="work" style={s.section}><div style={s.container}>
         <R><SectionHeader label="Featured Work" title="Working hypotheses you can click." body="Each prototype tests whether the same architecture holds in a new domain. Different industry, same intelligence framework. Try them." t={t} s={s} /></R>
         <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 32 }}>
-          {allWork.filter(w => w.type === "product" && w.status === "live").map((product, i) => {
+          {allWork.filter(w => w.type === "product" && (w.status === "live" || w.status === "building")).map((product, i) => {
             const c = colorMap[product.color];
             return (
               <R key={product.slug} delay={i * 0.12}><div style={{ ...s.card, overflow: "hidden", cursor: "pointer", transition: "border-color 0.3s, transform 0.3s" }} onClick={() => go("detail", product.slug)} onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-3px)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
@@ -433,84 +463,72 @@ function Portfolio() {
       </div></section>
       <div style={s.divider} />
 
-      {/* THE PATTERN — architecture comparison */}
-      <section id="pattern" style={s.section}><div style={s.container}>
+      {/* THE FRAMEWORK — architecture comparison */}
+      <section id="framework" style={s.section}><div style={s.container}>
         <R><SectionHeader label={ac.sectionLabel} title={ac.title} body={ac.body} t={t} s={s} /></R>
         {!isMobile ? (
           <div style={{ marginTop: 40 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, marginBottom: 20, alignItems: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ width: 10, height: 10, borderRadius: "50%", background: t.blue, display: "inline-block", flexShrink: 0 }} />
-                <div><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>Supply Chain</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>TradePilot</div></div>
-              </div>
-              <div />
-              <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "flex-end" }}>
-                <div style={{ textAlign: "right" }}><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>Recruiting</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>TalentPilot</div></div>
-                <span style={{ width: 10, height: 10, borderRadius: "50%", background: t.amber, display: "inline-block", flexShrink: 0 }} />
-              </div>
+            {/* Column headers */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 20 }}>
+              {ac.columns.map((col, ci) => {
+                const cc = colorMap[col.color] || t.blue;
+                return (
+                  <div key={ci} style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: ci === 2 ? "flex-end" : "flex-start" }}>
+                    {ci === 2 && <div style={{ textAlign: "right" }}><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>{col.label}</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>{col.product}</div></div>}
+                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: cc, display: "inline-block", flexShrink: 0 }} />
+                    {ci !== 2 && <div><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>{col.label}</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>{col.product}</div></div>}
+                  </div>
+                );
+              })}
             </div>
-            <div style={{ position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", width: 2, background: t.border, transform: "translateX(-50%)", zIndex: 0 }} />
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {ac.rows.map((row, i) => {
-                  const icons = [
-                    <svg key="dq" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="9 12 11 14 15 10"/></svg>,
-                    <svg key="ag" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></svg>,
-                    <svg key="ec" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
-                    <svg key="hc" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={t.t2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  ];
-                  return (
-                    <R key={i} delay={0.05 * i}>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 60px 1fr", gap: 16, alignItems: "center" }}>
-                        <div style={{ background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 10, padding: "18px 22px", textAlign: "right" }}>
-                          <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.blue, marginBottom: 6 }}>{row.layer}</div>
-                          <div style={{ fontSize: 15, color: t.t1, lineHeight: 1.5 }}>{row.left}</div>
-                          {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative", zIndex: 1 }}>
-                          <div style={{ width: 40, height: 40, background: t.bg2, border: `1px solid ${t.border}`, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>{icons[i]}</div>
-                        </div>
-                        <div style={{ background: t.amberS, border: `1px solid ${t.amberB}`, borderRadius: 10, padding: "18px 22px" }}>
-                          <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.amber, marginBottom: 6 }}>{row.layer}</div>
-                          <div style={{ fontSize: 15, color: t.t1, lineHeight: 1.5 }}>{row.right}</div>
-                          {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
-                        </div>
-                      </div>
-                    </R>
-                  );
-                })}
-              </div>
+            {/* Rows */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {ac.rows.map((row, i) => {
+                const vals = [row.left, row.center, row.right];
+                return (
+                  <R key={i} delay={0.05 * i}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, alignItems: "stretch" }}>
+                      {ac.columns.map((col, ci) => {
+                        const cc = colorMap[col.color] || t.blue;
+                        const cS = `${cc}10`;
+                        const cB = `${cc}28`;
+                        return (
+                          <div key={ci} style={{ background: `${cc}08`, border: `1px solid ${cc}22`, borderRadius: 10, padding: "16px 20px" }}>
+                            <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: cc, marginBottom: 6 }}>{row.layer}</div>
+                            <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{vals[ci]}</div>
+                            {row.badge && ci === 0 && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </R>
+                );
+              })}
             </div>
           </div>
         ) : (
-          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.blue, display: "inline-block" }} />
-                <div><div style={{ fontSize: 14, fontWeight: 600, color: t.t0 }}>Supply Chain</div><div style={{ fontFamily: mono, fontSize: 10, color: t.t2 }}>TradePilot</div></div>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div style={{ textAlign: "right" }}><div style={{ fontSize: 14, fontWeight: 600, color: t.t0 }}>Recruiting</div><div style={{ fontFamily: mono, fontSize: 10, color: t.t2 }}>TalentPilot</div></div>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.amber, display: "inline-block" }} />
-              </div>
-            </div>
-            {ac.rows.map((row, i) => (
-              <R key={i} delay={0.05 * i}>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.t2, textAlign: "center" }}>{row.layer}</div>
-                  <div style={{ background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 10, padding: "14px 16px" }}>
-                    <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.blue, marginBottom: 4 }}>TradePilot</div>
-                    <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.left}</div>
-                    {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+          /* Mobile: stacked cards per row */
+          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 28 }}>
+            {ac.rows.map((row, i) => {
+              const vals = [row.left, row.center, row.right];
+              return (
+                <R key={i} delay={0.05 * i}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.t2, textAlign: "center" }}>{row.layer}</div>
+                    {ac.columns.map((col, ci) => {
+                      const cc = colorMap[col.color] || t.blue;
+                      return (
+                        <div key={ci} style={{ background: `${cc}08`, border: `1px solid ${cc}22`, borderRadius: 10, padding: "14px 16px" }}>
+                          <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: cc, marginBottom: 4 }}>{col.product}</div>
+                          <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{vals[ci]}</div>
+                          {row.badge && ci === 0 && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div style={{ background: t.amberS, border: `1px solid ${t.amberB}`, borderRadius: 10, padding: "14px 16px" }}>
-                    <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.amber, marginBottom: 4 }}>TalentPilot</div>
-                    <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.right}</div>
-                    {row.badge && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
-                  </div>
-                </div>
-              </R>
-            ))}
+                </R>
+              );
+            })}
           </div>
         )}
         <R delay={0.2}><p style={{ fontSize: 15, color: t.t2, fontStyle: "italic", textAlign: "center", marginTop: 40 }}>{ac.closing}</p></R>
@@ -521,7 +539,7 @@ function Portfolio() {
       <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
         <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Design for the decision, not just the data.</h2>
           <p style={{ ...s.tBody, marginBottom: 16 }}>Enterprise AI fixates on data pipelines and model accuracy. But the moment that matters is when a human looks at an AI recommendation and decides whether to act on it. Every system I build is designed around that moment: transparent evidence chains, configurable autonomy, bias checks at point of decision.</p>
-          <p style={{ ...s.tBody, marginBottom: 24 }}>The architecture is domain-agnostic because good decision design doesn{"'"}t change when the industry does.</p>
+          <p style={{ ...s.tBody, marginBottom: 24 }}>The architecture is domain-agnostic -- proven across supply chain, recruiting, and financial data reconciliation. Good decision design doesn{"'"}t change when the industry does.</p>
           <a href="https://calendly.com/milan-khanal25/new-meeting" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute walkthrough {"\u2192"}</a>
         </div></R>
         <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
@@ -542,6 +560,7 @@ function Portfolio() {
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>milan.khanal25@gmail.com {"\u2192"}</a>
             <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>LinkedIn</a>
+            <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>GitHub</a>
           </div>
         </R>
       </div></section>
@@ -613,7 +632,7 @@ function Portfolio() {
   const ProductPage = ({ item }) => {
     const c = colorMap[item.color];
     const detail = item.detail;
-    const layerColorMap = { blue: t.blue, amber: t.amber, green: t.green, purple: t.blue };
+    const layerColorMap = { blue: t.blue, amber: t.amber, green: t.green, teal: t.teal, purple: t.blue };
 
     // Fallback layout if no detail object
     if (!detail) {
