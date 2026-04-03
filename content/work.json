@@ -5,26 +5,26 @@
   },
   "profile": {
     "name": "Milan Khanal",
-    "title": "Human-Centered AI · Trust & Decision Intelligence",
+    "title": "Human-Centered AI \u00b7 Trust & Decision Intelligence",
     "location": "McKinney, TX",
     "email": "milan.khanal25@gmail.com",
     "linkedin": "https://www.linkedin.com/in/milankhanal41"
   },
   "timeline": [
     {
-      "year": "2016–now",
+      "year": "2016\u2013now",
       "label": "Enterprise",
-      "text": "F500 Automotive, Global Tech, Global Logistics, Enterprise Healthcare — BA, product owner, delivery lead",
+      "text": "F500 Automotive, Global Tech, Global Logistics, Enterprise Healthcare \u2014 BA, product owner, delivery lead",
       "color": "blue"
     },
     {
-      "year": "2023–2026",
+      "year": "2023\u20132026",
       "label": "Education",
-      "text": "After a decade of enterprise delivery (F500 Automotive, Dell), I returned to academia to master the human factors of AI. Most companies focus entirely on the LLM technology and ignore the psychology of user adoption—which is why enterprise AI fails. Texas Tech B.S. Human-Centered AI (expected 2026) · Cornell AI Certification",
+      "text": "After a decade of enterprise delivery (F500 Automotive, Dell), I returned to academia to master the human factors of AI. Most companies focus entirely on the LLM technology and ignore the psychology of user adoption\u2014which is why enterprise AI fails. Texas Tech B.S. Human-Centered AI (expected 2026) \u00b7 Cornell AI Certification",
       "color": "amber"
     },
     {
-      "year": "2025–now",
+      "year": "2025\u2013now",
       "label": "Building",
       "text": "TradePilot (supply chain) + TalentPilot (recruiting) + FinPilot (financial data) -- same architecture, three industries",
       "color": "green"
@@ -40,43 +40,115 @@
       "status": "live",
       "date": "2026-02",
       "appUrl": "/tradepilot/",
-      "summary": "Decision intelligence for supply chain. AI agents detect risk, quantify exposure, and recommend — with full transparency.",
+      "summary": "Decision intelligence for supply chain. AI agents detect risk, quantify exposure, and recommend \u2014 with full transparency.",
       "desc": "Supply chains don't fail because of bad data. They fail because the right signal reaches the wrong person too late. TradePilot puts AI agents between the signal and the decision, with Glass Box transparency so you can see exactly why the system recommends what it recommends.",
       "problem": "Supply chain decisions are reactive, fragmented, and opaque. When a tariff changes or a supplier misses a deadline, the response depends on who happens to notice first. Cross-department impact is invisible until it hits the P&L.",
-      "approach": "Built a decision intelligence layer with 5 specialized AI agents — each monitoring different signal sources (trade policy, logistics, payments, inventory, sourcing). Agents detect, quantify in dollars, and recommend. Humans review through a Glass Box evidence chain and approve or override. The 10-80-10 framework: humans set thresholds (10%), AI handles monitoring and analysis (80%), humans make final decisions (10%).",
-      "tags": ["Decision Queue", "Glass Box", "10-80-10 Workflow"],
-      "pillars": ["Agentic AI", "Human-in-the-Loop", "Glass Box", "Intelligence Mining", "Learning Loops", "Decision Lifecycle"],
-      "stats": { "views": 6, "agents": 5, "tour": true },
+      "approach": "Built a decision intelligence layer with 5 specialized AI agents \u2014 each monitoring different signal sources (trade policy, logistics, payments, inventory, sourcing). Agents detect, quantify in dollars, and recommend. Humans review through a Glass Box evidence chain and approve or override. The 10-80-10 framework: humans set thresholds (10%), AI handles monitoring and analysis (80%), humans make final decisions (10%).",
+      "tags": [
+        "Decision Queue",
+        "Glass Box",
+        "10-80-10 Workflow"
+      ],
+      "pillars": [
+        "Agentic AI",
+        "Human-in-the-Loop",
+        "Glass Box",
+        "Intelligence Mining",
+        "Learning Loops",
+        "Decision Lifecycle"
+      ],
+      "stats": {
+        "views": 6,
+        "agents": 5,
+        "tour": true
+      },
       "detail": {
-        "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend — with full transparency into why. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
+        "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend \u2014 with full transparency into why. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
         "architectureSnapshot": {
           "layers": [
-            { "name": "Data Layer", "items": ["Federal Register", "Supplier APIs", "ERP Data", "Logistics Feeds", "Market Data"], "color": "blue" },
-            { "name": "Agent Layer — 5 AI Agents", "items": ["Trade Policy Analyst", "Logistics Agent", "AP Controller", "Inventory Guard", "Sourcing Agent"], "color": "blue" },
-            { "name": "Glass Box Layer", "items": ["Evidence Chain", "Confidence Scoring", "Ripple Effect Analysis", "Compliance Gate"], "color": "green" },
-            { "name": "Human Decision Layer", "items": ["Sarah (Ops)", "James (Finance)", "Decision Queue"], "color": "amber" },
-            { "name": "Learning Loop", "items": ["Decision Outcome Tracking", "Model Accuracy Feedback", "Weight Adjustment"], "color": "green" }
+            {
+              "name": "Data Layer",
+              "items": [
+                "Federal Register",
+                "Supplier APIs",
+                "ERP Data",
+                "Logistics Feeds",
+                "Market Data"
+              ],
+              "color": "blue"
+            },
+            {
+              "name": "Agent Layer \u2014 5 AI Agents",
+              "items": [
+                "Trade Policy Analyst",
+                "Logistics Agent",
+                "AP Controller",
+                "Inventory Guard",
+                "Sourcing Agent"
+              ],
+              "color": "blue"
+            },
+            {
+              "name": "Glass Box Layer",
+              "items": [
+                "Evidence Chain",
+                "Confidence Scoring",
+                "Ripple Effect Analysis",
+                "Compliance Gate"
+              ],
+              "color": "green"
+            },
+            {
+              "name": "Human Decision Layer",
+              "items": [
+                "Sarah (Ops)",
+                "James (Finance)",
+                "Decision Queue"
+              ],
+              "color": "amber"
+            },
+            {
+              "name": "Learning Loop",
+              "items": [
+                "Decision Outcome Tracking",
+                "Model Accuracy Feedback",
+                "Weight Adjustment"
+              ],
+              "color": "green"
+            }
           ],
-          "framework": "10-80-10: Humans set thresholds (10%) → AI agents monitor & analyze (80%) → Humans review & approve (10%)"
+          "framework": "10-80-10: Humans set thresholds (10%) \u2192 AI agents monitor & analyze (80%) \u2192 Humans review & approve (10%)"
         },
         "patternTransfer": {
           "text": "Same architecture that powers TalentPilot for recruiting. Different domain, same decision intelligence patterns.",
           "siblingSlug": "talentpilot",
           "comparisonRow": {
             "dimension": "Core Pattern",
-            "thisProduct": "Tariff exposure → dollar-quantified impact → cross-department ripple → human approval",
-            "sibling": "Candidate assessment → bias-checked recommendation → evidence chain → human decision"
+            "thisProduct": "Tariff exposure \u2192 dollar-quantified impact \u2192 cross-department ripple \u2192 human approval",
+            "sibling": "Candidate assessment \u2192 bias-checked recommendation \u2192 evidence chain \u2192 human decision"
           }
         },
         "keyMetrics": [
-          { "value": "$112,500", "label": "tariff exposure detected in under 6 hours" },
-          { "value": "$79,000", "label": "cross-department ripple quantified automatically" },
-          { "value": "4-step", "label": "action plan generated with assigned owners" },
-          { "value": "95%", "label": "AI confidence with full evidence chain visible" }
+          {
+            "value": "$112,500",
+            "label": "tariff exposure detected in under 6 hours"
+          },
+          {
+            "value": "$79,000",
+            "label": "cross-department ripple quantified automatically"
+          },
+          {
+            "value": "4-step",
+            "label": "action plan generated with assigned owners"
+          },
+          {
+            "value": "95%",
+            "label": "AI confidence with full evidence chain visible"
+          }
         ],
         "caseStudy": {
           "title": "When Tariffs Hit: A Supply Chain Simulation",
-          "subtitle": "What happens when a 15% tariff increase hits your Chinese suppliers overnight — and your system detects it before your team arrives at work.",
+          "subtitle": "What happens when a 15% tariff increase hits your Chinese suppliers overnight \u2014 and your system detects it before your team arrives at work.",
           "sections": [
             {
               "heading": "The Scenario",
@@ -84,19 +156,19 @@
             },
             {
               "heading": "How TradePilot Responds",
-              "body": "Hour 1 — Detection & Quantification: Three purchase orders flagged. PO-1045 ($45,000 steel housings from Shenzhen Metalworks), PO-1046 ($38,500 precision bearings from Guangzhou Industrial), PO-1047 ($29,000 connector assemblies from Suzhou Components). Combined exposure: $112,500. The system doesn't stop at identification. Each PO gets a confidence score — 95% for PO-1045 (direct tariff code match), 87% for PO-1046 (component contains Chinese-origin steel), 72% for PO-1047 (assembly uses tariff-affected subcomponents, requires supply chain verification).\n\nHour 3 — Cross-Department Ripple: The Logistics Agent flags that PO-1045 shares a container booking with two unaffected orders — rebooking the container to reroute sourcing would impact $23,000 in other shipments. The AP Controller calculates payment timing: $67,000 in payments are scheduled within the 30-day window, creating a cash flow decision point. Inventory Guard identifies that current safety stock covers 18 days of production at current run rate — sourcing alternatives need to be locked in within 12 days to avoid line stoppage.\n\nHour 6 — Decision Package: When Sarah opens TradePilot, she doesn't see an alert. She sees a complete decision package: the exposure ($112,500), the cross-department impact ($79,000 in ripple effects across logistics, AP, and inventory), and a 4-step recommended action plan with assigned owners and deadlines."
+              "body": "Hour 1 \u2014 Detection & Quantification: Three purchase orders flagged. PO-1045 ($45,000 steel housings from Shenzhen Metalworks), PO-1046 ($38,500 precision bearings from Guangzhou Industrial), PO-1047 ($29,000 connector assemblies from Suzhou Components). Combined exposure: $112,500. The system doesn't stop at identification. Each PO gets a confidence score \u2014 95% for PO-1045 (direct tariff code match), 87% for PO-1046 (component contains Chinese-origin steel), 72% for PO-1047 (assembly uses tariff-affected subcomponents, requires supply chain verification).\n\nHour 3 \u2014 Cross-Department Ripple: The Logistics Agent flags that PO-1045 shares a container booking with two unaffected orders \u2014 rebooking the container to reroute sourcing would impact $23,000 in other shipments. The AP Controller calculates payment timing: $67,000 in payments are scheduled within the 30-day window, creating a cash flow decision point. Inventory Guard identifies that current safety stock covers 18 days of production at current run rate \u2014 sourcing alternatives need to be locked in within 12 days to avoid line stoppage.\n\nHour 6 \u2014 Decision Package: When Sarah opens TradePilot, she doesn't see an alert. She sees a complete decision package: the exposure ($112,500), the cross-department impact ($79,000 in ripple effects across logistics, AP, and inventory), and a 4-step recommended action plan with assigned owners and deadlines."
             },
             {
               "heading": "The Counterfactual",
-              "body": "Without TradePilot, here's the realistic timeline: Day 1-3: Someone in procurement reads a trade publication article about the tariff change. Day 4-7: Manual review of supplier contracts to identify affected POs. Day 8-12: Cross-department emails to assess logistics, payment, and inventory impact. Day 14-18: First meeting with all stakeholders in the same room. Day 20+: Decision made, action initiated — with 10 days until the tariff takes effect. The 6-hour detection and analysis that TradePilot completed would take 2-3 weeks through normal enterprise channels."
+              "body": "Without TradePilot, here's the realistic timeline: Day 1-3: Someone in procurement reads a trade publication article about the tariff change. Day 4-7: Manual review of supplier contracts to identify affected POs. Day 8-12: Cross-department emails to assess logistics, payment, and inventory impact. Day 14-18: First meeting with all stakeholders in the same room. Day 20+: Decision made, action initiated \u2014 with 10 days until the tariff takes effect. The 6-hour detection and analysis that TradePilot completed would take 2-3 weeks through normal enterprise channels."
             },
             {
               "heading": "The Economics of Speed",
-              "body": "The difference isn't just time. It's optionality. At hour 6, Sarah has 29 days and 18 hours to act. She can renegotiate with existing suppliers (strongest position — they haven't been approached by competitors yet). She can activate pre-qualified alternative suppliers. She can adjust inventory orders to build buffer stock at current prices. She can restructure the container booking to optimize logistics costs. At day 20 (the manual timeline), most of these options are gone. Alternative suppliers have been approached by competitors. Current-price inventory windows have closed. The container booking is locked. The $112,500 in direct exposure becomes $112,500 plus an unknowable amount in lost optionality."
+              "body": "The difference isn't just time. It's optionality. At hour 6, Sarah has 29 days and 18 hours to act. She can renegotiate with existing suppliers (strongest position \u2014 they haven't been approached by competitors yet). She can activate pre-qualified alternative suppliers. She can adjust inventory orders to build buffer stock at current prices. She can restructure the container booking to optimize logistics costs. At day 20 (the manual timeline), most of these options are gone. Alternative suppliers have been approached by competitors. Current-price inventory windows have closed. The container booking is locked. The $112,500 in direct exposure becomes $112,500 plus an unknowable amount in lost optionality."
             },
             {
               "heading": "What This Demonstrates",
-              "body": "This isn't a case study — it's a simulation built on real-world parameters. The tariff scenario is modeled on actual 2024-2025 trade policy changes. The PO amounts reflect realistic mid-market procurement volumes. The agent response chain (detection → quantification → cross-department analysis → decision package) runs in the live prototype.\n\nThe question this prototype answers: can an AI-augmented decision layer compress the enterprise response cycle from weeks to hours? The answer, at least at the prototype level: yes. The next question — can it do it with real supplier data, real ERP integration, and real procurement workflows — is what a 4-week pilot engagement would validate."
+              "body": "This isn't a case study \u2014 it's a simulation built on real-world parameters. The tariff scenario is modeled on actual 2024-2025 trade policy changes. The PO amounts reflect realistic mid-market procurement volumes. The agent response chain (detection \u2192 quantification \u2192 cross-department analysis \u2192 decision package) runs in the live prototype.\n\nThe question this prototype answers: can an AI-augmented decision layer compress the enterprise response cycle from weeks to hours? The answer, at least at the prototype level: yes. The next question \u2014 can it do it with real supplier data, real ERP integration, and real procurement workflows \u2014 is what a 4-week pilot engagement would validate."
             }
           ]
         }
@@ -115,47 +187,120 @@
       "desc": "Same architecture, different domain. Recruiting has the same broken pattern: decisions made on incomplete data, bias invisible in the process, institutional knowledge siloed. TalentPilot tests whether the framework holds when you swap the industry.",
       "problem": "Recruiting decisions are made on incomplete data, bias is invisible in the process, and institutional knowledge about what makes a good hire is siloed in individual recruiters' heads.",
       "approach": "Applied the same architecture from TradePilot to recruiting. Decision enrichment replaces candidate scoring (because scoring implies the AI makes the call). Bias monitoring is built into the decision flow, not bolted on as a report. 4 AI agents, same Glass Box transparency.",
-      "tags": ["Decision Queue", "Glass Box", "Bias Monitoring"],
-      "pillars": ["Decision Enrichment", "Bias Monitoring", "Glass Box", "Pipeline Intelligence", "Human-in-the-Loop"],
-      "stats": { "views": 7, "agents": 4, "tour": true },
+      "tags": [
+        "Decision Queue",
+        "Glass Box",
+        "Bias Monitoring"
+      ],
+      "pillars": [
+        "Decision Enrichment",
+        "Bias Monitoring",
+        "Glass Box",
+        "Pipeline Intelligence",
+        "Human-in-the-Loop"
+      ],
+      "stats": {
+        "views": 7,
+        "agents": 4,
+        "tour": true
+      },
       "detail": {
-        "heroStatement": "Decision intelligence for recruiting. TalentPilot sits between AI matching and human judgment — enriching every recommendation with bias checks, compliance gates, and evidence chains. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
+        "heroStatement": "Decision intelligence for recruiting. TalentPilot sits between AI matching and human judgment \u2014 enriching every recommendation with bias checks, compliance gates, and evidence chains. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
         "architectureSnapshot": {
           "layers": [
-            { "name": "Data Layer", "items": ["ATS/CRM Data", "LinkedIn API", "GitHub Signals", "Market Data", "Client History", "Interview Transcripts"], "color": "amber" },
-            { "name": "Agent Layer — 4 AI Agents", "items": ["Decision Enrichment", "Pipeline Monitor", "Compliance Guardian", "Signal Scout"], "color": "blue" },
-            { "name": "Glass Box Layer", "items": ["Evidence Chain", "Counter-Factual Analysis", "Bias Check", "Weight Calibration", "Compliance Gate"], "color": "purple" },
-            { "name": "Human Decision Layer", "items": ["Sarah (Recruiter)", "Gavin (Account Mgr)", "David (VP Ops)"], "color": "amber" },
-            { "name": "Learning Loop", "items": ["Placement Outcome Tracking", "Attrition Pattern Analysis", "Weight Accuracy Feedback", "Model Self-Correction"], "color": "green" }
+            {
+              "name": "Data Layer",
+              "items": [
+                "ATS/CRM Data",
+                "LinkedIn API",
+                "GitHub Signals",
+                "Market Data",
+                "Client History",
+                "Interview Transcripts"
+              ],
+              "color": "amber"
+            },
+            {
+              "name": "Agent Layer \u2014 4 AI Agents",
+              "items": [
+                "Decision Enrichment",
+                "Pipeline Monitor",
+                "Compliance Guardian",
+                "Signal Scout"
+              ],
+              "color": "blue"
+            },
+            {
+              "name": "Glass Box Layer",
+              "items": [
+                "Evidence Chain",
+                "Counter-Factual Analysis",
+                "Bias Check",
+                "Weight Calibration",
+                "Compliance Gate"
+              ],
+              "color": "purple"
+            },
+            {
+              "name": "Human Decision Layer",
+              "items": [
+                "Sarah (Recruiter)",
+                "Gavin (Account Mgr)",
+                "David (VP Ops)"
+              ],
+              "color": "amber"
+            },
+            {
+              "name": "Learning Loop",
+              "items": [
+                "Placement Outcome Tracking",
+                "Attrition Pattern Analysis",
+                "Weight Accuracy Feedback",
+                "Model Self-Correction"
+              ],
+              "color": "green"
+            }
           ],
-          "framework": "10-80-10: Recruiters configure agents & set guardrails (10%) → AI agents scan, enrich, and monitor (80%) → Recruiters review through Glass Box & decide (10%)"
+          "framework": "10-80-10: Recruiters configure agents & set guardrails (10%) \u2192 AI agents scan, enrich, and monitor (80%) \u2192 Recruiters review through Glass Box & decide (10%)"
         },
         "patternTransfer": {
           "text": "Same architecture that powers TradePilot for supply chain. Different domain, same decision intelligence patterns.",
           "siblingSlug": "tradepilot",
           "comparisonRow": {
             "dimension": "Core Pattern",
-            "thisProduct": "Candidate assessment → bias-checked recommendation → evidence chain → human decision",
-            "sibling": "Tariff exposure → dollar-quantified impact → cross-department ripple → human approval"
+            "thisProduct": "Candidate assessment \u2192 bias-checked recommendation \u2192 evidence chain \u2192 human decision",
+            "sibling": "Tariff exposure \u2192 dollar-quantified impact \u2192 cross-department ripple \u2192 human approval"
           }
         },
         "keyMetrics": [
-          { "value": "87% → 94%", "label": "match confidence improved after Weight Calibration with recruiter expertise" },
-          { "value": "1 bias alert", "label": "gender disparity flagged in engineering pipeline before interview stage" },
-          { "value": "2 compliance actions", "label": "LL 144 notice and IL audit prep surfaced proactively" },
-          { "value": "8 decisions", "label": "across 4 clients — active decisions managed with full evidence chains" }
+          {
+            "value": "87% \u2192 94%",
+            "label": "match confidence improved after Weight Calibration with recruiter expertise"
+          },
+          {
+            "value": "1 bias alert",
+            "label": "gender disparity flagged in engineering pipeline before interview stage"
+          },
+          {
+            "value": "2 compliance actions",
+            "label": "LL 144 notice and IL audit prep surfaced proactively"
+          },
+          {
+            "value": "8 decisions",
+            "label": "across 4 clients \u2014 active decisions managed with full evidence chains"
+          }
         ],
         "differentiator": {
-          "text": "Unlike most AI recruiting platforms, bias monitoring isn't an add-on — it's a core view. The Bias Dashboard runs counter-factual analysis, proxy variable detection, and 4/5ths rule checks on every decision, in real time.",
+          "text": "Unlike most AI recruiting platforms, bias monitoring isn't an add-on \u2014 it's a core view. The Bias Dashboard runs counter-factual analysis, proxy variable detection, and 4/5ths rule checks on every decision, in real time.",
           "label": "What makes this different"
         },
         "scenarios": {
           "heading": "What TalentPilot Catches",
-          "intro": "These scenarios walk through what the prototype actually demonstrates — specific situations where the system surfaces problems before they become expensive.",
+          "intro": "These scenarios walk through what the prototype actually demonstrates \u2014 specific situations where the system surfaces problems before they become expensive.",
           "items": [
             {
               "title": "Bias Detection Before It Becomes a Problem",
-              "body": "A senior ML engineer opening shows an 87% match confidence for Marcus Rivera. But the Bias Dashboard flags that the engineering pipeline has a gender disparity drift. TalentPilot surfaces this at point of decision — before the hire, not in a quarterly audit. The recruiter sees the flag, the counter-factual analysis, and the evidence chain. They can adjust or document their rationale."
+              "body": "A senior ML engineer opening shows an 87% match confidence for Marcus Rivera. But the Bias Dashboard flags that the engineering pipeline has a gender disparity drift. TalentPilot surfaces this at point of decision \u2014 before the hire, not in a quarterly audit. The recruiter sees the flag, the counter-factual analysis, and the evidence chain. They can adjust or document their rationale."
             },
             {
               "title": "Compliance Surfaced Proactively",
@@ -172,25 +317,82 @@
       "title": "FinPilot",
       "domain": "Financial Data",
       "color": "teal",
-      "status": "building",
+      "status": "live",
       "date": "2026-04",
       "appUrl": "/finpilot/",
       "summary": "AI-assisted financial data reconciliation. Schema mapping, confidence triage, and Glass Box reasoning for the exceptions that spreadsheets can't explain.",
       "desc": "Investment operations teams spend 60% of their exception investigation time on noise -- formatting differences, timing mismatches, rounding variances. FinPilot filters the noise so analysts spend their expertise on the 10% that requires human judgment. Same HCAI architecture, third industry.",
       "problem": "Financial data reconciliation across custodians, administrators, and internal systems is manual, spreadsheet-dependent, and drowning in false positives. 91% of firms still rely on Excel. The 'last mile' of exception handling -- where matches are ambiguous and judgment is required -- has no AI tooling that operations teams actually trust.",
       "approach": "Built an AI-assisted reconciliation layer with 3 specialized agents. Schema Mapper normalizes field names and identifiers across sources with confidence scoring. Reconciliation Engine matches records with intelligent tolerance. Exception Analyst investigates flagged items with root cause hypotheses and numbered evidence. Conservative 70% auto-resolve threshold -- trust is earned, not assumed. Exception Workbench replaces the Decision Queue pattern because reconciliation workflows are exception-based, not decision-queue-based.",
-      "tags": ["Exception Workbench", "Glass Box", "Schema Mapping"],
-      "pillars": ["Schema Intelligence", "Confidence Triage", "Glass Box", "Exception Analysis", "Human-in-the-Loop", "Audit Trail"],
-      "stats": { "views": 0, "agents": 3, "tour": false },
+      "tags": [
+        "Exception Workbench",
+        "Glass Box",
+        "Schema Mapping"
+      ],
+      "pillars": [
+        "Schema Intelligence",
+        "Confidence Triage",
+        "Glass Box",
+        "Exception Analysis",
+        "Human-in-the-Loop",
+        "Audit Trail"
+      ],
+      "stats": {
+        "views": 3,
+        "agents": 3,
+        "tour": true
+      },
       "detail": {
         "heroStatement": "AI-assisted financial data reconciliation. When data arrives from custodians, administrators, and internal systems in different schemas with different identifiers, FinPilot's agents map the fields, run the reconciliation, and triage the results -- with full transparency into why every match was made and every exception was flagged. Built on the same 10-80-10 architecture: humans upload and label sources (10%), AI maps schemas and reconciles (80%), humans review exceptions and approve resolutions (10%).",
         "architectureSnapshot": {
           "layers": [
-            { "name": "Data Layer", "items": ["Custodian Reports", "Administrator NAV", "Internal Portfolio System", "Market Data Feeds"], "color": "teal" },
-            { "name": "Agent Layer -- 3 AI Agents", "items": ["Schema Mapper", "Reconciliation Engine", "Exception Analyst"], "color": "blue" },
-            { "name": "Glass Box Layer", "items": ["Field Mapping Rationale", "Confidence Scoring", "Root Cause Analysis", "Source Attribution"], "color": "green" },
-            { "name": "Human Decision Layer", "items": ["Sarah (Ops Analyst)", "Exception Review", "Resolution Approval"], "color": "amber" },
-            { "name": "Audit Trail", "items": ["Every AI Recommendation Logged", "Every Human Decision Tracked", "Exportable for Compliance"], "color": "green" }
+            {
+              "name": "Data Layer",
+              "items": [
+                "Custodian Reports",
+                "Administrator NAV",
+                "Internal Portfolio System",
+                "Market Data Feeds"
+              ],
+              "color": "teal"
+            },
+            {
+              "name": "Agent Layer -- 3 AI Agents",
+              "items": [
+                "Schema Mapper",
+                "Reconciliation Engine",
+                "Exception Analyst"
+              ],
+              "color": "blue"
+            },
+            {
+              "name": "Glass Box Layer",
+              "items": [
+                "Field Mapping Rationale",
+                "Confidence Scoring",
+                "Root Cause Analysis",
+                "Source Attribution"
+              ],
+              "color": "green"
+            },
+            {
+              "name": "Human Decision Layer",
+              "items": [
+                "Sarah (Ops Analyst)",
+                "Exception Review",
+                "Resolution Approval"
+              ],
+              "color": "amber"
+            },
+            {
+              "name": "Audit Trail",
+              "items": [
+                "Every AI Recommendation Logged",
+                "Every Human Decision Tracked",
+                "Exportable for Compliance"
+              ],
+              "color": "green"
+            }
           ],
           "framework": "10-80-10: Analyst uploads and labels data sources (10%) -- AI agents map schemas, reconcile records, and triage exceptions (80%) -- Analyst reviews flagged items and approves resolutions (10%)"
         },
@@ -204,10 +406,22 @@
           }
         },
         "keyMetrics": [
-          { "value": "60%", "label": "of manually investigated exceptions are noise -- FinPilot filters them automatically" },
-          { "value": "3 sources", "label": "with incompatible schemas reconciled through AI-assisted field mapping" },
-          { "value": "70%", "label": "auto-resolve threshold -- conservative by design, adjustable as trust builds" },
-          { "value": "3 stories", "label": "stock split timing, identifier cross-reference, and a genuine break the AI honestly escalates" }
+          {
+            "value": "60%",
+            "label": "of manually investigated exceptions are noise -- FinPilot filters them automatically"
+          },
+          {
+            "value": "3 sources",
+            "label": "with incompatible schemas reconciled through AI-assisted field mapping"
+          },
+          {
+            "value": "70%",
+            "label": "auto-resolve threshold -- conservative by design, adjustable as trust builds"
+          },
+          {
+            "value": "3 stories",
+            "label": "stock split timing, identifier cross-reference, and a genuine break the AI honestly escalates"
+          }
         ],
         "differentiator": {
           "text": "Unlike deterministic reconciliation platforms that automate the easy 90%, FinPilot focuses on the ambiguous last mile -- where schema mapping is uncertain, exceptions are ambiguous, and the human needs to see the reasoning before trusting the result. Glass Box transparency isn't a feature; it's the adoption strategy.",
@@ -244,9 +458,21 @@
     "body": "Built for the moment a human decides whether to trust it. The same architecture powers all three products because it was designed around the decision, not the domain.",
     "closing": "The domain changes. The architecture doesn't.",
     "columns": [
-      { "label": "Supply Chain", "product": "TradePilot", "color": "blue" },
-      { "label": "Recruiting", "product": "TalentPilot", "color": "amber" },
-      { "label": "Financial Data", "product": "FinPilot", "color": "teal" }
+      {
+        "label": "Supply Chain",
+        "product": "TradePilot",
+        "color": "blue"
+      },
+      {
+        "label": "Recruiting",
+        "product": "TalentPilot",
+        "color": "amber"
+      },
+      {
+        "label": "Financial Data",
+        "product": "FinPilot",
+        "color": "teal"
+      }
     ],
     "rows": [
       {
@@ -277,8 +503,23 @@
     ]
   },
   "domainTable": [
-    { "domain": "Supply Chain", "product": "TradePilot", "status": "live", "slug": "tradepilot" },
-    { "domain": "Recruiting", "product": "TalentPilot", "status": "live", "slug": "talentpilot" },
-    { "domain": "Financial Data", "product": "FinPilot", "status": "building", "slug": "finpilot" }
+    {
+      "domain": "Supply Chain",
+      "product": "TradePilot",
+      "status": "live",
+      "slug": "tradepilot"
+    },
+    {
+      "domain": "Recruiting",
+      "product": "TalentPilot",
+      "status": "live",
+      "slug": "talentpilot"
+    },
+    {
+      "domain": "Financial Data",
+      "product": "FinPilot",
+      "status": "building",
+      "slug": "finpilot"
+    }
   ]
 }
