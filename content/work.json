@@ -165,6 +165,51 @@
         },
         "caseStudy": null
       }
+    },
+    {
+      "slug": "finpilot",
+      "type": "product",
+      "title": "FinPilot",
+      "domain": "Financial Services",
+      "color": "teal",
+      "status": "live",
+      "date": "2026-04",
+      "appUrl": "/finpilot/",
+      "summary": "AI-assisted financial data reconciliation. Three sources, one source of truth.",
+      "desc": "Investment operations teams spend 30% of their time on manual reconciliation. 60% of investigated exceptions are false positives — formatting differences, timing lags, rounding. FinPilot uses AI to triage exceptions, explain discrepancies, and surface only the ones that require human judgment.",
+      "problem": "Reconciliation platforms handle the deterministic layer well — exact matches, format normalization, tolerance rules. But the exceptions that fall through require judgment: is this a stock split timing lag or a genuine break? Is this position missing or did the data feed fail? That last mile is where ops teams spend most of their time.",
+      "approach": "Applied the 10-80-10 HCAI framework to position reconciliation. Three data sources (custodian, fund administrator, internal system) with different schemas and identifiers are ingested, field-mapped with AI confidence scoring, and reconciled. Exceptions are triaged into three tiers: auto-matched, needs review, investigate. Gemini provides plain-English analysis with evidence chains and recommended action plans.",
+      "tags": ["AI Reconciliation", "Glass Box", "Schema Mapping", "Exception Triage"],
+      "pillars": ["Human-in-the-Loop", "Glass Box", "AI Confidence Scoring", "Exception Triage", "Schema Intelligence"],
+      "stats": { "views": 3, "agents": 3, "tour": false },
+      "detail": {
+        "heroStatement": "AI-assisted financial data reconciliation. When three data sources disagree on the same position, FinPilot explains why — with full evidence chains, confidence scores, and recommended actions. Built on the same 10-80-10 HCAI framework as TradePilot and TalentPilot.",
+        "architectureSnapshot": {
+          "layers": [
+            { "name": "Data Layer", "items": ["Custodian (BNY Mellon)", "Fund Admin (SS&C)", "Internal Portfolio System"], "color": "teal" },
+            { "name": "Schema Mapping Layer", "items": ["Field Detection", "CUSIP-to-ISIN Cross-reference", "AI Confidence Scoring", "Human Approval/Rejection"], "color": "blue" },
+            { "name": "Reconciliation Engine", "items": ["Exact Match Rules", "Tolerance Rules", "Exception Classification", "Gemini AI Analysis"], "color": "teal" },
+            { "name": "Human Review Layer", "items": ["Exception Triage", "Glass Box Evidence", "Accept/Override/Escalate"], "color": "amber" }
+          ],
+          "framework": "10-80-10: Analysts upload sources and set mapping rules (10%) -> AI reconciles and explains exceptions (80%) -> Analysts review and decide on flagged items (10%)"
+        },
+        "patternTransfer": {
+          "text": "Same architecture as TradePilot (supply chain) and TalentPilot (recruiting). Different domain, same decision intelligence framework.",
+          "siblingSlug": "tradepilot",
+          "comparisonRow": {
+            "dimension": "Core Pattern",
+            "thisProduct": "Three-source position data -> field mapping -> exception triage -> human review with evidence",
+            "sibling": "Multi-signal supply chain data -> agent analysis -> dollar-quantified impact -> human approval"
+          }
+        },
+        "keyMetrics": [
+          { "value": "68%", "label": "of positions auto-resolved — no human review needed" },
+          { "value": "3 tiers", "label": "of exception triage: Matched, Needs Review, Investigate" },
+          { "value": "92%", "label": "AI confidence on AAPL stock split timing explanation" },
+          { "value": "$207,500", "label": "genuine break detected in MSFT internal system (15% confidence — AI defers to human)" }
+        ],
+        "caseStudy": null
+      }
     }
   ],
   "architectureComparison": {
@@ -202,6 +247,7 @@
   },
   "domainTable": [
     { "domain": "Supply Chain", "product": "TradePilot", "status": "live", "slug": "tradepilot" },
-    { "domain": "Recruiting", "product": "TalentPilot", "status": "live", "slug": "talentpilot" }
+    { "domain": "Recruiting", "product": "TalentPilot", "status": "live", "slug": "talentpilot" },
+    { "domain": "Financial Services", "product": "FinPilot", "status": "live", "slug": "finpilot" }
   ]
 }

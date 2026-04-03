@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinPilot — AI-Assisted Financial Reconciliation</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══ THEMES ═══ */
+[data-theme="light"]{
+  --bg-0:#FAFAF9;--bg-1:#FFFFFF;--bg-2:#F5F5F4;--bg-3:#E7E5E4;
+  --text-0:#1C1917;--text-1:#44403C;--text-2:#78716C;--text-3:#A8A29E;
+  --border:#E7E5E4;--border-light:#F5F5F4;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 12px rgba(0,0,0,.06);--shadow-lg:0 12px 32px rgba(0,0,0,.08);
+  --card:#FFFFFF;--modal-bg:#FFFFFF;
+  --red:#DC2626;--red-bg:#FEF2F2;--red-border:#FECACA;
+  --amber:#D97706;--amber-bg:#FFFBEB;--amber-border:#FDE68A;
+  --green:#059669;--green-bg:#ECFDF5;--green-border:#A7F3D0;
+  --source-a:#3B82F6;--source-a-bg:#EFF6FF;--source-a-border:rgba(59,130,246,.25);--source-a-text:#1E40AF;
+  --source-b:#8B5CF6;--source-b-bg:#F5F3FF;--source-b-border:rgba(139,92,246,.25);--source-b-text:#5B21B6;
+  --source-c:#64748B;--source-c-bg:#F1F5F9;--source-c-border:rgba(100,116,139,.25);--source-c-text:#334155;
+}
+[data-theme="dark"]{
+  --bg-0:#0C0C0E;--bg-1:#141416;--bg-2:#1C1C1F;--bg-3:#27272A;
+  --text-0:#F0F0F2;--text-1:#C8C8CE;--text-2:#8A8A95;--text-3:#5A5A66;
+  --border:#27272A;--border-light:#1E1E22;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.2);--shadow-md:0 4px 12px rgba(0,0,0,.3);--shadow-lg:0 12px 32px rgba(0,0,0,.4);
+  --card:#141416;--modal-bg:#1C1C1F;
+  --red:#F87171;--red-bg:rgba(220,38,38,.12);--red-border:rgba(220,38,38,.3);
+  --amber:#FBBF24;--amber-bg:rgba(217,119,6,.12);--amber-border:rgba(217,119,6,.3);
+  --green:#34D399;--green-bg:rgba(5,150,105,.12);--green-border:rgba(5,150,105,.3);
+  --source-a:#60A5FA;--source-a-bg:rgba(59,130,246,.1);--source-a-border:rgba(59,130,246,.3);--source-a-text:#93C5FD;
+  --source-b:#A78BFA;--source-b-bg:rgba(139,92,246,.1);--source-b-border:rgba(139,92,246,.3);--source-b-text:#C4B5FD;
+  --source-c:#94A3B8;--source-c-bg:rgba(100,116,139,.1);--source-c-border:rgba(100,116,139,.3);--source-c-text:#CBD5E1;
+}
+:root{
+  --accent:#0D9488;--accent-bg:#F0FDFA;--accent-border:rgba(13,148,136,.25);
+  --sidebar-bg:#18181B;--sidebar-text:#D4D4D8;--sidebar-muted:#71717A;--sidebar-border:#27272A;
+  --sidebar-active-bg:rgba(13,148,136,.15);--sidebar-active-text:#0D9488;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-3)}
+*{scrollbar-width:thin;scrollbar-color:var(--bg-3) transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+
+/* ═══ LAYOUT ═══ */
+.layout{display:grid;grid-template-columns:auto 1fr;min-height:100vh}
+.mobile-header{display:none;position:fixed;top:0;left:0;right:0;height:52px;background:var(--sidebar-bg);border-bottom:1px solid var(--sidebar-border);padding:0 16px;align-items:center;justify-content:space-between;z-index:100}
+.mobile-logo{display:flex;align-items:center;gap:8px}
+.mobile-logo-mark{width:28px;height:28px;border-radius:6px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#FFF;font-family:'DM Serif Display',serif}
+.mobile-logo-text{font-size:15px;font-weight:600;color:#F4F4F5}
+.hamburger-btn{background:none;border:none;color:var(--sidebar-text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;width:36px;height:36px}
+
+/* ═══ SIDEBAR ═══ */
+.sidebar{background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);padding:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;width:240px;transition:width .3s cubic-bezier(.4,0,.2,1);overflow:hidden;flex-shrink:0;z-index:50}
+.sidebar.collapsed{width:68px}
+.sidebar-header{padding:20px 16px;border-bottom:1px solid var(--sidebar-border);display:flex;align-items:center;gap:10px;height:64px;flex-shrink:0}
+.sidebar-logo-mark{width:30px;height:30px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#FFF;font-family:'DM Serif Display',serif;flex-shrink:0}
+.sidebar-logo-text{font-size:16px;font-weight:600;color:#F4F4F5;white-space:nowrap;transition:opacity .2s}
+.sidebar.collapsed .sidebar-logo-text{opacity:0;width:0;overflow:hidden;position:absolute}
+.sidebar-nav{flex:1;padding:16px 8px;overflow-y:auto}
+.nav-section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--sidebar-muted);padding:4px 8px;margin-bottom:6px;font-family:'JetBrains Mono',monospace;white-space:nowrap;transition:opacity .2s}
+.sidebar.collapsed .nav-section-label{opacity:0;height:0;margin:0;overflow:hidden;position:absolute}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:400;color:var(--sidebar-text);transition:background .15s,color .15s;margin-bottom:2px;white-space:nowrap;justify-content:flex-start}
+.nav-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text);font-weight:500}
+.nav-item.done{color:var(--sidebar-muted)}
+.sidebar.collapsed .nav-item{justify-content:center;padding:8px 0;width:44px;height:40px;margin:2px auto}
+.sidebar.collapsed .nav-text{opacity:0;width:0;overflow:hidden;position:absolute}
+.sidebar.collapsed .nav-badge{opacity:0;width:0;overflow:hidden;padding:0;margin:0;position:absolute}
+.step-circle{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;font-family:'JetBrains Mono',monospace;background:#27272A;color:#52525B;transition:background .2s,color .2s}
+.step-circle.active{background:var(--accent);color:#FFF}
+.step-circle.done{background:#27272A;color:var(--green)}
+.nav-badge{margin-left:auto;font-size:10px;font-weight:600;color:var(--accent);background:rgba(13,148,136,.15);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.sidebar-footer{padding:12px 8px;border-top:1px solid var(--sidebar-border);flex-shrink:0}
+.agent-status{display:flex;align-items:center;gap:6px;padding:6px 10px;margin-bottom:8px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
+.agent-status-text{font-size:11px;color:var(--sidebar-muted);white-space:nowrap;transition:opacity .2s}
+.sidebar.collapsed .agent-status-text{opacity:0;width:0;overflow:hidden;position:absolute}
+.theme-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;margin-bottom:6px}
+.theme-toggle-label{font-size:11px;color:var(--sidebar-muted);white-space:nowrap;transition:opacity .2s}
+.sidebar.collapsed .theme-toggle-label{opacity:0;width:0;overflow:hidden;position:absolute}
+.theme-toggle-btn{width:32px;height:18px;border-radius:9px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.theme-toggle-btn.light{background:#3F3F46}
+.theme-toggle-btn.dark{background:var(--accent)}
+.theme-toggle-thumb{width:14px;height:14px;border-radius:50%;background:#FFF;position:absolute;top:2px;transition:left .2s}
+.theme-toggle-thumb.light{left:2px}
+.theme-toggle-thumb.dark{left:16px}
+.collapse-btn{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:none;background:transparent;color:var(--sidebar-muted);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:background .15s,color .15s;width:100%;text-align:left}
+.collapse-btn:hover{background:rgba(255,255,255,.05);color:var(--sidebar-text)}
+.sidebar.collapsed .collapse-btn{justify-content:center;width:44px;margin:0 auto;padding:8px 0}
+.sidebar.collapsed .collapse-btn-text{opacity:0;width:0;overflow:hidden;position:absolute}
+.collapse-icon{font-size:14px;transition:transform .3s;flex-shrink:0}
+.sidebar.collapsed .collapse-icon{transform:rotate(180deg)}
+
+/* Mobile overlay */
+.mobile-overlay{display:none;position:fixed;inset:0;z-index:99;flex-direction:row}
+.mobile-overlay.open{display:flex}
+.mobile-overlay-backdrop{flex:1;background:rgba(0,0,0,.5)}
+.mobile-sidebar{width:240px;flex-shrink:0}
+
+/* ═══ MAIN CONTENT ═══ */
+.main-content{flex:1;min-width:0;overflow-y:auto}
+.view{display:none;min-height:100vh}
+.view.active{display:block}
+.content-inner{max-width:960px;margin:0 auto;padding:28px 24px}
+
+/* ═══ BREADCRUMB ═══ */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);margin-bottom:10px;flex-wrap:wrap}
+.breadcrumb-done{color:var(--green)}
+.breadcrumb-active{font-weight:600;color:var(--text-0)}
+.breadcrumb-sep{color:var(--border)}
+
+/* ═══ PAGE HEADER ═══ */
+.page-header{margin-bottom:24px}
+.page-title{font-size:22px;font-weight:600;color:var(--text-0);margin:0 0 6px}
+.page-desc{font-size:14px;color:var(--text-2);line-height:1.55;max-width:660px}
+
+/* ═══ SECTION LABEL ═══ */
+.section-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);font-family:'JetBrains Mono',monospace;margin-bottom:8px}
+
+/* ═══ CARDS ═══ */
+.card{background:var(--card);border-radius:10px;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.card-header{padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+
+/* ═══ PROGRESS BAR ═══ */
+.progress-wrap{margin-bottom:24px;padding:14px 16px;background:var(--bg-1);border-radius:10px;border:1px solid var(--border)}
+.progress-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.progress-label{font-size:13px;font-weight:500;color:var(--text-1)}
+.progress-ready{font-size:11px;font-weight:700;color:var(--green)}
+.progress-track{height:6px;background:var(--bg-3);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;transition:width .4s ease,background .3s}
+
+/* ═══ UPLOAD CARD ═══ */
+.upload-card{border-radius:10px;overflow:hidden;transition:border-color .2s;margin-bottom:12px}
+.upload-card-header{padding:13px 16px;display:flex;align-items:center;gap:10px}
+.source-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.upload-card-title{font-size:13px;font-weight:600;color:var(--text-0)}
+.upload-card-sub{font-size:11px;color:var(--text-2);margin-top:1px}
+.upload-status-badge{font-size:10px;font-weight:700;padding:2px 10px;border-radius:999px}
+.upload-card-body{padding:16px}
+.upload-desc{font-size:12px;color:var(--text-2);line-height:1.5;margin-bottom:12px}
+.upload-zone{padding:22px 16px;border-radius:8px;border:1.5px dashed var(--border);background:var(--bg-0);text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.upload-zone:hover{border-color:var(--accent);background:var(--accent-bg)}
+.upload-zone-icon{font-size:22px;margin-bottom:5px;color:var(--text-3)}
+.upload-zone-text{font-size:13px;font-weight:500;color:var(--text-1)}
+.upload-zone-hint{font-size:11px;color:var(--text-3);margin-top:3px}
+.upload-zone.loading{opacity:.6;cursor:not-allowed;pointer-events:none}
+.file-preview{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.file-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.file-name{font-size:12px;font-weight:500;font-family:'JetBrains Mono',monospace;color:var(--text-0);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-meta{font-size:11px;color:var(--text-2);margin-top:2px}
+.remove-btn{padding:4px 10px;border-radius:4px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-2);font-size:11px;cursor:pointer;flex-shrink:0;transition:background .15s}
+.remove-btn:hover{background:var(--bg-2)}
+.fields-detected{display:flex;gap:6px;flex-wrap:wrap}
+.field-tag{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500;font-family:'JetBrains Mono',monospace}
+.field-tag-more{padding:3px 10px;border-radius:4px;font-size:11px;color:var(--text-3)}
+
+/* ═══ WHAT HAPPENS NEXT ═══ */
+.whats-next{padding:14px 16px;background:var(--accent-bg);border-radius:10px;border:1px solid var(--accent-border);margin-bottom:24px}
+
+/* ═══ BOTTOM CTA ═══ */
+.bottom-cta{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:10px;border:1px solid var(--border);flex-wrap:wrap;gap:12px;margin-bottom:32px;transition:border-color .3s,background .3s}
+.bottom-cta.ready{background:var(--accent-bg);border-color:var(--accent-border)}
+.cta-label{font-size:14px;font-weight:600;color:var(--text-0)}
+.cta-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.cta-btn{padding:10px 24px;border-radius:8px;border:none;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s,opacity .2s}
+.cta-btn.enabled{background:var(--accent);color:#FFF}
+.cta-btn.disabled{background:var(--bg-3);color:var(--text-3);cursor:not-allowed}
+
+/* ═══ SUMMARY BAR (mapping) ═══ */
+.summary-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.summary-stat{flex:1 1 100px;padding:12px 16px;border-radius:8px;background:var(--bg-1);border:1px solid var(--border)}
+.summary-stat-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);font-family:'JetBrains Mono',monospace}
+.summary-stat-value{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
+
+/* ═══ SOURCE LEGEND ═══ */
+.source-legend{display:flex;gap:12px;flex-wrap:wrap;padding:10px 14px;background:var(--bg-1);border-radius:8px;border:1px solid var(--border);margin-bottom:20px;align-items:center}
+.source-legend-label{font-size:12px;font-weight:600;color:var(--text-1)}
+.source-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;border:1.5px solid}
+.source-tag .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+
+/* ═══ MAPPING CARD ═══ */
+.mapping-card{padding:18px;border-radius:10px;background:var(--card);border:1.5px solid var(--border);box-shadow:var(--shadow-sm);margin-bottom:14px;transition:border-color .2s}
+.mapping-card.approved{border-color:var(--green)}
+.mapping-card.rejected{border-color:var(--red)}
+.mapping-card-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.mapping-label{font-size:15px;font-weight:600;color:var(--text-0)}
+.mapping-card-status{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.confidence-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid}
+.confidence-badge.high{background:var(--green-bg);color:#065F46;border-color:var(--green-border)}
+.confidence-badge.medium{background:var(--amber-bg);color:#92400E;border-color:var(--amber-border)}
+.confidence-badge.low{background:var(--red-bg);color:#991B1B;border-color:var(--red-border)}
+[data-theme="dark"] .confidence-badge.high{color:var(--green)}
+[data-theme="dark"] .confidence-badge.medium{color:var(--amber)}
+[data-theme="dark"] .confidence-badge.low{color:var(--red)}
+.confidence-sub{font-size:10px;font-weight:500;opacity:.8}
+.source-evidence-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.source-evidence-card{padding:12px 14px;border-radius:8px;border:1.5px solid}
+.source-evidence-field{font-size:13px;font-weight:600;color:var(--text-0);font-family:'JetBrains Mono',monospace;margin-top:8px}
+.source-evidence-format{font-size:11px;color:var(--text-2);margin-top:3px}
+.source-evidence-sample{font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--bg-1);padding:3px 8px;border-radius:4px;border:1px solid var(--border);display:inline-block;margin-top:6px;color:var(--text-1)}
+.mapping-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-approve{padding:7px 18px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s}
+.btn-approve.active{background:var(--green);color:#FFF}
+.btn-approve.inactive{background:var(--accent);color:#FFF}
+.btn-reject{padding:7px 18px;border-radius:6px;border:1px solid var(--red);font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.btn-reject.active{background:var(--red-bg);color:var(--red)}
+.btn-reject.inactive{background:transparent;color:var(--red)}
+.btn-reasoning{padding:7px 18px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-1);font-size:12px;font-weight:500;cursor:pointer;margin-left:auto;transition:background .15s}
+.btn-reasoning:hover{background:var(--bg-2)}
+.glass-box{margin-top:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-1);overflow:hidden}
+.glass-box-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-1);font-family:'DM Sans',sans-serif;transition:background .15s}
+.glass-box-toggle:hover{background:var(--bg-2)}
+.glass-box-chevron{font-size:10px;transition:transform .2s;color:var(--text-3)}
+.glass-box-chevron.open{transform:rotate(180deg)}
+.glass-box-body{padding:0 14px 14px;border-top:1px solid var(--border)}
+.glass-box-evidence{margin:10px 0 0;padding-left:20px;font-size:13px;color:var(--text-1);line-height:1.7}
+.glass-box-evidence li{margin-bottom:4px}
+.glass-box-history{font-size:12px;color:var(--text-2);line-height:1.5;font-style:italic}
+
+/* ═══ DASHBOARD SUMMARY CARDS ═══ */
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+.summary-card{padding:16px;border-radius:10px;border:1px solid}
+.summary-card-count{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.summary-card-title{font-size:13px;font-weight:500;margin-top:2px}
+.summary-card-desc{font-size:11px;color:var(--text-2);margin-top:4px}
+
+/* ═══ FILTER TABS ═══ */
+.filter-tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
+.filter-tab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:400;cursor:pointer;white-space:nowrap;border:1px solid var(--border);background:transparent;color:var(--text-2);transition:all .15s}
+.filter-tab.active-matched{border:1.5px solid var(--green);background:var(--green-bg);color:var(--green);font-weight:600}
+.filter-tab.active-flagged{border:1.5px solid var(--amber);background:var(--amber-bg);color:var(--amber);font-weight:600}
+.filter-tab.active-escalated{border:1.5px solid var(--red);background:var(--red-bg);color:var(--red);font-weight:600}
+.filter-tab.active-all{border:1.5px solid var(--accent);background:var(--accent-bg);color:var(--accent);font-weight:600}
+
+/* ═══ RESULTS TABLE ═══ */
+.results-table{border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.result-row-header{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--border-light)}
+.result-row-header:hover{background:var(--bg-2)}
+.result-row-header.expanded{background:var(--bg-1)}
+.result-row-header:last-child{border-bottom:none}
+.tier-icon{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:1.5px solid}
+.result-security{flex:1;min-width:0}
+.result-security-name{font-size:14px;font-weight:500;color:var(--text-0)}
+.result-ticker{font-size:11px;color:var(--text-3);font-family:'JetBrains Mono',monospace;margin-left:4px}
+.result-summary{font-size:12px;color:var(--text-2);margin-top:1px}
+.result-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ai-pct-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;font-family:'JetBrains Mono',monospace}
+.row-chevron{font-size:10px;color:var(--text-3);transition:transform .2s}
+.row-chevron.open{transform:rotate(180deg)}
+
+/* ═══ EXPANDED ROW ═══ */
+.expanded-row{background:var(--bg-2);border-top:1px solid var(--border);padding:20px}
+.expanded-section{margin-bottom:20px}
+.ai-analysis-text{font-size:13px;color:var(--text-1);line-height:1.6;max-width:700px}
+.source-evidence-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.source-ev-card{padding:12px 14px;border-radius:8px;border:1.5px solid}
+.source-ev-name{font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:5px;margin-bottom:8px}
+.source-ev-shares{font-size:15px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--text-0)}
+.source-ev-value{font-size:13px;font-family:'JetBrains Mono',monospace;color:var(--text-2);margin-top:2px}
+.source-ev-note{margin-top:6px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;display:inline-block}
+.source-ev-missing{font-size:14px;font-weight:600;color:var(--red)}
+.action-plan-box{background:var(--bg-1);border-radius:8px;border:1px solid var(--border);padding:14px 16px}
+.action-plan-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.confidence-label{font-size:12px;color:var(--text-2)}
+.action-plan-text{font-size:13px;color:var(--text-1);line-height:1.6;margin-bottom:10px}
+.action-plan-steps{margin:0;padding-left:20px;font-size:13px;color:var(--text-1);line-height:1.7}
+.action-plan-steps li{margin-bottom:2px}
+.hist-impact-row{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;margin-bottom:16px}
+.hist-text{font-size:12px;color:var(--text-2);line-height:1.5;font-style:italic}
+.impact-value{font-size:14px;font-weight:600;text-align:right}
+.action-buttons{display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border)}
+.btn-accept{padding:8px 20px;border-radius:6px;border:none;background:var(--accent);color:#FFF;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s}
+.btn-accept:hover{opacity:.85}
+.btn-accept.done{background:var(--green);cursor:default}
+.btn-override{padding:8px 20px;border-radius:6px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-1);font-size:13px;font-weight:500;cursor:pointer;transition:background .15s}
+.btn-override:hover{background:var(--bg-2)}
+.btn-escalate{padding:8px 20px;border-radius:6px;border:1px solid var(--red);background:transparent;color:var(--red);font-size:13px;font-weight:500;cursor:pointer;transition:background .15s}
+.btn-escalate:hover{background:var(--red-bg)}
+
+/* ═══ DASHBOARD FOOTER ═══ */
+.dashboard-footer{margin-top:16px;padding:12px 16px;background:var(--bg-1);border-radius:8px;border:1px solid var(--border);font-size:12px;color:var(--text-2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.btn-export{padding:6px 16px;border-radius:6px;border:none;background:var(--accent);color:#FFF;font-size:12px;font-weight:600;cursor:pointer}
+
+/* ═══ AI LOADING ═══ */
+.ai-loading-indicator{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--accent-bg);border-radius:6px;border:1px solid var(--accent-border);font-size:12px;color:var(--accent);margin-bottom:12px}
+.spinner{width:14px;height:14px;border:2px solid var(--accent-border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══ TOAST ═══ */
+.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;border-radius:8px;background:var(--text-0);color:var(--bg-0);font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);z-index:200;transform:translateY(80px);opacity:0;transition:transform .3s,opacity .3s}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .mobile-header{display:flex}
+  .content-inner{padding:80px 16px 24px}
+  .source-evidence-grid{grid-template-columns:1fr}
+  .source-evidence-row{grid-template-columns:1fr}
+  .hist-impact-row{grid-template-columns:1fr}
+  .impact-value{text-align:left}
+  .summary-cards{grid-template-columns:1fr}
+  .summary-bar{flex-direction:column}
+  .filter-tabs{gap:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile header -->
+<div class="mobile-header">
+  <div class="mobile-logo">
+    <div class="mobile-logo-mark">F</div>
+    <span class="mobile-logo-text">FinPilot</span>
+  </div>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()">&#9776;</button>
+</div>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <div class="mobile-sidebar" id="mobile-sidebar-inner"></div>
+  <div class="mobile-overlay-backdrop" onclick="toggleMobileMenu()"></div>
+</div>
+
+<!-- Main layout -->
+<div class="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo-mark">F</div>
+      <span class="sidebar-logo-text">FinPilot</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Workflow Steps</div>
+      <div class="nav-item" id="nav-ingestion" onclick="navTo('ingestion')">
+        <span class="step-circle active" id="step-1">1</span>
+        <span class="nav-text">Upload Sources</span>
+        <span class="nav-badge" id="nav-badge-ingestion">Now</span>
+      </div>
+      <div class="nav-item" id="nav-mapping" onclick="navTo('mapping')">
+        <span class="step-circle" id="step-2">2</span>
+        <span class="nav-text">Map Fields</span>
+        <span class="nav-badge" id="nav-badge-mapping" style="display:none">Now</span>
+      </div>
+      <div class="nav-item" id="nav-dashboard" onclick="navTo('dashboard')">
+        <span class="step-circle" id="step-3">3</span>
+        <span class="nav-text">Review Results</span>
+        <span class="nav-badge" id="nav-badge-dashboard" style="display:none">Now</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="agent-status">
+        <span class="status-dot"></span>
+        <span class="agent-status-text" id="agent-status-text">Schema Mapper active</span>
+      </div>
+      <div class="theme-toggle-row">
+        <span class="theme-toggle-label">Dark mode</span>
+        <button class="theme-toggle-btn light" id="theme-toggle-btn" onclick="toggleTheme()">
+          <div class="theme-toggle-thumb light" id="theme-toggle-thumb"></div>
+        </button>
+      </div>
+      <button class="collapse-btn" onclick="toggleSidebar()">
+        <span class="collapse-icon" id="collapse-icon">&#8592;</span>
+        <span class="collapse-btn-text">Collapse</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main content area -->
+  <main class="main-content">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- VIEW 1: DATA INGESTION                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="view active" id="view-ingestion">
+      <div class="content-inner">
+        <div class="breadcrumb">
+          <span class="breadcrumb-active">Upload Sources</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span>Map Fields</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span>Review Results</span>
+        </div>
+
+        <div class="page-header">
+          <h1 class="page-title">Upload Your Data Sources</h1>
+          <p class="page-desc">Upload position files from each of your data sources. FinPilot will analyze the file structures, detect field types, and prepare them for schema mapping. You need at least 2 sources to run a reconciliation.</p>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span class="progress-label" id="progress-label">No sources uploaded yet</span>
+            <span class="progress-ready" id="progress-ready" style="display:none">Ready for schema mapping</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%;background:var(--accent)"></div>
+          </div>
+        </div>
+
+        <div id="upload-cards">
+          <!-- Generated by JS -->
+        </div>
+
+        <div id="whats-next" style="display:none">
+          <div class="whats-next">
+            <div class="section-label">What happens next</div>
+            <div style="font-size:13px;color:var(--text-1);line-height:1.6">Once you proceed, the AI will analyze the field structures across your uploaded sources, identify matching fields (even when they use different names or formats), and propose a schema mapping for your review. You will approve or reject each mapping before any reconciliation runs.</div>
+          </div>
+        </div>
+
+        <div class="bottom-cta" id="ingestion-cta">
+          <div>
+            <div class="cta-label" id="cta-label-ingestion">Upload at least 2 sources to continue</div>
+            <div class="cta-sub" id="cta-sub-ingestion">2 more sources needed</div>
+          </div>
+          <button class="cta-btn disabled" id="proceed-btn" onclick="proceedToMapping()">Proceed to Schema Mapping &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- VIEW 2: SCHEMA MAPPING                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="view" id="view-mapping">
+      <div class="content-inner">
+        <div class="breadcrumb">
+          <span class="breadcrumb-done">Upload Sources</span>
+          <span class="breadcrumb-done">&#10003;</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span class="breadcrumb-active">Map Fields</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span>Review Results</span>
+        </div>
+
+        <div class="page-header">
+          <h1 class="page-title">Schema Mapping</h1>
+          <p class="page-desc">The AI analyzed field structures across your three data sources and proposed the mappings below. Review each mapping, check the evidence, then approve or reject. Approved mappings will be used during reconciliation.</p>
+        </div>
+
+        <div class="summary-bar" id="mapping-summary-bar">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="source-legend">
+          <span class="source-legend-label">Data sources:</span>
+          <span style="display:inline-flex;align-items:center;gap:6px">
+            <span class="source-tag" style="background:var(--source-a-bg);color:var(--source-a-text);border-color:var(--source-a)"><span class="dot" style="background:var(--source-a)"></span>Source A</span>
+            <span style="font-size:12px;color:var(--text-2)">Custodian (BNY Mellon)</span>
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px">
+            <span class="source-tag" style="background:var(--source-b-bg);color:var(--source-b-text);border-color:var(--source-b)"><span class="dot" style="background:var(--source-b)"></span>Source B</span>
+            <span style="font-size:12px;color:var(--text-2)">Fund Admin (SS&amp;C)</span>
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px">
+            <span class="source-tag" style="background:var(--source-c-bg);color:var(--source-c-text);border-color:var(--source-c)"><span class="dot" style="background:var(--source-c)"></span>Source C</span>
+            <span style="font-size:12px;color:var(--text-2)">Internal Portfolio System</span>
+          </span>
+        </div>
+
+        <div id="mapping-cards">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="bottom-cta" id="mapping-cta">
+          <div>
+            <div class="cta-label" id="cta-label-mapping">0 of 5 mappings approved</div>
+            <div class="cta-sub">Approved mappings will be used by the Reconciliation Engine</div>
+          </div>
+          <button class="cta-btn disabled" id="reconcile-btn" onclick="runReconciliation()">Run Reconciliation &#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- VIEW 3: RECONCILIATION DASHBOARD            -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="view" id="view-dashboard">
+      <div class="content-inner">
+        <div class="breadcrumb">
+          <span class="breadcrumb-done">Upload Sources</span>
+          <span class="breadcrumb-done">&#10003;</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span class="breadcrumb-done">Map Fields</span>
+          <span class="breadcrumb-done">&#10003;</span>
+          <span class="breadcrumb-sep">&#8594;</span>
+          <span class="breadcrumb-active">Review Results</span>
+        </div>
+
+        <div class="page-header">
+          <h1 class="page-title">Reconciliation Results</h1>
+          <p class="page-desc">We compared 10 security positions across your three data sources. Positions that matched are logged below. The ones that need your attention are highlighted.</p>
+        </div>
+
+        <div class="summary-cards">
+          <div class="summary-card" style="background:var(--green-bg);border-color:var(--green-border)">
+            <div class="summary-card-count" style="color:var(--green)">5</div>
+            <div class="summary-card-title" style="color:var(--green)">positions matched</div>
+            <div class="summary-card-desc">All three sources agree. No action needed.</div>
+          </div>
+          <div class="summary-card" style="background:var(--amber-bg);border-color:var(--amber-border)">
+            <div class="summary-card-count" style="color:var(--amber)">3</div>
+            <div class="summary-card-title" style="color:var(--amber)">need your review</div>
+            <div class="summary-card-desc">AI found a likely explanation. You decide.</div>
+          </div>
+          <div class="summary-card" style="background:var(--red-bg);border-color:var(--red-border)">
+            <div class="summary-card-count" style="color:var(--red)">2</div>
+            <div class="summary-card-title" style="color:var(--red)">require investigation</div>
+            <div class="summary-card-desc">AI can't explain these. Your expertise needed.</div>
+          </div>
+        </div>
+
+        <div class="source-legend">
+          <span class="source-legend-label">Data sources compared:</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-2)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--source-a);display:inline-block"></span>Custodian (BNY Mellon)
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-2)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--source-b);display:inline-block"></span>Fund Admin (SS&amp;C)
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text-2)">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--source-c);display:inline-block"></span>Internal Portfolio System
+          </span>
+        </div>
+
+        <div class="filter-tabs" id="filter-tabs">
+          <!-- Generated by JS -->
+        </div>
+
+        <div id="ai-loading-bar" style="display:none">
+          <div class="ai-loading-indicator">
+            <div class="spinner"></div>
+            AI is analyzing exception records with Gemini. This takes a few seconds...
+          </div>
+        </div>
+
+        <div class="results-table" id="results-table">
+          <!-- Generated by JS -->
+        </div>
+
+        <div class="dashboard-footer">
+          <span>Every AI recommendation and human decision is logged in the audit trail (Glass Box transparency)</span>
+          <button class="btn-export">Export Results</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+
+const MOCK_FILES = {
+  A: { name: 'bny_mellon_positions_20240315.csv', size: '142 KB', rows: 25, fields: 12,
+       preview: ['Security_ID','Position_Qty','Market_Value','Report_Date','Settlement_Status'] },
+  B: { name: 'ssc_nav_report_20240315.csv', size: '98 KB', rows: 25, fields: 10,
+       preview: ['cusip_number','shares','mkt_val','as_of','status'] },
+  C: { name: 'internal_portfolio_export.csv', size: '118 KB', rows: 25, fields: 11,
+       preview: ['ISIN','quantity','value_usd','val_date','recon_status'] }
+};
+
+const SOURCES = [
+  { key: 'A', label: 'Source A', name: 'Custodian Report', desc: 'Daily position file from your custodian (e.g., BNY Mellon, State Street)', accepts: 'CSV, XLSX, or fixed-width TXT', cssVar: 'source-a' },
+  { key: 'B', label: 'Source B', name: 'Fund Administrator NAV', desc: 'NAV package or position report from your fund administrator (e.g., SS&C, Citco)', accepts: 'CSV, XLSX, or fixed-width TXT', cssVar: 'source-b' },
+  { key: 'C', label: 'Source C', name: 'Internal Portfolio System', desc: 'Position export from your internal order management or portfolio system', accepts: 'CSV, XLSX, or fixed-width TXT', cssVar: 'source-c' }
+];
+
+const MAPPINGS = [
+  {
+    id: 1, label: 'Security Identifier', confidence: 94, status: 'high',
+    sourceA: { field: 'Security_ID', format: '9-char CUSIP', sample: '037833100' },
+    sourceB: { field: 'cusip_number', format: '9-char CUSIP', sample: '037833100' },
+    sourceC: { field: 'ISIN', format: '12-char ISIN', sample: 'US0378331005' },
+    evidence: [
+      "Source A 'Security_ID' matches 9-character alphanumeric CUSIP pattern (check-digit validated)",
+      "Source B 'cusip_number' contains explicit CUSIP reference in field name. 100% string match on sample values with Source A",
+      "Source C 'ISIN' uses 12-character format with 'US' country prefix. Standard CUSIP-to-ISIN derivation confirmed (US + CUSIP + Luhn check digit)",
+      "All three sources map to the same underlying security via cross-reference validation"
+    ],
+    historicalNote: 'This identifier mapping pattern has been validated across 47 prior reconciliation cycles with 100% accuracy.'
+  },
+  {
+    id: 2, label: 'Market Value', confidence: 91, status: 'high',
+    sourceA: { field: 'Market_Value', format: 'Decimal (2dp)', sample: '6,840,000.00' },
+    sourceB: { field: 'mkt_val', format: 'Decimal (mixed)', sample: '6840000' },
+    sourceC: { field: 'value_usd', format: 'Decimal (4dp)', sample: '6840000.0000' },
+    evidence: [
+      "Semantic similarity: 'Market_Value', 'mkt_val', and 'value_usd' all indicate monetary valuation fields",
+      "Statistical correlation: values across all three sources are within 0.01% variance for 23 of 25 records",
+      "Currency context: Source C appends '_usd' suffix confirming USD denomination. Matches Source A and B 'Currency'/'ccy' fields"
+    ],
+    historicalNote: 'Market value field mapping has been stable across all prior cycles. Decimal precision differences are handled during normalization.'
+  },
+  {
+    id: 3, label: 'Position Quantity', confidence: 72, status: 'medium',
+    sourceA: { field: 'Position_Qty', format: 'Integer', sample: '40,000' },
+    sourceB: { field: 'shares', format: 'Decimal', sample: '10,000.0000' },
+    sourceC: { field: 'quantity', format: 'Integer', sample: '40,000' },
+    evidence: [
+      "Semantic match: 'Position_Qty', 'shares', and 'quantity' all reference holding amounts",
+      "Format divergence: Source B stores as decimal (10000.0000), Sources A and C as integers. Mapping requires type normalization",
+      "Data discrepancy detected: Source B shows 10,000 shares for AAPL vs. 40,000 in Sources A and C. Possible corporate action (4:1 stock split). This is a data variance, not a mapping error. Flagging for reconciliation phase."
+    ],
+    historicalNote: 'Quantity discrepancies due to stock splits have appeared 8 times in the last 90 days. All were resolved after Source B processed the corporate action.'
+  },
+  {
+    id: 4, label: 'Report Date', confidence: 97, status: 'high',
+    sourceA: { field: 'Report_Date', format: 'YYYY-MM-DD', sample: '2024-03-15' },
+    sourceB: { field: 'as_of', format: 'MM/DD/YYYY', sample: '03/15/2024' },
+    sourceC: { field: 'val_date', format: 'DD-Mon-YYYY', sample: '15-Mar-2024' },
+    evidence: [
+      "All three fields contain date values referring to the same reporting period",
+      "Format normalization: YYYY-MM-DD, MM/DD/YYYY, and DD-Mon-YYYY all resolve to March 15, 2024 across all 25 records",
+      "Field names ('Report_Date', 'as_of', 'val_date') are common date-field naming patterns in financial data schemas"
+    ],
+    historicalNote: ''
+  },
+  {
+    id: 5, label: 'Status / Settlement', confidence: 58, status: 'low',
+    sourceA: { field: 'Settlement_Status', format: 'String', sample: 'Settled' },
+    sourceB: { field: 'status', format: 'String (uppercase)', sample: 'CONFIRMED' },
+    sourceC: { field: 'recon_status', format: 'String', sample: 'Pending' },
+    evidence: [
+      "Possible semantic overlap between 'Settlement_Status', 'status', and 'recon_status', but vocabulary differs significantly",
+      "Source A uses trade settlement states (Settled, Pending Settlement). Source B uses confirmation states (CONFIRMED, PENDING). Source C uses reconciliation workflow states (Pending, Reviewed).",
+      "These may represent different stages of the same lifecycle rather than equivalent fields. Recommend manual review to confirm mapping or split into separate normalized fields."
+    ],
+    historicalNote: 'Status field mapping has required manual override in 4 of the last 10 cycles due to vocabulary inconsistencies between sources.'
+  }
+];
+
+const RECORDS = [
+  {
+    id: 1, security: 'Apple Inc', ticker: 'AAPL', tier: 'flagged',
+    summaryShort: 'Stock split timing difference',
+    summaryLong: 'Source B shows pre-split shares (10,000). Sources A and C already reflect the 4:1 split (40,000). Dollar amounts match perfectly across all three. This is a timing lag, not a real discrepancy.',
+    sourceA: { shares: '40,000', value: '$6,840,000', note: 'Post-split' },
+    sourceB: { shares: '10,000', value: '$6,840,000', note: 'Pre-split' },
+    sourceC: { shares: '40,000', value: '$6,840,000', note: 'Post-split' },
+    recommendation: 'Wait for Source B\'s end-of-day refresh. The administrator hasn\'t processed the split yet.',
+    recommendationSteps: [
+      'Confirm the 4:1 stock split date against corporate actions calendar',
+      'Wait for Source B (SS&C) end-of-day NAV refresh to process the split',
+      'Re-run reconciliation after Source B updates to verify auto-resolution'
+    ],
+    confidence: 92,
+    impact: 'No financial impact (values match)',
+    historicalNote: 'Similar pattern: TSLA 3:1 split on Aug 2022 resolved automatically after Source B refreshed within 24 hours.'
+  },
+  {
+    id: 2, security: 'Microsoft Corp', ticker: 'MSFT', tier: 'escalated',
+    summaryShort: '500 unexplained shares in internal system',
+    summaryLong: 'The internal system shows 15,500 shares, but both the custodian and administrator agree on 15,000. No stock split, no corporate action, no pending trades found. This is a real discrepancy worth $207,500.',
+    sourceA: { shares: '15,000', value: '$6,225,000', note: '' },
+    sourceB: { shares: '15,000', value: '$6,225,000', note: '' },
+    sourceC: { shares: '15,500', value: '$6,432,500', note: '+500 extra' },
+    recommendation: 'Investigate internal trade records. Check for unconfirmed or pending transactions that may explain the 500-share difference.',
+    recommendationSteps: [
+      'Pull internal trade blotter for MSFT from the last 5 business days',
+      'Check for any pending or unconfirmed buy orders totaling 500 shares',
+      'If no pending trades found, escalate to portfolio manager for manual review'
+    ],
+    confidence: 28,
+    impact: '$207,500 variance',
+    historicalNote: 'No similar pattern found in resolution history. This is a new exception type for MSFT.'
+  },
+  {
+    id: 3, security: 'Johnson & Johnson', ticker: 'JNJ', tier: 'resolved',
+    summaryShort: 'All sources agree',
+    summaryLong: '12,000 shares at $158.00 across all three sources. The AI matched CUSIP 478160104 to ISIN US4781601046, confirming these are the same security using different identifier formats.',
+    sourceA: { shares: '12,000', value: '$1,896,000', note: '' },
+    sourceB: { shares: '12,000', value: '$1,896,000', note: '' },
+    sourceC: { shares: '12,000', value: '$1,896,000', note: '' },
+    recommendation: 'Auto-resolved. Identifier cross-reference confirmed match.',
+    recommendationSteps: [],
+    confidence: 98,
+    impact: 'None',
+    historicalNote: 'JNJ identifier cross-referencing has been consistent across 47 prior reconciliation cycles.'
+  },
+  {
+    id: 4, security: 'Salesforce Inc', ticker: 'CRM', tier: 'escalated',
+    summaryShort: 'Missing from administrator entirely',
+    summaryLong: 'The custodian and internal system both show 6,500 shares ($1.95M), but the fund administrator has no record of this position at all. This could be a reporting delay, a data feed failure, or an administrative error.',
+    sourceA: { shares: '6,500', value: '$1,950,000', note: '' },
+    sourceB: { shares: 'N/A', value: 'N/A', note: 'Missing' },
+    sourceC: { shares: '6,500', value: '$1,950,000', note: '' },
+    recommendation: 'Contact the fund administrator. This position is completely absent from their report, not mismatched but missing.',
+    recommendationSteps: [
+      'Verify Source B (SS&C) data feed ran successfully for today\'s reporting period',
+      'Contact SS&C operations desk to confirm CRM position status',
+      'If data feed issue confirmed, request manual position file and re-run ingestion'
+    ],
+    confidence: 15,
+    impact: '$1,950,000 unconfirmed',
+    historicalNote: 'SS&C feed delays have occurred 3 times in the last 90 days, typically resolving within 4 hours.'
+  },
+  {
+    id: 5, security: 'Alphabet Inc', ticker: 'GOOGL', tier: 'flagged',
+    summaryShort: 'Naming convention differs across sources',
+    summaryLong: 'All three sources agree on 5,000 shares at $709,000. The only difference is how they name it: \'Alphabet Inc\' vs \'GOOGL\' vs \'Alphabet Inc Class A\'. No financial impact.',
+    sourceA: { shares: '5,000', value: '$709,000', note: '' },
+    sourceB: { shares: '5,000', value: '$709,000', note: '' },
+    sourceC: { shares: '5,000', value: '$709,000', note: '' },
+    recommendation: 'Accept this match. The naming difference is cosmetic and does not affect financial data.',
+    recommendationSteps: [
+      'Confirm all three refer to the same CUSIP/ISIN',
+      "Accept the mapping with 'Alphabet Inc (GOOGL)' as the normalized display name"
+    ],
+    confidence: 85,
+    impact: 'None (cosmetic only)',
+    historicalNote: 'Naming normalization for GOOGL has been auto-accepted in 12 prior cycles.'
+  },
+  {
+    id: 6, security: 'Amazon.com Inc', ticker: 'AMZN', tier: 'resolved',
+    summaryShort: 'All sources agree',
+    summaryLong: '',
+    sourceA: { shares: '8,000', value: '$1,428,000', note: '' },
+    sourceB: { shares: '8,000', value: '$1,428,000', note: '' },
+    sourceC: { shares: '8,000', value: '$1,428,000', note: '' },
+    recommendation: 'Auto-resolved',
+    recommendationSteps: [],
+    confidence: 99,
+    impact: 'None',
+    historicalNote: ''
+  },
+  {
+    id: 7, security: 'Tesla Inc', ticker: 'TSLA', tier: 'flagged',
+    summaryShort: 'Settlement status vocabulary differs',
+    summaryLong: 'Shares and values match perfectly. But settlement status uses different vocabulary: \'Pending Settlement\' vs \'PENDING\' vs \'Pending\'. Same meaning, different labels.',
+    sourceA: { shares: '3,000', value: '$525,900', note: '' },
+    sourceB: { shares: '3,000', value: '$525,900', note: '' },
+    sourceC: { shares: '3,000', value: '$525,900', note: '' },
+    recommendation: 'Accept. Vocabulary normalization needed but no financial discrepancy exists.',
+    recommendationSteps: [
+      "Map all three status values to normalized 'Pending Settlement' label",
+      'Accept the match with a note for schema mapping refinement'
+    ],
+    confidence: 88,
+    impact: 'None',
+    historicalNote: 'Settlement status vocabulary normalization has been accepted in 31 prior cycles across multiple securities.'
+  },
+  {
+    id: 8, security: 'NVIDIA Corp', ticker: 'NVDA', tier: 'resolved',
+    summaryShort: 'All sources agree',
+    summaryLong: '',
+    sourceA: { shares: '4,500', value: '$3,952,800', note: '' },
+    sourceB: { shares: '4,500', value: '$3,952,800', note: '' },
+    sourceC: { shares: '4,500', value: '$3,952,800', note: '' },
+    recommendation: 'Auto-resolved',
+    recommendationSteps: [],
+    confidence: 99,
+    impact: 'None',
+    historicalNote: ''
+  },
+  {
+    id: 9, security: 'Home Depot Inc', ticker: 'HD', tier: 'resolved',
+    summaryShort: 'Match within rounding tolerance',
+    summaryLong: '',
+    sourceA: { shares: '2,800', value: '$1,037,540', note: '' },
+    sourceB: { shares: '2,800', value: '$1,037,540.15', note: '' },
+    sourceC: { shares: '2,800', value: '$1,037,540', note: '' },
+    recommendation: 'Auto-resolved. $0.15 rounding variance is within tolerance.',
+    recommendationSteps: [],
+    confidence: 97,
+    impact: 'None',
+    historicalNote: ''
+  },
+  {
+    id: 10, security: 'Mastercard Inc', ticker: 'MA', tier: 'resolved',
+    summaryShort: 'Match within rounding tolerance',
+    summaryLong: '',
+    sourceA: { shares: '1,500', value: '$702,300', note: '' },
+    sourceB: { shares: '1,500', value: '$702,299.68', note: '' },
+    sourceC: { shares: '1,500', value: '$702,300', note: '' },
+    recommendation: 'Auto-resolved. $0.32 rounding variance is within tolerance.',
+    recommendationSteps: [],
+    confidence: 97,
+    impact: 'None',
+    historicalNote: ''
+  }
+];
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+
+let currentView = 'ingestion';
+let sidebarCollapsed = false;
+let mobileMenuOpen = false;
+let uploads = {};
+let uploadLoading = {};
+let approvals = { 5: false }; // Status/Settlement pre-rejected
+let expandedCards = {};
+let expandedRow = null;
+let activeFilter = 'all';
+let acceptedRows = {};
+let aiLoading = false;
+let aiData = {};
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  currentView = name;
+  updateSidebarNav();
+  if (name === 'mapping') renderMappingCards();
+  if (name === 'dashboard') {
+    expandedRow = RECORDS.find(r => r.tier !== 'resolved')?.id || null;
+    renderDashboard();
+    loadAIAnalysis();
+  }
+}
+
+function navTo(view) {
+  if (view === 'mapping' && Object.keys(uploads).length < 2) return;
+  if (view === 'dashboard' && Object.keys(uploads).length < 2) return;
+  showView(view);
+  if (mobileMenuOpen) toggleMobileMenu();
+}
+
+function updateSidebarNav() {
+  const views = ['ingestion', 'mapping', 'dashboard'];
+  const order = { ingestion: 1, mapping: 2, dashboard: 3 };
+  const current = order[currentView];
+
+  views.forEach(v => {
+    const item = document.getElementById('nav-' + v);
+    const circle = document.getElementById('step-' + order[v]);
+    const badge = document.getElementById('nav-badge-' + v);
+
+    item.classList.remove('active', 'done');
+    circle.classList.remove('active', 'done');
+
+    if (v === currentView) {
+      item.classList.add('active');
+      circle.classList.add('active');
+      circle.textContent = order[v];
+      if (badge) badge.style.display = '';
+    } else if (order[v] < current) {
+      item.classList.add('done');
+      circle.classList.add('done');
+      circle.textContent = '\u2713';
+      if (badge) badge.style.display = 'none';
+    } else {
+      circle.textContent = order[v];
+      if (badge) badge.style.display = 'none';
+    }
+  });
+
+  const statusText = document.getElementById('agent-status-text');
+  if (currentView === 'ingestion') statusText.textContent = 'File Parser ready';
+  else if (currentView === 'mapping') statusText.textContent = 'Schema Mapper active';
+  else statusText.textContent = '3 agents active';
+}
+
+// ═══════════════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════════════
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  const btn = document.getElementById('theme-toggle-btn');
+  const thumb = document.getElementById('theme-toggle-thumb');
+  btn.className = 'theme-toggle-btn ' + (isDark ? 'light' : 'dark');
+  thumb.className = 'theme-toggle-thumb ' + (isDark ? 'light' : 'dark');
+  localStorage.setItem('fp-theme', isDark ? 'light' : 'dark');
+  if (currentView === 'mapping') renderMappingCards();
+  if (currentView === 'dashboard') renderDashboard();
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('fp-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const btn = document.getElementById('theme-toggle-btn');
+    const thumb = document.getElementById('theme-toggle-thumb');
+    if (btn) { btn.className = 'theme-toggle-btn dark'; thumb.className = 'theme-toggle-thumb dark'; }
+  }
+})();
+
+// ═══════════════════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════════════════
+
+function toggleSidebar() {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed', sidebarCollapsed);
+}
+
+function toggleMobileMenu() {
+  mobileMenuOpen = !mobileMenuOpen;
+  const overlay = document.getElementById('mobile-overlay');
+  const hamburger = document.querySelector('.hamburger-btn');
+  overlay.classList.toggle('open', mobileMenuOpen);
+  hamburger.innerHTML = mobileMenuOpen ? '&#10005;' : '&#9776;';
+  if (mobileMenuOpen) {
+    const inner = document.getElementById('mobile-sidebar-inner');
+    inner.innerHTML = document.getElementById('sidebar').outerHTML;
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SCREEN 1: DATA INGESTION
+// ═══════════════════════════════════════════════════
+
+function renderUploadCards() {
+  const container = document.getElementById('upload-cards');
+  container.innerHTML = SOURCES.map(s => renderUploadCard(s)).join('');
+}
+
+function renderUploadCard(s) {
+  const file = uploads[s.key];
+  const isLoading = uploadLoading[s.key];
+  const cv = s.cssVar;
+  const isUploaded = !!file;
+
+  let headerStyle = `background:var(--${cv}-bg);border-bottom:1px solid var(--${cv}-border)`;
+  let cardBorder = isUploaded ? `border:2px solid var(--${cv})` : `border:1.5px dashed var(--border)`;
+
+  let badgeHtml = isUploaded ? `<span class="upload-status-badge" style="background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)">Uploaded</span>` : '';
+
+  let bodyHtml = '';
+  if (isLoading) {
+    bodyHtml = `<div style="text-align:center;padding:20px;color:var(--text-2);font-size:13px">
+      <div class="spinner" style="margin:0 auto 8px"></div>
+      Analyzing file structure...
+    </div>`;
+  } else if (!isUploaded) {
+    bodyHtml = `
+      <div class="upload-desc">${s.desc}</div>
+      <div class="upload-zone" onclick="simUpload('${s.key}')">
+        <div class="upload-zone-icon">+</div>
+        <div class="upload-zone-text">Click to upload or drag and drop</div>
+        <div class="upload-zone-hint">Accepts: ${s.accepts}</div>
+      </div>`;
+  } else {
+    const previewTags = file.preview.map(f =>
+      `<span class="field-tag" style="background:var(--${cv}-bg);color:var(--${cv}-text);border:1px solid var(--${cv}-border)">${f}</span>`
+    ).join('');
+    const extra = file.fields - file.preview.length;
+    bodyHtml = `
+      <div class="file-preview">
+        <div class="file-icon" style="background:var(--${cv}-bg);border:1px solid var(--${cv}-border)">&#128196;</div>
+        <div style="flex:1;min-width:0">
+          <div class="file-name">${file.name}</div>
+          <div class="file-meta">${file.size} &middot; ${file.rows} rows &middot; ${file.fields} fields detected</div>
+        </div>
+        <button class="remove-btn" onclick="removeUpload('${s.key}')">Remove</button>
+      </div>
+      <div class="section-label">Fields Detected</div>
+      <div class="fields-detected">
+        ${previewTags}
+        <span class="field-tag-more">+${extra} more</span>
+      </div>`;
+  }
+
+  return `<div class="upload-card" style="${cardBorder}">
+    <div class="card-header" style="${headerStyle}">
+      <span class="source-dot" style="background:var(--${cv})"></span>
+      <div style="flex:1">
+        <div class="upload-card-title">${s.name}</div>
+        <div class="upload-card-sub">${s.label}</div>
+      </div>
+      ${badgeHtml}
+    </div>
+    <div class="upload-card-body">${bodyHtml}</div>
+  </div>`;
+}
+
+function simUpload(key) {
+  uploadLoading[key] = true;
+  renderUploadCards();
+  setTimeout(() => {
+    uploadLoading[key] = false;
+    uploads[key] = MOCK_FILES[key];
+    renderUploadCards();
+    updateIngestionState();
+  }, 320);
+}
+
+function removeUpload(key) {
+  delete uploads[key];
+  renderUploadCards();
+  updateIngestionState();
+}
+
+function updateIngestionState() {
+  const count = Object.keys(uploads).length;
+  const total = 3;
+  const pct = (count / total) * 100;
+  const fill = document.getElementById('progress-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = count === 3 ? 'var(--green)' : 'var(--accent)';
+
+  document.getElementById('progress-label').textContent =
+    count === 0 ? 'No sources uploaded yet' : `${count} of 3 sources uploaded`;
+  document.getElementById('progress-ready').style.display = count === 3 ? '' : 'none';
+
+  const lbl = document.getElementById('cta-label-ingestion');
+  const sub = document.getElementById('cta-sub-ingestion');
+  const btn = document.getElementById('proceed-btn');
+  const cta = document.getElementById('ingestion-cta');
+
+  if (count === 3) {
+    lbl.textContent = 'All 3 sources uploaded. Ready to map fields.';
+    sub.textContent = 'The AI will analyze field structures and propose mappings';
+  } else if (count >= 2) {
+    lbl.textContent = `${count} sources uploaded. Minimum met.`;
+    sub.textContent = 'You can proceed now or add the third source';
+  } else {
+    lbl.textContent = 'Upload at least 2 sources to continue';
+    sub.textContent = `${2 - count} more source${2 - count > 1 ? 's' : ''} needed`;
+  }
+
+  if (count >= 2) {
+    btn.className = 'cta-btn enabled';
+    cta.classList.add('ready');
+  } else {
+    btn.className = 'cta-btn disabled';
+    cta.classList.remove('ready');
+  }
+
+  document.getElementById('whats-next').style.display = count > 0 ? '' : 'none';
+}
+
+function proceedToMapping() {
+  if (Object.keys(uploads).length < 2) return;
+  showView('mapping');
+}
+
+// ═══════════════════════════════════════════════════
+// SCREEN 2: SCHEMA MAPPING
+// ═══════════════════════════════════════════════════
+
+function renderMappingCards() {
+  renderMappingSummary();
+  const container = document.getElementById('mapping-cards');
+  container.innerHTML = MAPPINGS.map(m => renderMappingCard(m)).join('');
+  updateMappingCTA();
+}
+
+function renderMappingSummary() {
+  const approvedCount = Object.values(approvals).filter(v => v === true).length;
+  const rejectedCount = Object.values(approvals).filter(v => v === false).length;
+  const pending = MAPPINGS.length - approvedCount - rejectedCount;
+  const bar = document.getElementById('mapping-summary-bar');
+  const stats = [
+    { label: 'Total Mappings', value: MAPPINGS.length, color: 'var(--accent)' },
+    { label: 'Approved', value: approvedCount, color: 'var(--green)' },
+    { label: 'Rejected', value: rejectedCount, color: 'var(--red)' },
+    { label: 'Pending Review', value: pending, color: 'var(--amber)' }
+  ];
+  bar.innerHTML = stats.map(s =>
+    `<div class="summary-stat">
+      <div class="summary-stat-label">${s.label}</div>
+      <div class="summary-stat-value" style="color:${s.color}">${s.value}</div>
+    </div>`
+  ).join('');
+}
+
+function renderMappingCard(m) {
+  const state = approvals[m.id]; // true=approved, false=rejected, undefined=neutral
+  const isApproved = state === true;
+  const isRejected = state === false;
+  const isExpanded = !!expandedCards[m.id];
+
+  let cardClass = 'mapping-card';
+  if (isApproved) cardClass += ' approved';
+  if (isRejected) cardClass += ' rejected';
+
+  const confLabel = m.status === 'high' ? 'High confidence' : m.status === 'medium' ? 'Medium confidence' : 'Low confidence, manual review needed';
+
+  const sourceKeys = ['A','B','C'];
+  const evidenceCards = sourceKeys.map(k => {
+    const data = m['source'+k];
+    return `<div class="source-evidence-card" style="background:var(--source-${k.toLowerCase()}-bg);border-color:var(--source-${k.toLowerCase()})">
+      <div style="margin-bottom:4px">
+        <span class="source-tag" style="background:var(--source-${k.toLowerCase()}-bg);color:var(--source-${k.toLowerCase()}-text);border-color:var(--source-${k.toLowerCase()})">
+          <span class="dot" style="background:var(--source-${k.toLowerCase()})"></span>Source ${k}
+        </span>
+      </div>
+      <div class="source-evidence-field">${data.field}</div>
+      <div class="source-evidence-format">${data.format}</div>
+      <div class="source-evidence-sample">${data.sample}</div>
+    </div>`;
+  }).join('');
+
+  const approveLabel = isApproved ? '&#10003; Approved' : 'Accept Mapping';
+  const approveClass = 'btn-approve ' + (isApproved ? 'active' : 'inactive');
+  const rejectLabel = isRejected ? '&#10007; Rejected' : 'Reject';
+  const rejectClass = 'btn-reject ' + (isRejected ? 'active' : 'inactive');
+  const reasoningLabel = isExpanded ? 'Hide reasoning' : 'View AI reasoning';
+
+  let statusBadge = '';
+  if (isApproved) statusBadge = `<span class="mapping-card-status" style="color:var(--green)">Approved</span>`;
+  if (isRejected) statusBadge = `<span class="mapping-card-status" style="color:var(--red)">Rejected</span>`;
+
+  let glassBox = '';
+  if (isExpanded) {
+    const evidenceItems = m.evidence.map(e => `<li>${e}</li>`).join('');
+    const histSection = m.historicalNote ? `
+      <div style="margin-top:14px">
+        <div class="section-label">Historical Context</div>
+        <div class="glass-box-history">${m.historicalNote}</div>
+      </div>` : '';
+    glassBox = `<div class="glass-box-body">
+      <div style="margin-top:10px">
+        <div class="section-label">AI Reasoning</div>
+        <ol class="glass-box-evidence">${evidenceItems}</ol>
+      </div>
+      ${histSection}
+    </div>`;
+  }
+
+  return `<div class="${cardClass}" id="mapping-card-${m.id}">
+    <div class="mapping-card-header">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="mapping-label">${m.label}</span>
+        <span class="confidence-badge ${m.status}">AI Confidence: ${m.confidence}%<span class="confidence-sub">${confLabel}</span></span>
+      </div>
+      ${statusBadge}
+    </div>
+    <div class="section-label">Source Evidence</div>
+    <div class="source-evidence-grid">${evidenceCards}</div>
+    <div class="mapping-actions">
+      <button class="${approveClass}" onclick="approveMapping(${m.id})">${approveLabel}</button>
+      <button class="${rejectClass}" onclick="rejectMapping(${m.id})">${rejectLabel}</button>
+      <button class="btn-reasoning" onclick="toggleCard(${m.id})">${reasoningLabel}</button>
+    </div>
+    <div class="glass-box" id="glass-${m.id}" style="display:${isExpanded ? '' : 'none'}">
+      <button class="glass-box-toggle" onclick="toggleCard(${m.id})">
+        <span>Glass Box: Why did the AI suggest this mapping?</span>
+        <span class="glass-box-chevron ${isExpanded ? 'open' : ''}">&#9660;</span>
+      </button>
+      ${glassBox}
+    </div>
+  </div>`;
+}
+
+function approveMapping(id) {
+  approvals[id] = approvals[id] === true ? undefined : true;
+  renderMappingCards();
+}
+
+function rejectMapping(id) {
+  approvals[id] = approvals[id] === false ? undefined : false;
+  renderMappingCards();
+}
+
+function toggleCard(id) {
+  expandedCards[id] = !expandedCards[id];
+  renderMappingCards();
+}
+
+function updateMappingCTA() {
+  const approvedCount = Object.values(approvals).filter(v => v === true).length;
+  const btn = document.getElementById('reconcile-btn');
+  const lbl = document.getElementById('cta-label-mapping');
+  const cta = document.getElementById('mapping-cta');
+
+  lbl.textContent = approvedCount === MAPPINGS.length
+    ? 'All mappings approved. Ready to reconcile.'
+    : `${approvedCount} of ${MAPPINGS.length} mappings approved`;
+
+  if (approvedCount > 0) {
+    btn.className = 'cta-btn enabled';
+    cta.classList.add('ready');
+  } else {
+    btn.className = 'cta-btn disabled';
+    cta.classList.remove('ready');
+  }
+}
+
+function runReconciliation() {
+  const approvedCount = Object.values(approvals).filter(v => v === true).length;
+  if (approvedCount === 0) return;
+  showView('dashboard');
+}
+
+// ═══════════════════════════════════════════════════
+// SCREEN 3: RECONCILIATION DASHBOARD
+// ═══════════════════════════════════════════════════
+
+function renderDashboard() {
+  renderFilterTabs();
+  renderResultsTable();
+}
+
+function renderFilterTabs() {
+  const resolved = RECORDS.filter(r => r.tier === 'resolved').length;
+  const flagged = RECORDS.filter(r => r.tier === 'flagged').length;
+  const escalated = RECORDS.filter(r => r.tier === 'escalated').length;
+
+  const tabs = [
+    { key: 'all', label: `All (${RECORDS.length})`, activeClass: 'active-all' },
+    { key: 'resolved', label: `Matched (${resolved})`, activeClass: 'active-matched' },
+    { key: 'flagged', label: `Needs Review (${flagged})`, activeClass: 'active-flagged' },
+    { key: 'escalated', label: `Investigate (${escalated})`, activeClass: 'active-escalated' }
+  ];
+
+  document.getElementById('filter-tabs').innerHTML = tabs.map(t =>
+    `<button class="filter-tab ${activeFilter === t.key ? t.activeClass : ''}" onclick="setFilter('${t.key}')">${t.label}</button>`
+  ).join('');
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  renderDashboard();
+}
+
+function renderResultsTable() {
+  const filtered = activeFilter === 'all' ? RECORDS : RECORDS.filter(r => r.tier === activeFilter);
+  const container = document.getElementById('results-table');
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="padding:32px;text-align:center;color:var(--text-2);font-size:13px">No records match this filter</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map((r, i) => {
+    const isExpanded = expandedRow === r.id;
+    const tierCfg = getTierConfig(r.tier);
+    const isLast = i === filtered.length - 1;
+
+    let rowStyle = `border-bottom:${!isLast || isExpanded ? '1px solid var(--border-light)' : 'none'}`;
+    if (isExpanded) rowStyle += ';background:var(--bg-1)';
+
+    const aiBadge = r.tier !== 'resolved' ? `
+      <span class="ai-pct-badge" style="background:${r.confidence>=80?'var(--green-bg)':r.confidence>=50?'var(--amber-bg)':'var(--red-bg)'};color:${r.confidence>=80?'var(--green)':r.confidence>=50?'var(--amber)':'var(--red)'}">
+        AI: ${r.confidence}%
+      </span>` : '';
+
+    const expandedHtml = isExpanded ? renderExpandedRow(r) : '';
+
+    return `<div>
+      <div class="result-row-header ${isExpanded ? 'expanded' : ''}" onclick="toggleRow(${r.id})" style="${rowStyle}">
+        <div class="tier-icon" style="background:${tierCfg.bg};border-color:${tierCfg.color};color:${tierCfg.color}">${tierCfg.icon}</div>
+        <div class="result-security">
+          <div><span class="result-security-name">${r.security}</span><span class="result-ticker">${r.ticker}</span></div>
+          <div class="result-summary">${r.summaryShort}</div>
+        </div>
+        <div class="result-right">
+          ${aiBadge}
+          <span class="row-chevron ${isExpanded ? 'open' : ''}">&#9660;</span>
+        </div>
+      </div>
+      ${expandedHtml}
+    </div>`;
+  }).join('');
+}
+
+function getTierConfig(tier) {
+  const configs = {
+    resolved: { bg: 'var(--green-bg)', color: 'var(--green)', icon: '&#10003;' },
+    flagged:  { bg: 'var(--amber-bg)', color: 'var(--amber)', icon: '?' },
+    escalated:{ bg: 'var(--red-bg)',   color: 'var(--red)',   icon: '!' }
+  };
+  return configs[tier] || configs.resolved;
+}
+
+function renderExpandedRow(r) {
+  const data = aiData[r.id] || r;
+
+  // Source evidence cards
+  const sourceCards = ['A','B','C'].map(k => {
+    const ev = r['source'+k];
+    const isMissing = ev.shares === 'N/A';
+    const key = k.toLowerCase();
+    let sharesHtml = isMissing
+      ? `<div class="source-ev-missing">Not found in this source</div>`
+      : `<div class="source-ev-shares">${ev.shares} shares</div>
+         <div class="source-ev-value">${ev.value}</div>`;
+    let noteHtml = ev.note ? `<div class="source-ev-note" style="background:${isMissing?'var(--red-bg)':'var(--source-'+key+'-bg)'};color:${isMissing?'var(--red)':'var(--source-'+key+'-text)'};">${ev.note}</div>` : '';
+    return `<div class="source-ev-card" style="background:${isMissing?'var(--red-bg)':'var(--source-'+key+'-bg)'};border-color:${isMissing?'var(--red-border)':'var(--source-'+key+')'}">
+      <div class="source-ev-name">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--source-${key});display:inline-block"></span>
+        ${k==='A'?'Custodian':k==='B'?'Fund Admin':'Internal System'}
+      </div>
+      ${sharesHtml}
+      ${noteHtml}
+    </div>`;
+  }).join('');
+
+  // Confidence badge for action plan
+  const conf = data.confidence;
+  const confBg = conf>=80?'var(--green-bg)':conf>=50?'var(--amber-bg)':'var(--red-bg)';
+  const confColor = conf>=80?'var(--green)':conf>=50?'var(--amber)':'var(--red)';
+  const confBorder = conf>=80?'var(--green-border)':conf>=50?'var(--amber-border)':'var(--red-border)';
+  const confLabelText = conf>=80?'High confidence':conf>=50?'Medium confidence':'Low confidence, manual review needed';
+
+  const stepsHtml = data.recommendationSteps && data.recommendationSteps.length > 0
+    ? `<ol class="action-plan-steps">${data.recommendationSteps.map(s=>`<li>${s}</li>`).join('')}</ol>`
+    : '';
+
+  // Financial impact color
+  const isMatImpact = data.impact && data.impact.includes('$') && !data.impact.toLowerCase().includes('none') && !data.impact.toLowerCase().includes('no financial');
+
+  // Action buttons (only for non-resolved)
+  let actionBtns = '';
+  if (r.tier !== 'resolved') {
+    const isDone = !!acceptedRows[r.id];
+    actionBtns = `<div class="action-buttons">
+      <button class="btn-accept ${isDone?'done':''}" onclick="acceptRec(${r.id})">${isDone?'&#10003; Accepted':'Accept Recommendation'}</button>
+      <button class="btn-override" onclick="showToast('Override noted. Exception flagged for manual review.')">Override</button>
+      ${r.tier==='flagged'?`<button class="btn-escalate" onclick="showToast('Escalated to senior analyst queue.')">Escalate Instead</button>`:''}
+    </div>`;
+  }
+
+  const aiAnalysisSection = data.summaryLong ? `
+    <div class="expanded-section">
+      <div class="section-label">AI Analysis</div>
+      <div class="ai-analysis-text">${data.summaryLong}</div>
+    </div>` : '';
+
+  const histSection = data.historicalNote ? `
+    <div>
+      <div class="section-label">Historical Context</div>
+      <div class="hist-text">${data.historicalNote}</div>
+    </div>` : '<div></div>';
+
+  return `<div class="expanded-row">
+    ${aiAnalysisSection}
+    <div class="expanded-section">
+      <div class="section-label">Source Evidence</div>
+      <div class="source-evidence-row">${sourceCards}</div>
+    </div>
+    <div class="expanded-section">
+      <div class="section-label">Recommended Action Plan</div>
+      <div class="action-plan-box">
+        <div class="action-plan-meta">
+          <span class="confidence-badge" style="background:${confBg};color:${confColor};border-color:${confBorder}">AI Confidence: ${conf}%</span>
+          <span class="confidence-label">${confLabelText}</span>
+        </div>
+        <div class="action-plan-text">${data.recommendation}</div>
+        ${stepsHtml}
+      </div>
+    </div>
+    <div class="hist-impact-row">
+      ${histSection}
+      <div style="text-align:right">
+        <div class="section-label">Financial Impact</div>
+        <div class="impact-value" style="color:${isMatImpact?'var(--red)':'var(--green)'}">${data.impact}</div>
+      </div>
+    </div>
+    ${actionBtns}
+  </div>`;
+}
+
+function toggleRow(id) {
+  expandedRow = expandedRow === id ? null : id;
+  renderDashboard();
+}
+
+function acceptRec(id) {
+  acceptedRows[id] = true;
+  showToast('Recommendation accepted. Logged to audit trail.');
+  renderDashboard();
+}
+
+// ═══════════════════════════════════════════════════
+// GEMINI API INTEGRATION
+// ═══════════════════════════════════════════════════
+
+async function loadAIAnalysis() {
+  const exceptions = RECORDS.filter(r => r.tier !== 'resolved');
+  if (exceptions.length === 0) return;
+
+  aiLoading = true;
+  document.getElementById('ai-loading-bar').style.display = '';
+
+  const promises = exceptions.map(async (r) => {
+    try {
+      const res = await fetch('/api/finpilot/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'reconciliation',
+          context: {
+            security: r.security,
+            ticker: r.ticker,
+            tier: r.tier,
+            sourceA: r.sourceA,
+            sourceB: r.sourceB,
+            sourceC: r.sourceC
+          }
+        })
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data && !data.fallback) {
+        aiData[r.id] = {
+          ...r,
+          summaryLong: data.analysis || r.summaryLong,
+          confidence: typeof data.confidence === 'number' ? data.confidence : r.confidence,
+          recommendation: data.recommendation || r.recommendation,
+          recommendationSteps: Array.isArray(data.recommendationSteps) ? data.recommendationSteps : r.recommendationSteps,
+          historicalNote: data.historicalContext || r.historicalNote,
+          impact: data.impact || r.impact
+        };
+      }
+    } catch (e) {
+      // silently fall back to mock data
+    }
+  });
+
+  await Promise.allSettled(promises);
+
+  aiLoading = false;
+  document.getElementById('ai-loading-bar').style.display = 'none';
+  if (currentView === 'dashboard') renderDashboard();
+}
+
+// ═══════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+
+renderUploadCards();
+updateIngestionState();
+</script>
+</body>
+</html>
