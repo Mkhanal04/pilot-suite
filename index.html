@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,29 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  /* ═══ THEME TOKENS (CSS custom properties) ═══ */
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --blueS: rgba(37,99,235,0.06); --blueB: rgba(37,99,235,0.14);
+    --green: #16A34A; --greenS: rgba(22,163,74,0.06); --greenB: rgba(22,163,74,0.14);
+    --amber: #CA8A04; --amberS: rgba(202,138,4,0.06); --amberB: rgba(202,138,4,0.14);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.06); --tealB: rgba(13,148,136,0.14);
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    /* WCAG AA: t1 ≥10:1, t2 ≥6.4:1 on #09090B */
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --blueS: rgba(59,130,246,0.08); --blueB: rgba(59,130,246,0.18);
+    --green: #22C55E; --greenS: rgba(34,197,94,0.08); --greenB: rgba(34,197,94,0.18);
+    --amber: #EAB308; --amberS: rgba(234,179,8,0.08); --amberB: rgba(234,179,8,0.18);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.08); --tealB: rgba(13,148,136,0.18);
+    --navBg: rgba(9,9,11,0.85);
+  }
 
   /* Keyboard focus indicators — WCAG AA */
   *:focus-visible {
@@ -63,7 +86,8 @@ const themes = {
   dark: {
     bg: "#09090B", bg1: "#0F0F12", bg2: "#17171C", bg3: "#1E1E26",
     border: "rgba(255,255,255,0.06)", borderH: "rgba(255,255,255,0.13)",
-    t0: "#F4F4F5", t1: "#A1A1AA", t2: "#63636E", t3: "#3F3F46",
+    /* WCAG AA: t1 ≥10:1, t2 ≥6.4:1 on #09090B bg */
+    t0: "#F4F4F5", t1: "#D4D4D8", t2: "#A1A1AA", t3: "#3F3F46",
     blue: "#3B82F6", blueS: "rgba(59,130,246,0.08)", blueB: "rgba(59,130,246,0.18)",
     green: "#22C55E", greenS: "rgba(34,197,94,0.08)", greenB: "rgba(34,197,94,0.18)",
     amber: "#EAB308", amberS: "rgba(234,179,8,0.08)", amberB: "rgba(234,179,8,0.18)",
@@ -243,6 +267,9 @@ function Portfolio() {
   const t = themes[mode];
   useReveal(page + slug + mode + filter + (content ? '1' : '0') + isMobile);
 
+  // Sync data-theme attribute so CSS custom properties track React mode state
+  useEffect(() => { document.documentElement.setAttribute('data-theme', mode); }, [mode]);
+
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
   useEffect(() => { fetch('/content/work.json').then(r => r.json()).then(data => setContent(data)).catch(() => console.error('Failed to load content')); }, []);
 
@@ -368,19 +395,70 @@ function Portfolio() {
   const HomePage = () => { const ac = content.architectureComparison; return (
     <>
       {/* HERO */}
-      <section style={{ padding: isMobile ? "100px 20px 56px" : "140px 24px 80px" }}>
+      <section style={{ padding: isMobile ? "80px 20px 40px" : "100px 24px 48px" }}>
         <div style={s.container}>
-          <R delay={0.05}><div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
-            <img src="/content/headshot.jpg" alt="Milan Khanal" style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", flexShrink: 0, border: `3px solid ${t.border}` }} />
-            <div><div style={{ fontWeight: 600, fontSize: 16, color: t.t0 }}>Milan Khanal</div><div style={{ ...s.tCaption, display: "flex", alignItems: "center", gap: 6, color: t.t1 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: t.green, display: "inline-block" }} />Human-Centered AI · Trust & Decision Intelligence {"\u00b7"} McKinney, TX</div></div>
-          </div></R>
-          <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720 }}>Enterprise AI fails when nobody designs for the moment a user decides whether to trust it.</h1></R>
-          <R delay={0.2}>
-            <p style={{ ...s.tBody, marginBottom: 36, maxWidth: 640 }}>I design decision intelligence systems where every AI recommendation comes with a visible evidence chain, human approval controls, and real-time bias monitoring. The architecture is domain-agnostic: each proof of concept applies the same HCAI framework to a different industry. Supply chain, recruiting, and financial data reconciliation -- three industries, one framework.</p>
-          </R>
+          {isMobile ? (
+            <>
+              <R delay={0.05}>
+                <div style={{ textAlign: "center", marginBottom: 28 }}>
+                  <img src="/content/headshot.jpg" alt="Milan Khanal" style={{ width: 140, height: 140, borderRadius: "50%", objectFit: "cover", objectPosition: "center 20%", border: `3px solid ${t.border}`, marginBottom: 14, display: "block", margin: "0 auto 14px" }} />
+                  <div style={{ fontWeight: 600, fontSize: 18, color: t.t0, marginBottom: 4 }}>Milan Khanal</div>
+                  <div style={{ fontSize: 13, color: t.t1, lineHeight: 1.5, marginBottom: 12 }}>Human-Centered AI · Trust &amp; Decision Intelligence</div>
+                  <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+                    <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
+                    <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
+                  </div>
+                </div>
+              </R>
+              <R delay={0.12}><h1 style={{ ...s.tHero, marginBottom: 20 }}>Enterprise AI fails when nobody designs for the moment a user decides whether to trust it.</h1></R>
+              <R delay={0.2}>
+                <p style={{ ...s.tBody, marginBottom: 24 }}>10 years bridging enterprise operations and technical build teams across Toyota, Dell, CRC Group, and World Kinect. Now I build the prototypes myself. Using AI-assisted development and Human-Centered AI principles, I compress the idea-to-validation cycle from months to weeks — and every prototype you see here is live, functional, and applies the same trust-first architecture to a different industry.</p>
+              </R>
+              <R delay={0.28}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 8 }}>
+                  {[{ num: "$900M+", label: "platform prototyped" }, { num: "80%", label: "less manual processing" }, { num: "5 industries", label: "10+ years" }, { num: "3 live prototypes", label: "click below" }].map((stat, i) => (
+                    <div key={i} style={{ borderLeft: `3px solid ${t.blue}`, paddingLeft: 12 }}>
+                      <div style={{ fontWeight: 700, fontSize: 18, color: t.t0, letterSpacing: "-0.01em" }}>{stat.num}</div>
+                      <div style={{ fontSize: 12, color: t.t2, marginTop: 2 }}>{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </R>
+            </>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 56, alignItems: "start" }}>
+              <R delay={0.05}>
+                <div>
+                  <img src="/content/headshot.jpg" alt="Milan Khanal" style={{ width: 140, height: 140, borderRadius: "50%", objectFit: "cover", objectPosition: "center 20%", border: `3px solid ${t.border}`, marginBottom: 16, display: "block" }} />
+                  <div style={{ fontWeight: 600, fontSize: 16, color: t.t0, marginBottom: 4 }}>Milan Khanal</div>
+                  <div style={{ fontSize: 13, color: t.t1, lineHeight: 1.5, marginBottom: 14 }}>Human-Centered AI · Trust &amp; Decision Intelligence</div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn ↗</a>
+                    <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub ↗</a>
+                  </div>
+                </div>
+              </R>
+              <div>
+                <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720, marginBottom: 20 }}>Enterprise AI fails when nobody designs for the moment a user decides whether to trust it.</h1></R>
+                <R delay={0.2}>
+                  <p style={{ ...s.tBody, marginBottom: 28, maxWidth: 640 }}>10 years bridging enterprise operations and technical build teams across Toyota, Dell, CRC Group, and World Kinect. Now I build the prototypes myself. Using AI-assisted development and Human-Centered AI principles, I compress the idea-to-validation cycle from months to weeks — and every prototype you see here is live, functional, and applies the same trust-first architecture to a different industry.</p>
+                </R>
+                <R delay={0.28}>
+                  <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
+                    {[{ num: "$900M+", label: "platform prototyped" }, { num: "80%", label: "less manual processing" }, { num: "5 industries", label: "10+ years" }, { num: "3 live prototypes", label: "click below" }].map((stat, i) => (
+                      <div key={i} style={{ borderLeft: `3px solid ${t.blue}`, paddingLeft: 12 }}>
+                        <div style={{ fontWeight: 700, fontSize: 20, color: t.t0, letterSpacing: "-0.01em" }}>{stat.num}</div>
+                        <div style={{ fontSize: 12, color: t.t2, marginTop: 2 }}>{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </R>
+              </div>
+            </div>
+          )}
         </div>
       </section>
-      <div style={s.divider} />
+      <div style={{ ...s.divider, margin: "0 auto" }} />
 
       {/* STORY */}
       <section id="story" style={s.section}><div style={s.container}>

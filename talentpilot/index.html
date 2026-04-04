@@ -36,6 +36,7 @@
   --blue:#2563EB;--blue-bg:#EFF6FF;
   --purple:#7C3AED;--purple-bg:#F5F3FF;
   --teal:#0D9488;--teal-bg:#F0FDFA;
+  --accent:#0D9488;--accent-bg:#F0FDFA;--accent-border:rgba(13,148,136,.25);
 }
 [data-theme="dark"]{
   --red-bg:rgba(220,38,38,.12);--red-border:rgba(220,38,38,.25);
@@ -48,6 +49,9 @@
 *{margin:0;padding:0;box-sizing:border-box}
 ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-3)}
 *{scrollbar-width:thin;scrollbar-color:var(--bg-3) transparent}
+/* ═══ FOCUS INDICATORS — WCAG AA ═══ */
+*:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+*:focus:not(:focus-visible){outline:none}
 body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 
 /* ═══ LAYOUT ═══ */
@@ -56,8 +60,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .mobile-header-left{display:flex;align-items:center;gap:12px}
 .mobile-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text-0)}
 .mobile-logo span{font-family:'DM Sans';font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em}
-.mobile-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-.hamburger{width:36px;height:36px;border:none;background:transparent;color:var(--text-0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+.mobile-btn{width:44px;height:44px;border-radius:8px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+.hamburger{width:44px;height:44px;border:none;background:transparent;color:var(--text-0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
 .hamburger span{width:18px;height:2px;background:var(--text-0);border-radius:1px}
 
 /* ═══ SIDEBAR ═══ */
@@ -71,7 +75,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 [data-theme="dark"] .sidebar.collapsed .logo-mark{background:var(--blue);color:white}
 .sidebar.collapsed .nav-label{opacity:0;height:0;margin:0;overflow:hidden;position:absolute}
 .sidebar.collapsed .nav-section{padding:0 12px;margin-bottom:12px}
-.sidebar.collapsed .nav-item{display:flex;align-items:center;justify-content:center;padding:0;gap:0;border-radius:8px;width:44px;height:40px;margin:2px auto}
+.sidebar.collapsed .nav-item{display:flex;align-items:center;justify-content:center;padding:0;gap:0;border-radius:8px;width:44px;height:44px;margin:2px auto}
 .sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;margin:0;text-align:center}
 .sidebar.collapsed .nav-item .nav-text{opacity:0;width:0;overflow:hidden;position:absolute}
 .sidebar.collapsed .nav-badge{opacity:0;width:0;overflow:hidden;padding:0;margin:0;position:absolute}
@@ -93,7 +97,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .logo-mark{display:none;transition:all .2s ease}
 .nav-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);padding:0 8px;margin-bottom:8px}
 .nav-section{padding:0 16px;margin-bottom:28px}
-.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-2);cursor:pointer;transition:all .2s ease}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-2);cursor:pointer;transition:all .2s ease;border:none;background:none;font-family:'DM Sans',sans-serif;width:100%;text-align:left;min-height:44px}
 .nav-item:hover{background:var(--bg-2);color:var(--text-0)}
 .nav-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text);font-weight:500}
 .nav-item .icon{width:18px;text-align:center;font-size:15px;flex-shrink:0}
@@ -101,7 +105,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 .nav-badge{margin-left:auto;background:var(--red);color:white;font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px}
 .nav-badge-blue{margin-left:auto;background:var(--blue);color:white;font-size:10px;font-weight:600;padding:1px 6px;border-radius:8px}
 .sidebar-bottom{margin-top:auto}
-.theme-toggle{display:flex;align-items:center;gap:10px;margin:0 24px 16px;cursor:pointer;user-select:none}
+.theme-toggle{display:flex;align-items:center;gap:10px;margin:0 24px 16px;cursor:pointer;user-select:none;border:none;background:none;font-family:'DM Sans',sans-serif;color:inherit;width:100%;text-align:left;min-height:44px}
 .toggle-track{width:44px;height:24px;background:var(--bg-3);border-radius:12px;position:relative;transition:background .3s;flex-shrink:0}
 .toggle-knob{width:18px;height:18px;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 [data-theme="light"] .toggle-knob{background:#fff}
@@ -950,7 +954,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
   .hero{padding:28px 24px 32px}.feed-section{padding:24px}
   .queue-content{padding:24px}
   .decision-hero-body{grid-template-columns:1fr;gap:16px}
-  .dhb-right{text-align:left;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .dhb-right{text-align:left;display:flex;align-items:center;gap:16px;flex-wrap:wrap;min-width:0}
   .breadcrumb{padding:8px 16px;font-size:12px}
 }
 @media(max-width:767px){
@@ -967,6 +971,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 
 /* ═══ MOBILE PHONE FIXES (≤480px) ═══ */
 @media(max-width:480px){
+  /* Fixed-width overrides for 375px phones */
+  .hero-sub{font-size:13px;max-width:100%}
+  .hero-headline{font-size:22px}
+  .detail-desc{font-size:13px;max-width:100%}
+  .dhb-right{min-width:0}
+  .hero{padding:16px 14px 20px}
+  .feed-section{padding:16px 14px}
   /* Hero cards stack to 1 column on small phones */
   .hero-cards{grid-template-columns:1fr;gap:6px}
   .hero-card{padding:10px 14px;flex-direction:row;align-items:center;gap:8px}
@@ -1111,11 +1122,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
 <body>
 <div class="mobile-header">
   <div class="mobile-header-left">
-    <button class="hamburger" onclick="toggleMobileSidebar()"><span></span><span></span><span></span></button>
+    <button class="hamburger" onclick="toggleMobileSidebar()" aria-label="Open menu" aria-expanded="false" id="hamburgerBtn"><span></span><span></span><span></span></button>
     <div class="mobile-logo">TalentPilot <span>· Decision Intelligence</span></div>
   </div>
   <div class="mobile-actions" style="display:flex;gap:8px">
-    <button class="mobile-btn" onclick="toggleTheme()">◐</button>
+    <button class="mobile-btn" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
   </div>
 </div>
 
@@ -1126,27 +1137,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0)
     <div class="logo" onclick="showView('today')" style="cursor:pointer"><h1><span class="logo-full">TalentPilot</span><span class="logo-mark">TP</span></h1><span class="sub">Decision Intelligence</span></div>
     <nav class="nav-section">
       <div class="nav-label">Recruiting</div>
-      <div class="nav-item active" id="nav-today" onclick="showView('today')" title="Today"><span class="icon">◎</span><span class="nav-text"> Today</span></div>
-      <div class="nav-item" id="nav-queue" onclick="showView('queue')" title="Decisions"><span class="icon">⚡</span><span class="nav-text"> Decisions</span><span class="nav-badge">8</span></div>
-      <div class="nav-item" id="nav-detail" onclick="showView('detail')" title="Decision Detail" style="display:none"><span class="icon">◈</span><span class="nav-text"> Decision Detail</span></div>
-      <div class="nav-item" id="nav-intel" onclick="showView('intel')" title="Client Health"><span class="icon">📡</span><span class="nav-text"> Client Health</span><span class="nav-badge-blue">4</span></div>
+      <button class="nav-item active" id="nav-today" onclick="showView('today')" aria-label="Today" type="button"><span class="icon">◎</span><span class="nav-text"> Today</span></button>
+      <button class="nav-item" id="nav-queue" onclick="showView('queue')" aria-label="Decisions" type="button"><span class="icon">⚡</span><span class="nav-text"> Decisions</span><span class="nav-badge">8</span></button>
+      <button class="nav-item" id="nav-detail" onclick="showView('detail')" aria-label="Decision Detail" type="button" style="display:none"><span class="icon">◈</span><span class="nav-text"> Decision Detail</span></button>
+      <button class="nav-item" id="nav-intel" onclick="showView('intel')" aria-label="Client Health" type="button"><span class="icon">📡</span><span class="nav-text"> Client Health</span><span class="nav-badge-blue">4</span></button>
     </nav>
     <nav class="nav-section">
       <div class="nav-label">System</div>
-      <div class="nav-item" id="nav-control" onclick="showView('control')" title="Control Center"><span class="icon">⚙</span><span class="nav-text"> Control Center</span></div>
-      <div class="nav-item" id="nav-bias" onclick="showView('bias')" title="Bias Dashboard"><span class="icon">⬡</span><span class="nav-text"> Bias Dashboard</span></div>
-      <div class="nav-item" id="nav-chat" onclick="showView('chat')" title="Chat Intelligence"><span class="icon">💬</span><span class="nav-text"> Chat</span></div>
+      <button class="nav-item" id="nav-control" onclick="showView('control')" aria-label="Control Center" type="button"><span class="icon">⚙</span><span class="nav-text"> Control Center</span></button>
+      <button class="nav-item" id="nav-bias" onclick="showView('bias')" aria-label="Bias Dashboard" type="button"><span class="icon">⬡</span><span class="nav-text"> Bias Dashboard</span></button>
+      <button class="nav-item" id="nav-chat" onclick="showView('chat')" aria-label="Chat Intelligence" type="button"><span class="icon">💬</span><span class="nav-text"> Chat</span></button>
     </nav>
     <nav class="nav-section">
-      <button class="collapse-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
+      <button class="collapse-toggle" onclick="toggleSidebar()" aria-label="Collapse sidebar" aria-expanded="true" id="collapseBtn">
         <span class="collapse-icon">«</span><span class="collapse-text">Collapse</span>
       </button>
     </nav>
     <div class="sidebar-bottom">
-      <div class="theme-toggle" onclick="toggleTheme()">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" type="button">
         <div class="toggle-track"><div class="toggle-knob"></div></div>
         <span class="toggle-label" id="themeLabel">Dark mode</span>
-      </div>
+      </button>
       <div class="sidebar-footer">
         <div class="agent-status"><span class="status-dot"></span><span>4 Agents Active · System Online</span></div>
         <div style="margin-top:10px"><button onclick="resetDemo()" style="width:100%;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg-2);color:var(--text-2);font-size:12px;font-family:'DM Sans';cursor:pointer;transition:all .15s" onmouseover="this.style.background='var(--red-bg)';this.style.color='var(--red)'" onmouseout="this.style.background='var(--bg-2)';this.style.color='var(--text-2)'">↻ Reset Demo</button></div>
@@ -3323,7 +3334,10 @@ function filterQueue(filter) {
 // ═══ SIDEBAR ═══
 function toggleSidebar() {
   if (window.innerWidth < 1024) { toggleMobileSidebar(); return; }
-  document.getElementById('sidebar').classList.toggle('collapsed');
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('collapsed');
+  const collapseBtn = document.getElementById('collapseBtn');
+  if (collapseBtn) collapseBtn.setAttribute('aria-expanded', String(!sidebar.classList.contains('collapsed')));
 }
 function toggleMobileSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -3331,6 +3345,8 @@ function toggleMobileSidebar() {
   if (!sidebar.classList.contains('mobile-open')) sidebar.classList.remove('collapsed');
   sidebar.classList.toggle('mobile-open');
   overlay.classList.toggle('show');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', String(sidebar.classList.contains('mobile-open')));
 }
 
 // ═══ THEME ═══
