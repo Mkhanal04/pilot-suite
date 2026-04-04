@@ -82,29 +82,9 @@ const { useState, useEffect } = React;
  ╚═══════════════════════════════════════════════════════════════╝
 */
 
-const themes = {
-  dark: {
-    bg: "#09090B", bg1: "#0F0F12", bg2: "#17171C", bg3: "#1E1E26",
-    border: "rgba(255,255,255,0.06)", borderH: "rgba(255,255,255,0.13)",
-    /* WCAG AA: t1 ≥10:1, t2 ≥6.4:1 on #09090B bg */
-    t0: "#F4F4F5", t1: "#D4D4D8", t2: "#A1A1AA", t3: "#3F3F46",
-    blue: "#3B82F6", blueS: "rgba(59,130,246,0.08)", blueB: "rgba(59,130,246,0.18)",
-    green: "#22C55E", greenS: "rgba(34,197,94,0.08)", greenB: "rgba(34,197,94,0.18)",
-    amber: "#EAB308", amberS: "rgba(234,179,8,0.08)", amberB: "rgba(234,179,8,0.18)",
-    teal: "#0D9488", tealS: "rgba(13,148,136,0.08)", tealB: "rgba(13,148,136,0.18)",
-    navBg: "rgba(9,9,11,0.85)",
-  },
-  light: {
-    bg: "#FAFAFA", bg1: "#FFFFFF", bg2: "#F4F4F5", bg3: "#E4E4E7",
-    border: "rgba(0,0,0,0.06)", borderH: "rgba(0,0,0,0.12)",
-    t0: "#18181B", t1: "#3F3F46", t2: "#71717A", t3: "#D4D4D8",
-    blue: "#2563EB", blueS: "rgba(37,99,235,0.06)", blueB: "rgba(37,99,235,0.14)",
-    green: "#16A34A", greenS: "rgba(22,163,74,0.06)", greenB: "rgba(22,163,74,0.14)",
-    amber: "#CA8A04", amberS: "rgba(202,138,4,0.06)", amberB: "rgba(202,138,4,0.14)",
-    teal: "#0D9488", tealS: "rgba(13,148,136,0.06)", tealB: "rgba(13,148,136,0.14)",
-    navBg: "rgba(250,250,250,0.88)",
-  },
-};
+// CSS custom properties proxy — all color values come from [data-theme] CSS vars.
+// data-theme attribute is set by the theme toggle via useEffect.
+const t = { bg:'var(--bg)', bg1:'var(--bg1)', bg2:'var(--bg2)', bg3:'var(--bg3)', border:'var(--border)', borderH:'var(--borderH)', t0:'var(--t0)', t1:'var(--t1)', t2:'var(--t2)', t3:'var(--t3)', blue:'var(--blue)', blueS:'var(--blueS)', blueB:'var(--blueB)', green:'var(--green)', greenS:'var(--greenS)', greenB:'var(--greenB)', amber:'var(--amber)', amberS:'var(--amberS)', amberB:'var(--amberB)', teal:'var(--teal)', tealS:'var(--tealS)', tealB:'var(--tealB)', navBg:'var(--navBg)' };
 
 
 // --- SCROLL REVEAL ---
@@ -245,7 +225,7 @@ function AppWireframe({ t, color, isMobile, large }) {
                   <div style={{ width: large ? 100 : 40, height: 4, borderRadius: 2, background: t.bg2 }} />
                   {large && <div style={{ width: 70, height: 3, borderRadius: 2, background: t.bg2 }} />}
                 </div>
-                {large && d===1 && <div style={{ width: 36, height: 14, borderRadius: 3, background: `${t.green}18`, border: `1px solid ${t.green}25` }} />}
+                {large && d===1 && <div style={{ width: 36, height: 14, borderRadius: 3, background: 'var(--greenS)', border: '1px solid var(--greenB)' }} />}
               </div>
             ))}
           </div>
@@ -264,7 +244,6 @@ function Portfolio() {
   const [mobileNav, setMobileNav] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [content, setContent] = useState(null);
-  const t = themes[mode];
   useReveal(page + slug + mode + filter + (content ? '1' : '0') + isMobile);
 
   // Sync data-theme attribute so CSS custom properties track React mode state

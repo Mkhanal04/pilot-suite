@@ -57,6 +57,7 @@ export default async function handler(req, res) {
   // CORS headers — restrict to known origins
   const allowedOrigins = [
     'https://pilot-suite-sigma.vercel.app',
+    'https://milankhanal.com',
     'http://localhost:3000',
     'http://localhost:5500'
   ];
