@@ -54,8 +54,16 @@ Analyze this reconciliation exception and return a JSON object with this exact s
 Confidence scoring: 80+ for well-understood discrepancies with clear explanations (stock splits, timing), 40-79 for likely explanations, under 40 for unexplained genuine breaks.`;
 
 export default async function handler(req, res) {
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS headers — restrict to known origins
+  const allowedOrigins = [
+    'https://pilot-suite-sigma.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5500'
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

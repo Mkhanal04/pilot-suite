@@ -35,6 +35,7 @@
     --green:#059669;--green-bg:#ECFDF5;--green-border:#A7F3D0;
     --blue:#2563EB;--blue-bg:#EFF6FF;
     --purple:#7C3AED;--purple-bg:#F5F3FF;
+    --accent:#0D9488;--accent-bg:#F0FDFA;--accent-border:rgba(13,148,136,.25);
   }
   [data-theme="dark"]{
     --red-bg:rgba(220,38,38,.12);--red-border:rgba(220,38,38,.25);
@@ -54,6 +55,9 @@
   [data-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:#3F3F46}
   /* Firefox */
   *{scrollbar-width:thin;scrollbar-color:var(--bg-3) transparent}
+  /* ═══ FOCUS INDICATORS — WCAG AA ═══ */
+  *:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  *:focus:not(:focus-visible){outline:none}
   body{font-family:'DM Sans',sans-serif;background:var(--bg-0);color:var(--text-0);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 
   /* ═══ LAYOUT ═══ */
@@ -62,8 +66,8 @@
   .mobile-header-left{display:flex;align-items:center;gap:12px}
   .mobile-logo{font-family:'DM Serif Display',serif;font-size:18px;color:var(--text-0)}
   .mobile-logo span{font-family:'DM Sans';font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em}
-  .mobile-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
-  .hamburger{width:36px;height:36px;border:none;background:transparent;color:var(--text-0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
+  .mobile-btn{width:44px;height:44px;border-radius:8px;border:1px solid var(--border);background:var(--bg-1);color:var(--text-2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+  .hamburger{width:44px;height:44px;border:none;background:transparent;color:var(--text-0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer}
   .hamburger span{width:18px;height:2px;background:var(--text-0);border-radius:1px}
 
   /* ═══ SIDEBAR ═══ */
@@ -78,7 +82,7 @@
   [data-theme="dark"] .sidebar.collapsed .logo-mark{background:var(--blue);color:white}
   .sidebar.collapsed .nav-label{opacity:0;height:0;margin:0;overflow:hidden;position:absolute}
   .sidebar.collapsed .nav-section{padding:0 12px;margin-bottom:12px}
-  .sidebar.collapsed .nav-item{display:flex;align-items:center;justify-content:center;padding:0;gap:0;border-radius:8px;width:44px;height:40px;margin:2px auto}
+  .sidebar.collapsed .nav-item{display:flex;align-items:center;justify-content:center;padding:0;gap:0;border-radius:8px;width:44px;height:44px;margin:2px auto}
   .sidebar.collapsed .nav-item .icon{width:auto;font-size:18px;margin:0;text-align:center}
   .sidebar.collapsed .nav-item .nav-text{opacity:0;width:0;overflow:hidden;position:absolute}
   .sidebar.collapsed .nav-badge{opacity:0;width:0;overflow:hidden;padding:0;margin:0;position:absolute}
@@ -107,7 +111,7 @@
   .logo-mark{display:none;transition:all .2s ease}
   .nav-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);padding:0 8px;margin-bottom:8px;transition:opacity .2s ease,height .2s ease,margin .2s ease}
   .nav-section{padding:0 16px;margin-bottom:28px;transition:padding .3s ease,margin .3s ease}
-  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-2);cursor:pointer;transition:all .2s ease}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;color:var(--text-2);cursor:pointer;transition:all .2s ease;border:none;background:none;font-family:'DM Sans',sans-serif;width:100%;text-align:left;min-height:44px}
   .nav-item:hover{background:var(--bg-2);color:var(--text-0)}
   .nav-item.active{background:var(--sidebar-active-bg);color:var(--sidebar-active-text);font-weight:500}
   .nav-item .icon{width:18px;text-align:center;font-size:15px;flex-shrink:0}
@@ -117,7 +121,7 @@
   .sidebar-footer > div:last-child{transition:opacity .2s ease,height .2s ease}
   .sidebar-status-warning{transition:opacity .2s ease,height .2s ease}
   .sidebar-bottom{margin-top:auto}
-  .theme-toggle{display:flex;align-items:center;gap:10px;margin:0 24px 16px;cursor:pointer;user-select:none}
+  .theme-toggle{display:flex;align-items:center;gap:10px;margin:0 24px 16px;cursor:pointer;user-select:none;border:none;background:none;font-family:'DM Sans',sans-serif;color:inherit;width:100%;text-align:left;min-height:44px}
   .toggle-track{width:44px;height:24px;background:var(--bg-3);border-radius:12px;position:relative;transition:background .3s;flex-shrink:0}
   .toggle-knob{width:18px;height:18px;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
   [data-theme="light"] .toggle-knob{background:#fff}
@@ -172,7 +176,7 @@
   .feed-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
   .feed-title{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-1);font-weight:600}
   .feed-filters{display:flex;gap:4px;flex-wrap:wrap}
-  .filter-btn{padding:7px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:transparent;font-family:'DM Sans';transition:all .15s}
+  .filter-btn{padding:7px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:transparent;font-family:'DM Sans';transition:all .15s;min-height:44px}
   .filter-btn:hover{background:var(--bg-2);color:var(--text-0)}.filter-btn.active{background:var(--bg-3);color:var(--text-0)}
   .feed-layout{display:grid;grid-template-columns:1fr 280px;gap:32px}
   .decision-hero{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:16px;box-shadow:var(--shadow-md);overflow:hidden;cursor:pointer;transition:all .2s}
@@ -562,7 +566,7 @@
     .hero{padding:28px 24px 32px}.feed-section{padding:24px}
     .detail-content{padding:24px 24px 100px}.cc-content{padding:24px 24px 48px}
     .decision-hero-body{grid-template-columns:1fr;gap:16px}
-    .dhb-right{text-align:left;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .dhb-right{text-align:left;display:flex;align-items:center;gap:16px;flex-wrap:wrap;min-width:0}
     .dhb-meta-item{justify-content:flex-start}
     .ripple-row{grid-template-columns:80px 1fr auto}.rr-owner{display:none}
     .ap-step{grid-template-columns:36px 1fr auto}.ap-deadline{display:none}
@@ -625,6 +629,14 @@
 .tour-launch-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.4)}
 .tour-launch-btn.visible{display:inline-flex}
 @media(max-width:480px){
+  /* Layout adjustments for small phones */
+  .hero-sub{font-size:13px;max-width:100%}
+  .hero-headline{font-size:22px}
+  .detail-desc{font-size:13px;max-width:100%}
+  .dhb-right{min-width:0}
+  .hero{padding:16px 14px 20px}
+  .feed-section{padding:16px 14px}
+  /* Tour modal */
   .tour-modal{width:96%;max-height:90vh;border-radius:12px}
   .tour-visual{padding:24px 20px 16px}
   .tour-title{font-size:20px}
@@ -636,11 +648,11 @@
 <body>
 <div class="mobile-header">
   <div class="mobile-header-left">
-    <button class="hamburger" onclick="toggleMobileSidebar()"><span></span><span></span><span></span></button>
+    <button class="hamburger" onclick="toggleMobileSidebar()" aria-label="Open menu" aria-expanded="false" id="hamburgerBtn"><span></span><span></span><span></span></button>
     <div class="mobile-logo">TradePilot <span>· Decision Intelligence</span></div>
   </div>
   <div class="mobile-actions" style="display:flex;gap:8px">
-    <button class="mobile-btn" onclick="toggleTheme()">◐</button>
+    <button class="mobile-btn" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
   </div>
 </div>
 
@@ -651,24 +663,24 @@
     <div class="logo" onclick="showView('today')" style="cursor:pointer"><h1><span class="logo-full">TradePilot</span><span class="logo-mark">TP</span></h1><span class="sub">Decision Intelligence</span></div>
     <nav class="nav-section">
       <div class="nav-label">Operations</div>
-      <div class="nav-item active" id="nav-today" onclick="showView('today')" title="Today"><span class="icon">◎</span><span class="nav-text"> Today</span></div>
-      <div class="nav-item" id="nav-decisions" onclick="showView('queue')" title="Decisions"><span class="icon">⚡</span><span class="nav-text"> Decisions</span> <span class="nav-badge">5</span></div>
-      <div class="nav-item" id="nav-intel" onclick="showView('intel')" title="Intelligence"><span class="icon">📡</span><span class="nav-text"> Intelligence</span> <span class="nav-intel-badge" style="font-size:10px;background:var(--blue);color:white;padding:1px 6px;border-radius:8px;margin-left:4px">3</span></div>
-      <div class="nav-item" id="nav-records" onclick="showView('records')" title="Records"><span class="icon">☰</span><span class="nav-text"> Records</span></div>
+      <button class="nav-item active" id="nav-today" onclick="showView('today')" aria-label="Today" type="button"><span class="icon">◎</span><span class="nav-text"> Today</span></button>
+      <button class="nav-item" id="nav-decisions" onclick="showView('queue')" aria-label="Decisions" type="button"><span class="icon">⚡</span><span class="nav-text"> Decisions</span> <span class="nav-badge">5</span></button>
+      <button class="nav-item" id="nav-intel" onclick="showView('intel')" aria-label="Intelligence" type="button"><span class="icon">📡</span><span class="nav-text"> Intelligence</span> <span class="nav-intel-badge" style="font-size:10px;background:var(--blue);color:white;padding:1px 6px;border-radius:8px;margin-left:4px">3</span></button>
+      <button class="nav-item" id="nav-records" onclick="showView('records')" aria-label="Records" type="button"><span class="icon">☰</span><span class="nav-text"> Records</span></button>
     </nav>
     <nav class="nav-section">
       <div class="nav-label">System</div>
-      <div class="nav-item" id="nav-control" onclick="showView('control')" title="Control Center"><span class="icon">⚙</span><span class="nav-text"> Control Center</span></div>
-      <button class="collapse-toggle" onclick="toggleSidebar()" title="Collapse sidebar">
+      <button class="nav-item" id="nav-control" onclick="showView('control')" aria-label="Control Center" type="button"><span class="icon">⚙</span><span class="nav-text"> Control Center</span></button>
+      <button class="collapse-toggle" onclick="toggleSidebar()" aria-label="Collapse sidebar" aria-expanded="true" id="collapseBtn">
         <span class="collapse-icon">«</span><span class="collapse-text">Collapse</span>
       </button>
     </nav>
     <div class="sidebar-bottom">
       <div class="sidebar-status-warning" id="sidebarWarning"><div class="sidebar-status-warning-inner" id="sidebarWarningText"></div></div>
-      <div class="theme-toggle" onclick="toggleTheme()">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" type="button">
         <div class="toggle-track"><div class="toggle-knob"></div></div>
         <span class="toggle-label" id="themeLabel">Dark mode</span>
-      </div>
+      </button>
       <div class="sidebar-footer">
         <div class="agent-status"><span class="status-dot" id="sidebarStatusDot"></span><span id="sidebarStatusText">5 Agents Active · System Online</span></div>
         <div style="margin-top:10px"><button onclick="resetDemo()" style="width:100%;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg-2);color:var(--text-2);font-size:12px;font-family:'DM Sans';cursor:pointer;transition:all .15s" onmouseover="this.style.background='var(--red-bg)';this.style.color='var(--red)';this.style.borderColor='var(--red-border)'" onmouseout="this.style.background='var(--bg-2)';this.style.color='var(--text-2)';this.style.borderColor='var(--border)'">↻ Reset Demo</button></div>
@@ -1948,6 +1960,8 @@ function toggleSidebar() {
   sidebar.classList.toggle('collapsed');
   const actionBar = document.getElementById('actionBar');
   actionBar.style.left = sidebar.classList.contains('collapsed') ? '68px' : '240px';
+  const collapseBtn = document.getElementById('collapseBtn');
+  if (collapseBtn) collapseBtn.setAttribute('aria-expanded', String(!sidebar.classList.contains('collapsed')));
 }
 function toggleMobileSidebar() {
   const sidebar = document.getElementById('sidebar');
@@ -1955,6 +1969,8 @@ function toggleMobileSidebar() {
   if (!sidebar.classList.contains('mobile-open')) sidebar.classList.remove('collapsed');
   sidebar.classList.toggle('mobile-open');
   overlay.classList.toggle('show');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  if (hamburgerBtn) hamburgerBtn.setAttribute('aria-expanded', String(sidebar.classList.contains('mobile-open')));
 }
 
 // ═══ THEME ═══
