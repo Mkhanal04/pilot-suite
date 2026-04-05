@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1376,7 +1376,7 @@ let summaryIndex = 0;
 ═══════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function() {
   // Restore theme
-  const saved = localStorage.getItem('gv-theme') || 'light';
+  const saved = localStorage.getItem('gv-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
   document.getElementById('themeIcon').textContent = saved === 'dark' ? '☽' : '☀';
   const pillIcon = document.getElementById('heroPillIcon');
