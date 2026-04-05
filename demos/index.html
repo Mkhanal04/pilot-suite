@@ -40,12 +40,12 @@
         {
           "@type": "Question",
           "name": "What does a complete AI-powered business system include?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Every system includes a custom website, AI chatbot (English and Spanish), owner dashboard with lead tracking, GEO and SEO optimization, and smart follow-up tools. You own everything — no monthly platform fees." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Every system includes a custom website, AI chatbot (English and Spanish), owner dashboard with lead tracking, GEO and SEO optimization, and smart follow-up tools. You own everything we build. Optional managed services available for ongoing support." }
         },
         {
           "@type": "Question",
           "name": "How much does an AI-powered business system cost?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Starting at $5,000 for a complete custom build. One-time investment — no monthly fees, no per-lead charges. Most clients save $3,000–$5,000 in the first year compared to lead platforms like Thumbtack." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Projects start at $3,000 for a complete custom build. One-time investment with no per-lead charges. Optional monthly management available for ongoing chatbot, content updates, and GEO optimization. Most clients save $3,000–$5,000 in the first year compared to lead platforms like Thumbtack." }
         },
         {
           "@type": "Question",
@@ -617,6 +617,42 @@ body {
   .footer-links { flex-direction: column; gap: 10px; }
   .not-your-industry { padding: 20px 16px; }
 }
+
+/* ═══════════════════════════════════════════
+   BUILD vs MANAGED
+═══════════════════════════════════════════ */
+.pricing-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px;
+}
+.pricing-col {
+  background: var(--bg1); border: 1px solid var(--border); border-radius: 16px;
+  padding: 32px 28px; display: flex; flex-direction: column;
+}
+.pricing-col.managed {
+  border-color: var(--green); box-shadow: 0 0 0 1px var(--greenB);
+}
+.pricing-col-header { margin-bottom: 20px; }
+.pricing-col-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.pricing-col-title { font-weight: 700; font-size: 1.15rem; color: var(--t0); }
+.pricing-col-subtitle { font-size: 0.82rem; color: var(--t2); margin-top: 2px; }
+.pricing-col-list {
+  list-style: none; padding: 0; margin: 0 0 24px; flex: 1;
+}
+.pricing-col-list li {
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.9rem; color: var(--t1); display: flex; align-items: center; gap: 8px;
+}
+.pricing-col-list li::before { content: '✓'; color: var(--green); font-weight: 700; }
+.pricing-col-price {
+  font-size: 1.1rem; color: var(--t0); font-weight: 600; margin-top: auto;
+}
+.pricing-col-price strong { font-size: 1.4rem; color: var(--green); }
+.pricing-col-note {
+  font-size: 0.8rem; color: var(--t2); margin-top: 8px; font-style: italic;
+}
+@media (max-width: 640px) {
+  .pricing-cols { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -641,7 +677,7 @@ body {
       </div>
       <div class="hero-trust">
         <div class="trust-pill">🏡 Built for local service companies</div>
-        <div class="trust-pill">✓ You own everything — no monthly fees</div>
+        <div class="trust-pill">✓ You own everything we build — cancel anytime</div>
         <div class="trust-pill">📍 Serving the DFW metro area</div>
       </div>
     </div>
@@ -701,7 +737,49 @@ body {
       <div class="feature-card reveal">
         <div class="feature-icon">🔑</div>
         <div class="feature-title">You Own Everything</div>
-        <div class="feature-desc">Your website, your leads, your data. No monthly platform fees. No per-lead charges. No middleman.</div>
+        <div class="feature-desc">Your website, your leads, your data — always yours. Optional managed services keep your chatbot running and leads flowing. Cancel anytime — everything stays with you.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BUILD vs MANAGED ═══════════════════ -->
+<section class="section" id="pricing-model">
+  <div class="section-inner">
+    <div class="section-label">After Launch</div>
+    <h2 class="section-title">Build once. Manage your way.</h2>
+    <p class="section-sub">Every project starts with a one-time build. After launch, you choose how much support you want.</p>
+    <div class="pricing-cols">
+      <div class="pricing-col reveal">
+        <div class="pricing-col-header">
+          <div class="pricing-col-icon">🔨</div>
+          <div class="pricing-col-title">The Build</div>
+          <div class="pricing-col-subtitle">One-time investment</div>
+        </div>
+        <ul class="pricing-col-list">
+          <li>Custom website on your domain</li>
+          <li>AI chatbot (English &amp; Spanish)</li>
+          <li>Owner dashboard + lead tracking</li>
+          <li>GEO/SEO optimization</li>
+          <li>You own everything — code, data, leads</li>
+        </ul>
+        <div class="pricing-col-price">Starting at <strong>$3,000</strong></div>
+      </div>
+      <div class="pricing-col managed reveal">
+        <div class="pricing-col-header">
+          <div class="pricing-col-icon">🛡️</div>
+          <div class="pricing-col-title">Managed Services</div>
+          <div class="pricing-col-subtitle">Optional monthly</div>
+        </div>
+        <ul class="pricing-col-list">
+          <li>Chatbot stays active (API costs covered)</li>
+          <li>Monthly content + seasonal campaigns</li>
+          <li>GEO monitoring + optimization</li>
+          <li>Priority support + bug fixes</li>
+          <li>Monthly performance reports</li>
+        </ul>
+        <div class="pricing-col-price">From <strong>$500</strong>/month</div>
+        <div class="pricing-col-note">Cancel anytime — everything stays yours</div>
       </div>
     </div>
   </div>
@@ -730,7 +808,7 @@ body {
           <div class="step-num">3</div>
           <div class="step-icon">🔑</div>
           <div class="step-title">You Own Everything</div>
-          <div class="step-desc">Your website, your leads, your data. No monthly platform fees. No per-lead charges. No middleman between you and your customers.</div>
+          <div class="step-desc">Your website, your leads, your data — always yours. We offer ongoing management if you want it, but you're never locked in. Cancel the retainer? Everything stays with you.</div>
         </div>
       </div>
     </div>
@@ -819,7 +897,7 @@ body {
       <div class="stat-card reveal">
         <div class="stat-value">100%</div>
         <div class="stat-label">You own your leads</div>
-        <div class="stat-sub">No middleman. No per-lead fees.</div>
+        <div class="stat-sub">No per-lead fees. No lock-in. Ever.</div>
       </div>
     </div>
     <div class="compare-wrap reveal">
