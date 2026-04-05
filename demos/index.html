@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Powered Business Demos | Milan Khanal</title>
-<meta name="description" content="See live demos of AI-powered websites built for landscaping, painting, HVAC, and plumbing businesses. Built in 30 minutes. No monthly fees.">
+<title>AI-Powered Business Systems for Local Companies | Milan Khanal</title>
+<meta name="description" content="We build complete AI-powered business systems for local service companies — website, chatbot, lead dashboard, and SEO. Browse live demos for landscaping, real estate, plumbing, and HVAC.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
       "@type": "Organization",
       "name": "Milan Khanal — AI Business Solutions",
       "url": "https://milankhanal.com/demos/",
-      "description": "AI-powered websites and business tools for local service companies",
+      "description": "Complete AI-powered business systems for local service companies in DFW",
       "founder": {
         "@type": "Person",
         "name": "Milan Khanal",
@@ -30,8 +30,8 @@
     },
     {
       "@type": "WebPage",
-      "name": "AI-Powered Business Demos",
-      "description": "See live demos of AI-powered websites built for landscaping, painting, HVAC, and plumbing businesses.",
+      "name": "AI-Powered Business Systems — Live Demos",
+      "description": "Browse live demos of complete AI-powered business systems built for landscaping, real estate, plumbing, and HVAC companies.",
       "url": "https://milankhanal.com/demos/"
     },
     {
@@ -39,18 +39,18 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How long does it take to build an AI-powered website?",
-          "acceptedAnswer": { "@type": "Answer", "text": "We build working prototypes in 30 minutes. Production-ready sites take 1-2 weeks." }
+          "name": "What does a complete AI-powered business system include?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Every system includes a custom website, AI chatbot (English and Spanish), owner dashboard with lead tracking, GEO and SEO optimization, and smart follow-up tools. You own everything — no monthly platform fees." }
         },
         {
           "@type": "Question",
-          "name": "How much does an AI-powered website cost?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Starting at $5,000 for a complete AI-powered website with chatbot, booking system, and GEO optimization. No monthly fees — you own it." }
+          "name": "How much does an AI-powered business system cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Starting at $5,000 for a complete custom build. One-time investment — no monthly fees, no per-lead charges. Most clients save $3,000–$5,000 in the first year compared to lead platforms like Thumbtack." }
         },
         {
           "@type": "Question",
           "name": "What is GEO and why does my business need it?",
-          "acceptedAnswer": { "@type": "Answer", "text": "GEO (Generative Engine Optimization) makes your business visible to AI assistants like ChatGPT, Gemini, and Perplexity — not just Google. More customers are using AI to find local businesses." }
+          "acceptedAnswer": { "@type": "Answer", "text": "GEO (Generative Engine Optimization) makes your business visible to AI assistants like ChatGPT, Gemini, and Perplexity — not just Google. More customers are using AI to find local businesses. We build GEO optimization in from day one." }
         }
       ]
     }
@@ -146,14 +146,18 @@ body {
 ═══════════════════════════════════════════ */
 .hero {
   background: var(--hero-bg); padding: 100px 24px 80px;
-  text-align: center; color: white; position: relative; overflow: hidden;
+  color: white; position: relative; overflow: hidden;
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
-.hero-inner { max-width: 680px; margin: 0 auto; position: relative; }
+.hero-split {
+  max-width: 1100px; margin: 0 auto; position: relative;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-text { }
 .hero h1 {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(2.2rem, 5vw, 3.6rem);
@@ -161,9 +165,9 @@ body {
 }
 .hero-sub {
   font-size: 1.1rem; color: rgba(255,255,255,0.78);
-  margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto;
+  margin-bottom: 36px; max-width: 480px;
 }
-.hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
 .btn-primary {
   padding: 13px 30px; background: white; color: #14532D;
   font-weight: 700; font-size: 14px; border-radius: 8px; border: none;
@@ -181,7 +185,7 @@ body {
 }
 .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
 .hero-trust {
-  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  display: flex; gap: 16px; flex-wrap: wrap;
 }
 .trust-pill {
   display: inline-flex; align-items: center; gap: 8px;
@@ -189,6 +193,65 @@ body {
   border-radius: 20px; padding: 8px 18px; font-size: 13px;
   color: rgba(255,255,255,0.88); font-weight: 500; backdrop-filter: blur(6px);
 }
+
+/* Hero device mockup */
+.hero-device-wrap {
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-device {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+  width: 100%; max-width: 480px;
+}
+.hero-device-bar {
+  background: rgba(255,255,255,0.06); padding: 10px 16px;
+  display: flex; align-items: center; gap: 7px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero-device-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+}
+.hero-device-screen {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(5,46,22,0.8) 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; padding: 24px; text-align: center;
+}
+.hero-device-screen img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  border-radius: 0;
+}
+.hero-device-placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.hero-device-placeholder-icon { font-size: 2.5rem; opacity: 0.7; }
+.hero-device-placeholder-text {
+  font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6);
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.hero-device-placeholder-sub {
+  font-size: 11px; color: rgba(255,255,255,0.4);
+}
+
+/* ═══════════════════════════════════════════
+   WHAT'S INCLUDED (new section)
+═══════════════════════════════════════════ */
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: 40px;
+}
+.feature-card {
+  background: var(--bg1); border-radius: 16px; padding: 28px 24px;
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+.feature-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.feature-icon { font-size: 2rem; margin-bottom: 14px; }
+.feature-title { font-weight: 700; font-size: 1rem; color: var(--t0); margin-bottom: 8px; }
+.feature-desc { font-size: 0.87rem; color: var(--t2); line-height: 1.6; }
 
 /* ═══════════════════════════════════════════
    INDUSTRY CARDS
@@ -216,6 +279,7 @@ body {
 }
 .badge-live { background: var(--greenS); color: var(--green); border: 1px solid var(--greenB); }
 .badge-soon { background: var(--amberS); color: var(--amber); border: 1px solid var(--amberB); }
+.industry-teaser { font-size: 0.8rem; color: var(--t2); font-style: italic; line-height: 1.4; }
 .industry-desc { font-size: 0.85rem; color: var(--t2); line-height: 1.5; flex: 1; }
 .industry-cta {
   display: inline-flex; align-items: center; gap: 6px;
@@ -238,6 +302,22 @@ body {
 }
 .notify-btn:hover { background: var(--bg3); }
 .notify-confirm { font-size: 12px; color: var(--green); font-weight: 500; padding: 4px 0; }
+
+/* "Not your industry?" block */
+.not-your-industry {
+  margin-top: 32px; padding: 28px 32px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; text-align: center;
+}
+.not-your-industry p { font-size: 1.05rem; font-weight: 600; color: var(--t0); margin-bottom: 6px; }
+.not-your-industry span { font-size: 0.9rem; color: var(--t2); }
+.not-your-industry button {
+  display: inline-block; margin-top: 16px;
+  padding: 11px 24px; background: var(--green); color: white;
+  font-weight: 700; font-size: 13px; border-radius: 8px; border: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.not-your-industry button:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* ═══════════════════════════════════════════
    HOW IT WORKS
@@ -500,6 +580,13 @@ body {
    RESPONSIVE — TABLET
 ═══════════════════════════════════════════ */
 @media (max-width: 1023px) {
+  .hero-split { grid-template-columns: 1fr; gap: 40px; }
+  .hero-device-wrap { display: none; }
+  .hero { text-align: center; }
+  .hero-ctas { justify-content: center; }
+  .hero-trust { justify-content: center; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
   .industry-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .blog-grid { grid-template-columns: repeat(2, 1fr); }
@@ -515,6 +602,7 @@ body {
   .hero { padding: 72px 20px 60px; }
   .hero-ctas { flex-direction: column; align-items: center; }
   .hero-trust { gap: 10px; }
+  .features-grid { grid-template-columns: 1fr; }
   .industry-grid { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
   .steps-grid::before { display: none; }
@@ -525,6 +613,7 @@ body {
   .referral-link-row { flex-direction: column; }
   .referral-link-text { min-width: 0; width: 100%; }
   .footer-links { flex-direction: column; gap: 10px; }
+  .not-your-industry { padding: 20px 16px; }
 }
 </style>
 </head>
@@ -536,78 +625,82 @@ body {
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero" id="top">
-  <div class="hero-inner">
-    <h1>Your Business.<br>Powered by AI.</h1>
-    <p class="hero-sub">See what your website could look like — built in 30 minutes, not 3 months. AI-powered websites that bring customers to you.</p>
-    <div class="hero-ctas">
-      <button class="btn-primary" onclick="document.getElementById('demos').scrollIntoView({behavior:'smooth'})">
-        See Demos ↓
-      </button>
-      <button class="btn-outline" onclick="document.getElementById('intake').scrollIntoView({behavior:'smooth'})">
-        Get Started →
-      </button>
+  <div class="hero-split">
+    <div class="hero-text">
+      <h1>Stop renting leads.<br>Start owning them.</h1>
+      <p class="hero-sub">We build complete online systems for local service companies — website, AI chatbot, lead dashboard, and SEO that actually works.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="document.getElementById('included').scrollIntoView({behavior:'smooth'})">
+          See What's Included ↓
+        </button>
+        <button class="btn-outline" onclick="document.getElementById('intake').scrollIntoView({behavior:'smooth'})">
+          Let's Talk →
+        </button>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-pill">🏡 Built for local service companies</div>
+        <div class="trust-pill">✓ You own everything — no monthly fees</div>
+        <div class="trust-pill">📍 Serving the DFW metro area</div>
+      </div>
     </div>
-    <div class="hero-trust">
-      <div class="trust-pill">⭐ Trusted by local businesses</div>
-      <div class="trust-pill">⚡ 30-minute build time</div>
-      <div class="trust-pill">✓ Zero monthly fees</div>
+    <div class="hero-device-wrap">
+      <div class="hero-device">
+        <div class="hero-device-bar">
+          <div class="hero-device-dot"></div>
+          <div class="hero-device-dot"></div>
+          <div class="hero-device-dot"></div>
+        </div>
+        <div class="hero-device-screen">
+          <img src="/demos/assets/demo-preview.png" alt="Live demo preview"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="hero-device-placeholder" style="display:none;">
+            <div class="hero-device-placeholder-icon">🌿</div>
+            <div class="hero-device-placeholder-text">Live Demo Preview</div>
+            <div class="hero-device-placeholder-sub">See a real example in the demos below</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ INDUSTRY DEMOS ═══════════════════ -->
-<section class="section" id="demos">
+<!-- ═══════════════════ WHAT'S INCLUDED ═══════════════════ -->
+<section class="section" id="included">
   <div class="section-inner">
-    <div class="section-label">Live Demos</div>
-    <h2 class="section-title">Pick your industry</h2>
-    <p class="section-sub">Click a live demo to see what we build — or tell us your industry below.</p>
-    <div class="industry-grid">
-
-      <!-- Landscaping — LIVE -->
-      <div class="industry-card live reveal">
-        <div class="industry-icon">🌿</div>
-        <div class="industry-name">Landscaping</div>
-        <div class="industry-badge badge-live">✓ Live</div>
-        <div class="industry-desc">Full demo with AI chatbot, online booking, owner dashboard, GEO score, and leads tracking.</div>
-        <a href="/demos/landscaping/" class="industry-cta" onclick="trackEvent('demo_click',{industry:'landscaping'})">View Demo →</a>
+    <div class="section-label">What You Get</div>
+    <h2 class="section-title">One system. Everything your business needs.</h2>
+    <p class="section-sub">Every client gets the same complete platform — customized for their industry, their market, and their brand.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🌐</div>
+        <div class="feature-title">Your Website</div>
+        <div class="feature-desc">Custom design, your branding, mobile-ready, optimized to convert visitors into customers.</div>
       </div>
-
-      <!-- Painting — Coming Soon -->
-      <div class="industry-card reveal">
-        <div class="industry-icon">🎨</div>
-        <div class="industry-name">Painting</div>
-        <div class="industry-badge badge-soon">Coming Soon</div>
-        <div class="industry-desc">Interior & exterior painting — quote calculator, portfolio gallery, and AI job scheduler.</div>
-        <div class="notify-form" id="notifyPainting">
-          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailPainting" aria-label="Email for painting demo notification">
-          <button class="notify-btn" onclick="submitNotify('painting')">Notify Me →</button>
-        </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title">AI Chatbot</div>
+        <div class="feature-desc">Answers customer questions 24/7 in English and Spanish. Qualifies leads while you sleep.</div>
       </div>
-
-      <!-- HVAC — Coming Soon -->
-      <div class="industry-card reveal">
-        <div class="industry-icon">❄️</div>
-        <div class="industry-name">HVAC</div>
-        <div class="industry-badge badge-soon">Coming Soon</div>
-        <div class="industry-desc">Heating & cooling services — seasonal campaigns, maintenance reminders, and emergency booking.</div>
-        <div class="notify-form" id="notifyHvac">
-          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailHvac" aria-label="Email for HVAC demo notification">
-          <button class="notify-btn" onclick="submitNotify('hvac')">Notify Me →</button>
-        </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Owner Dashboard</div>
+        <div class="feature-desc">See every lead, every follow-up, every metric. Know exactly how your business is performing online.</div>
       </div>
-
-      <!-- Plumbing — Coming Soon -->
-      <div class="industry-card reveal">
-        <div class="industry-icon">🔧</div>
-        <div class="industry-name">Plumbing</div>
-        <div class="industry-badge badge-soon">Coming Soon</div>
-        <div class="industry-desc">Emergency & scheduled plumbing — 24/7 AI triage, instant estimates, and licensed contractor matching.</div>
-        <div class="notify-form" id="notifyPlumbing">
-          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailPlumbing" aria-label="Email for plumbing demo notification">
-          <button class="notify-btn" onclick="submitNotify('plumbing')">Notify Me →</button>
-        </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔍</div>
+        <div class="feature-title">GEO &amp; SEO</div>
+        <div class="feature-desc">Get found on Google, ChatGPT, and AI search engines. We optimize for where customers actually look.</div>
       </div>
-
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Smart Follow-Ups</div>
+        <div class="feature-desc">Never lose a repeat customer. The system flags who to call back and when.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔑</div>
+        <div class="feature-title">You Own Everything</div>
+        <div class="feature-desc">Your website, your leads, your data. No monthly platform fees. No per-lead charges. No middleman.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -617,30 +710,94 @@ body {
   <section class="section">
     <div class="section-inner">
       <div class="section-label">How It Works</div>
-      <h2 class="section-title">From demo to live in 3 steps</h2>
+      <h2 class="section-title">From demo to your own system</h2>
       <div class="steps-grid">
         <div class="step-card reveal">
           <div class="step-num">1</div>
           <div class="step-icon">🎯</div>
-          <div class="step-title">Pick Your Industry</div>
-          <div class="step-desc">Browse a working demo built for your business type. See exactly what your customers would experience — chatbot, booking, reviews, and all.</div>
+          <div class="step-title">See What's Possible</div>
+          <div class="step-desc">Browse a working demo for your industry. Experience it as your customer would — then switch to the owner dashboard and see the intelligence behind it.</div>
         </div>
         <div class="step-card reveal">
           <div class="step-num">2</div>
-          <div class="step-icon">🤖</div>
-          <div class="step-title">We Customize It</div>
-          <div class="step-desc">AI builds your website with your branding, services, and pricing. Real content, not templates. GEO-optimized so AI search engines can find you.</div>
+          <div class="step-icon">🛠️</div>
+          <div class="step-title">We Build Yours</div>
+          <div class="step-desc">We take your brand, your services, and your market — and build a custom system tailored to your business. Not a template. Not a copy-paste. Yours.</div>
         </div>
         <div class="step-card reveal">
           <div class="step-num">3</div>
-          <div class="step-icon">🚀</div>
-          <div class="step-title">You Own It</div>
-          <div class="step-desc">Your AI-powered website goes live. Customers find you, book online, and you track everything from your dashboard. No monthly platform fees.</div>
+          <div class="step-icon">🔑</div>
+          <div class="step-title">You Own Everything</div>
+          <div class="step-desc">Your website, your leads, your data. No monthly platform fees. No per-lead charges. No middleman between you and your customers.</div>
         </div>
       </div>
     </div>
   </section>
 </div>
+
+<!-- ═══════════════════ LIVE DEMOS ═══════════════════ -->
+<section class="section" id="demos">
+  <div class="section-inner">
+    <div class="section-label">Live Demos</div>
+    <h2 class="section-title">See what we've built</h2>
+    <p class="section-sub">Each demo is a complete system — website, AI chatbot, lead dashboard, and SEO optimization. Click one to experience it as a customer AND as the business owner.</p>
+    <div class="industry-grid">
+
+      <!-- Landscaping — LIVE -->
+      <div class="industry-card live reveal">
+        <div class="industry-icon">🌿</div>
+        <div class="industry-name">Landscaping</div>
+        <div class="industry-badge badge-live">✓ Live</div>
+        <div class="industry-teaser">Lawn care booking, seasonal follow-ups, before/after gallery</div>
+        <div class="industry-desc">Full demo with AI chatbot, online booking, owner dashboard, GEO score, and leads tracking.</div>
+        <a href="/demos/landscaping/" class="industry-cta" onclick="trackEvent('demo_click',{industry:'landscaping'})">Experience Demo →</a>
+      </div>
+
+      <!-- Real Estate — In Development -->
+      <div class="industry-card reveal">
+        <div class="industry-icon">🏠</div>
+        <div class="industry-name">Real Estate &amp; Home Services</div>
+        <div class="industry-badge badge-soon">In Development</div>
+        <div class="industry-teaser">Project portfolios, multi-service booking, property management dashboard</div>
+        <div class="notify-form" id="notifyRealestate">
+          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailRealestate" aria-label="Email for real estate demo notification">
+          <button class="notify-btn" onclick="submitNotify('realestate')">Notify Me →</button>
+        </div>
+      </div>
+
+      <!-- Plumbing — In Development -->
+      <div class="industry-card reveal">
+        <div class="industry-icon">🔧</div>
+        <div class="industry-name">Plumbing</div>
+        <div class="industry-badge badge-soon">In Development</div>
+        <div class="industry-teaser">Emergency service routing, warranty tracking, service area coverage</div>
+        <div class="notify-form" id="notifyPlumbing">
+          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailPlumbing" aria-label="Email for plumbing demo notification">
+          <button class="notify-btn" onclick="submitNotify('plumbing')">Notify Me →</button>
+        </div>
+      </div>
+
+      <!-- HVAC — In Development -->
+      <div class="industry-card reveal">
+        <div class="industry-icon">❄️</div>
+        <div class="industry-name">HVAC</div>
+        <div class="industry-badge badge-soon">In Development</div>
+        <div class="industry-teaser">Seasonal maintenance plans, emergency booking, equipment guides</div>
+        <div class="notify-form" id="notifyHvac">
+          <input class="notify-input" type="email" placeholder="Your email" id="notifyEmailHvac" aria-label="Email for HVAC demo notification">
+          <button class="notify-btn" onclick="submitNotify('hvac')">Notify Me →</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="not-your-industry">
+      <p>Don't see your industry?</p>
+      <span>We build custom systems for any local service business. Tell us what you do — we'll show you what's possible.</span>
+      <br>
+      <button onclick="document.getElementById('intake').scrollIntoView({behavior:'smooth'})">Tell Us About Your Business ↓</button>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════ TRUST & COMPARISON ═══════════════════ -->
 <section class="section">
@@ -649,24 +806,24 @@ body {
     <h2 class="section-title">The agency experience without the agency price</h2>
     <div class="stats-grid">
       <div class="stat-card reveal">
-        <div class="stat-value">30 min</div>
-        <div class="stat-label">Build Time</div>
-        <div class="stat-sub">From demo to live</div>
+        <div class="stat-value">1</div>
+        <div class="stat-label">Industry with live demo</div>
+        <div class="stat-sub">More coming — landscaping live now</div>
       </div>
       <div class="stat-card reveal">
-        <div class="stat-value">$5K</div>
-        <div class="stat-label">Not $50K</div>
-        <div class="stat-sub">Full build, one-time cost</div>
+        <div class="stat-value">$4,320+</div>
+        <div class="stat-label">Average first-year savings</div>
+        <div class="stat-sub">vs lead platforms like Thumbtack</div>
       </div>
       <div class="stat-card reveal">
-        <div class="stat-value">Built-in</div>
-        <div class="stat-label">AI Features</div>
-        <div class="stat-sub">Chatbot, SEO, dashboard</div>
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Your AI chatbot never sleeps</div>
+        <div class="stat-sub">Qualifies leads while you're on the job</div>
       </div>
       <div class="stat-card reveal">
-        <div class="stat-value">$0</div>
-        <div class="stat-label">Monthly Fees</div>
-        <div class="stat-sub">You own it outright</div>
+        <div class="stat-value">100%</div>
+        <div class="stat-label">You own your leads</div>
+        <div class="stat-sub">No middleman. No per-lead fees.</div>
       </div>
     </div>
     <div class="compare-wrap reveal">
@@ -676,7 +833,7 @@ body {
             <th>Feature</th>
             <th>Thumbtack / Angi</th>
             <th>Web Agency</th>
-            <th class="col-us">Us ✓</th>
+            <th class="col-us">Your Custom System ✓</th>
           </tr>
         </thead>
         <tbody>
@@ -690,7 +847,7 @@ body {
             <td>Build time</td>
             <td>N/A</td>
             <td>8–16 weeks</td>
-            <td class="col-us">30 minutes</td>
+            <td class="col-us">Custom-built for you</td>
           </tr>
           <tr>
             <td>Own your leads</td>
@@ -726,15 +883,16 @@ body {
 <div style="background:var(--bg1);">
   <section class="section">
     <div class="section-inner">
-      <div class="section-label">Resources</div>
-      <h2 class="section-title">Learn how AI is changing local business</h2>
+      <div class="section-label">Insights</div>
+      <h2 class="section-title">What smart business owners are asking</h2>
+      <p class="section-sub">Answers to the questions we hear most from local service companies.</p>
       <div class="blog-grid">
         <a href="/demos/blog/ai-small-business.html" class="blog-card reveal" onclick="trackEvent('article_click',{article_slug:'ai-small-business'})">
           <div class="blog-card-img">🤖</div>
           <div class="blog-card-body">
             <div class="blog-card-label">Guide</div>
             <div class="blog-card-title">How AI Helps Small Businesses Get More Customers</div>
-            <div class="blog-card-snippet">Most small businesses spend $300+/mo on lead platforms. Here's a better way.</div>
+            <div class="blog-card-snippet">You're spending $300+/mo renting leads from Thumbtack. What if your website generated them instead?</div>
             <div class="blog-card-link">Read → </div>
           </div>
         </a>
@@ -743,7 +901,7 @@ body {
           <div class="blog-card-body">
             <div class="blog-card-label">Comparison</div>
             <div class="blog-card-title">Thumbtack vs Your Own AI-Powered Website: The Real Cost</div>
-            <div class="blog-card-snippet">The real cost comparison most business owners never see.</div>
+            <div class="blog-card-snippet">After a year on Thumbtack, you've spent $4,000 and own nothing. Here's the math.</div>
             <div class="blog-card-link">Read → </div>
           </div>
         </a>
@@ -752,7 +910,7 @@ body {
           <div class="blog-card-body">
             <div class="blog-card-label">Explainer</div>
             <div class="blog-card-title">What is GEO? Why AI Search Can't Find Your Business</div>
-            <div class="blog-card-snippet">Google isn't the only search engine anymore. Is your business ready?</div>
+            <div class="blog-card-snippet">When a customer asks ChatGPT "find me a landscaper near me," does your business show up?</div>
             <div class="blog-card-link">Read → </div>
           </div>
         </a>
@@ -765,9 +923,9 @@ body {
 <div class="form-bg">
   <section class="section" id="intake">
     <div class="section-inner">
-      <div class="section-label">Get Started</div>
-      <h2 class="section-title">Let's talk about your business</h2>
-      <p class="section-sub">Fill this out and we'll reach back within 24 hours with a custom demo walkthrough.</p>
+      <div class="section-label">Let's Talk</div>
+      <h2 class="section-title">Tell us about your business</h2>
+      <p class="section-sub">No sales pitch, no pressure. We'll review your situation and show you exactly what we'd build — with a working prototype, not a slide deck.</p>
       <div class="form-card reveal">
         <form id="intakeForm" onsubmit="submitIntake(event)" novalidate>
           <div class="form-grid">
@@ -776,7 +934,7 @@ body {
               <input class="form-input" id="fieldName" type="text" placeholder="Maria Garcia" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="fieldBusiness">Business Name *</label>
+              <label class="form-label" for="fieldBusiness">Business Name</label>
               <input class="form-input" id="fieldBusiness" type="text" placeholder="Garcia Painting Co">
             </div>
             <div class="form-group">
@@ -792,9 +950,10 @@ body {
               <select class="form-select" id="fieldIndustry" required>
                 <option value="">Select your industry...</option>
                 <option>Landscaping</option>
-                <option>Painting</option>
-                <option>HVAC</option>
+                <option>Real Estate / Home Services</option>
                 <option>Plumbing</option>
+                <option>HVAC</option>
+                <option>Painting</option>
                 <option>Other</option>
               </select>
               <div id="industryOtherWrap" style="display:none;margin-top:8px;">
@@ -813,33 +972,33 @@ body {
             </div>
 
             <div class="form-group full">
-              <div class="form-label" style="margin-bottom:10px;">What's your biggest challenge? (check all that apply)</div>
+              <div class="form-label" style="margin-bottom:10px;">What's costing you the most right now? (check all that apply)</div>
               <div class="checkbox-group">
                 <label class="checkbox-label"><input type="checkbox" name="challenge" value="Getting new customers"><span class="checkbox-box"></span>Getting new customers</label>
                 <label class="checkbox-label"><input type="checkbox" name="challenge" value="Following up with past customers"><span class="checkbox-box"></span>Following up with past customers</label>
                 <label class="checkbox-label"><input type="checkbox" name="challenge" value="Managing scheduling / bookings"><span class="checkbox-box"></span>Managing scheduling / bookings</label>
                 <label class="checkbox-label"><input type="checkbox" name="challenge" value="Online presence (website, Google, reviews)"><span class="checkbox-box"></span>Online presence (website, Google, reviews)</label>
-                <label class="checkbox-label"><input type="checkbox" name="challenge" value="Tracking expenses / receipts"><span class="checkbox-box"></span>Tracking expenses / receipts</label>
+                <label class="checkbox-label"><input type="checkbox" name="challenge" value="Paying for leads I don't own (Thumbtack, Angi)"><span class="checkbox-box"></span>Paying for leads I don't own (Thumbtack, Angi)</label>
                 <label class="checkbox-label"><input type="checkbox" name="challenge" value="Other"><span class="checkbox-box"></span>Other</label>
               </div>
             </div>
 
             <div class="form-group full">
-              <div class="form-label" style="margin-bottom:10px;">What services interest you? (check all that apply)</div>
+              <div class="form-label" style="margin-bottom:10px;">What would help your business the most? (check all that apply)</div>
               <div class="checkbox-group">
                 <label class="checkbox-label"><input type="checkbox" name="service" value="AI-powered website with online booking"><span class="checkbox-box"></span>AI-powered website with online booking</label>
                 <label class="checkbox-label"><input type="checkbox" name="service" value="AI chatbot for customer inquiries"><span class="checkbox-box"></span>AI chatbot for customer inquiries</label>
                 <label class="checkbox-label"><input type="checkbox" name="service" value="GEO/SEO optimization (get found on Google & AI search)"><span class="checkbox-box"></span>GEO/SEO optimization (get found on Google &amp; AI search)</label>
                 <label class="checkbox-label"><input type="checkbox" name="service" value="Customer follow-up automation"><span class="checkbox-box"></span>Customer follow-up automation</label>
-                <label class="checkbox-label"><input type="checkbox" name="service" value="Receipt scanner / expense tracking"><span class="checkbox-box"></span>Receipt scanner / expense tracking</label>
-                <label class="checkbox-label"><input type="checkbox" name="service" value="Employee scheduling"><span class="checkbox-box"></span>Employee scheduling</label>
+                <label class="checkbox-label"><input type="checkbox" name="service" value="Owner dashboard with lead tracking"><span class="checkbox-box"></span>Owner dashboard with lead tracking</label>
                 <label class="checkbox-label"><input type="checkbox" name="service" value="Review management"><span class="checkbox-box"></span>Review management</label>
+                <label class="checkbox-label"><input type="checkbox" name="service" value="Employee scheduling"><span class="checkbox-box"></span>Employee scheduling</label>
               </div>
             </div>
 
             <div class="form-group full">
               <label class="form-label" for="fieldNotes">Anything else you'd like us to know? (optional)</label>
-              <textarea class="form-textarea" id="fieldNotes" placeholder="Property size, current setup, goals..."></textarea>
+              <textarea class="form-textarea" id="fieldNotes" placeholder="Current setup, service area, goals..."></textarea>
             </div>
 
             <div class="form-group ref-field-wrap" id="refFieldWrap">
@@ -865,27 +1024,27 @@ body {
 <div class="referral-bg">
   <section class="section" id="referral">
     <div class="section-inner">
-      <div class="section-label">Partner With Us</div>
-      <h2 class="section-title">Know a business owner? Earn by referring.</h2>
-      <p class="section-sub">Share the link. When they sign up, you earn.</p>
+      <div class="section-label">Referrals</div>
+      <h2 class="section-title">Know someone who needs this?</h2>
+      <p class="section-sub">If you refer a business owner who works with us, you earn a percentage of the project. No caps, no strings.</p>
       <div class="referral-grid">
         <div class="referral-card reveal">
           <div class="referral-tier">Tier 1</div>
           <div class="referral-reward">10–15%</div>
           <div class="referral-title">Direct Referral</div>
-          <div class="referral-desc">Refer a business owner directly. Earn 10–15% of their first project when they sign a contract.</div>
+          <div class="referral-desc">You refer a business owner directly → earn 10–15% of their first project when they sign a contract.</div>
         </div>
         <div class="referral-card reveal">
           <div class="referral-tier">Tier 2</div>
           <div class="referral-reward">5%</div>
           <div class="referral-title">Extended Referral</div>
-          <div class="referral-desc">Your referral refers someone else? You still earn 5% of that project — no extra effort needed.</div>
+          <div class="referral-desc">Your referral refers someone else → you still earn 5% of that project. No extra effort needed.</div>
         </div>
         <div class="referral-card reveal">
           <div class="referral-tier">Client Perk</div>
           <div class="referral-reward">$500 off</div>
           <div class="referral-title">Client Referral</div>
-          <div class="referral-desc">Already a client? Refer a peer and get $500 off your next retainer or add-on project.</div>
+          <div class="referral-desc">Already working with us? Refer a peer → $500 off your next invoice or add-on project.</div>
         </div>
       </div>
       <div class="referral-link-box reveal">
@@ -902,8 +1061,8 @@ body {
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer class="footer">
-  <div class="footer-name">Milan Khanal</div>
-  <div class="footer-tagline">AI-powered business solutions for local companies</div>
+  <div class="footer-name">Milan Khanal — Founder</div>
+  <div class="footer-tagline">We build AI-powered business systems for local service companies in DFW.</div>
   <div class="footer-links">
     <span>📧 <a href="mailto:hello@milankhanal.com">hello@milankhanal.com</a></span>
     <span>📍 McKinney, TX</span>
