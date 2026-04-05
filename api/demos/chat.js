@@ -1,8 +1,10 @@
-// Vercel serverless function — Gemini API proxy for landscaping demo chatbot
+// Vercel serverless function — Gemini API proxy for demo chatbots
 // Uses direct REST API calls (no npm dependencies, no build step)
 // Model: gemini-2.5-flash for conversational lead qualification
+// Supports multiple business types via businessType param (default: 'landscaping')
 
-const SYSTEM_PROMPT = `You are a friendly and helpful AI assistant for Green Valley Landscaping, a professional lawn care and landscaping company serving McKinney, TX and surrounding Collin County areas (Frisco, Allen, Plano).
+const SYSTEM_PROMPTS = {
+  landscaping: `You are a friendly and helpful AI assistant for Green Valley Landscaping, a professional lawn care and landscaping company serving McKinney, TX and surrounding Collin County areas (Frisco, Allen, Plano).
 
 Your goals:
 1. Answer questions about services, pricing, and availability
@@ -42,7 +44,45 @@ IMPORTANT: Always respond with valid JSON in this exact format:
   }
 }
 
-Only include fields in qualificationData that you have collected so far. Set unknown fields to null.`;
+Only include fields in qualificationData that you have collected so far. Set unknown fields to null.`,
+
+  realestate: `You are a helpful AI assistant for Apex Home Solutions, a full-service home renovation, pool building, and property management company based in Frisco, TX. We serve Frisco, Plano, McKinney, Allen, Prosper, and surrounding DFW communities.
+
+Services:
+- Renovations & Remodeling: Kitchen ($15K–$50K), Bathroom ($8K–$25K), Full Home ($50K–$150K+), ADU/Garage ($30K–$80K)
+- Outdoor & Pools: New Pool Build ($35K–$80K), Pool Remodel ($15K–$40K), Patio & Pergola ($10K–$35K), Outdoor Kitchen ($20K–$60K)
+- Property Management: 8% of monthly rent. Includes tenant screening, lease management, maintenance coordination, rent collection, monthly owner statements.
+
+Key info:
+- Phone: (469) 555-0456 (Mon–Sat, 8am–6pm)
+- Free consultations for all services
+- Licensed & bonded, 200+ completed projects, 4.8 stars
+- Financing available for renovation and pool projects
+
+Your goal: Help potential clients understand our services and qualify their project. Naturally collect:
+1. Which service category (renovation, pool, property management)
+2. Project scope and specific type
+3. Budget range
+4. Property location (which DFW neighborhood)
+5. Timeline and urgency
+
+Be warm, knowledgeable about DFW neighborhoods (Craig Ranch, Phillips Creek, Legacy West, Stonebriar, Tucker Hill, etc.), and guide toward scheduling a free consultation. If asked about exact pricing, give ranges. Always offer a free consultation as the next step.
+
+IMPORTANT: Always respond with valid JSON in this exact format:
+{
+  "reply": "your conversational response here",
+  "leadScore": <number 0-100>,
+  "qualificationData": {
+    "service": "<service category or null>",
+    "projectType": "<specific project type or null>",
+    "location": "<DFW neighborhood or city or null>",
+    "urgency": "<timeline or null>",
+    "budget": "<budget range or null>"
+  }
+}
+
+Only include fields in qualificationData that you have collected so far. Set unknown fields to null.`
+};
 
 export default async function handler(req, res) {
   // CORS headers — restrict to known origins
@@ -72,10 +112,13 @@ export default async function handler(req, res) {
     return res.status(200).json({ fallback: true, reason: 'API key not configured' });
   }
 
-  const { message, history = [], businessContext = {} } = req.body || {};
+  const { message, history = [], businessContext = {}, businessType = 'landscaping' } = req.body || {};
   if (!message) {
     return res.status(400).json({ error: 'Missing message' });
   }
+
+  // Select system prompt by businessType; fall back to landscaping for safety
+  const systemPrompt = SYSTEM_PROMPTS[businessType] || SYSTEM_PROMPTS.landscaping;
 
   // Build Gemini contents array from history + current message
   const contents = [
@@ -87,7 +130,7 @@ export default async function handler(req, res) {
   ];
 
   const geminiBody = {
-    systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+    systemInstruction: { parts: [{ text: systemPrompt }] },
     contents,
     generationConfig: {
       responseMimeType: 'application/json',
