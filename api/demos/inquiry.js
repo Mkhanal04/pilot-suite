@@ -83,6 +83,23 @@ export default async function handler(req, res) {
     }
   }
 
+  // Notification webhook (Option C) — fires for every inquiry regardless of Supabase state
+  const webhookUrl = process.env.NOTIFICATION_WEBHOOK_URL;
+  if (webhookUrl) {
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `🔔 **New Inquiry**\n**Name:** ${inquiry.name}\n**Email:** ${inquiry.email}\n**Industry:** ${inquiry.industry}\n**Business:** ${inquiry.business_name || 'N/A'}\n**Phone:** ${inquiry.phone || 'N/A'}`
+        }),
+        signal: AbortSignal.timeout(3000)
+      });
+    } catch (err) {
+      console.warn('[Inquiry] Webhook notification failed (non-fatal):', err.message);
+    }
+  }
+
   return res.status(200).json({
     success: true,
     message: "Thank you! We'll reach out within 24 hours."
