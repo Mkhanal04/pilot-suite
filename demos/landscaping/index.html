@@ -983,6 +983,45 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
 .missing-banner-close:hover { color: var(--t1); }
 
 /* ═══════════════════════════════════════════
+   LANGUAGE TOGGLE
+═══════════════════════════════════════════ */
+.lang-toggle { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 13px; color: var(--t2); cursor: pointer; font-weight: 500; }
+.lang-toggle .active-lang { color: var(--accent); font-weight: 700; }
+.demo-bar-back { font-size: 12px; color: var(--t2); text-decoration: none; padding: 4px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg2); }
+.demo-bar-back:hover { color: var(--t0); }
+
+/* ═══════════════════════════════════════════
+   AUTOMATION PANEL
+═══════════════════════════════════════════ */
+.auto-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+.auto-metric-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.auto-metric-icon { font-size: 22px; margin-bottom: 6px; }
+.auto-metric-value { font-size: 22px; font-weight: 700; color: var(--t0); }
+.auto-metric-label { font-size: 12px; color: var(--t2); margin: 2px 0; }
+.auto-metric-trend { font-size: 11px; color: var(--accent); }
+.campaign-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+.campaign-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.campaign-name-row { display: flex; align-items: center; gap: 8px; }
+.campaign-icon-el { font-size: 18px; }
+.campaign-name { font-weight: 600; color: var(--t0); font-size: 15px; }
+.campaign-status { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 4px; }
+.campaign-status.active { background: var(--accentS); color: var(--accent); }
+.campaign-status.paused { background: rgba(245,158,11,0.1); color: var(--amber); }
+.campaign-desc { color: var(--t2); font-size: 13px; margin-bottom: 8px; }
+.campaign-stats { display: flex; gap: 16px; font-size: 12px; color: var(--t2); flex-wrap: wrap; }
+.campaign-stats span { display: flex; align-items: center; gap: 4px; }
+.missed-call-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.missed-call-item:last-child { border-bottom: none; }
+.missed-call-date { font-size: 12px; color: var(--t2); white-space: nowrap; min-width: 48px; }
+.missed-call-flow { flex: 1; font-size: 13px; color: var(--t1); }
+.missed-call-status { font-size: 14px; }
+.auto-msg-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+.auto-msg-table th { padding: 8px 12px; text-align: left; color: var(--t2); font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+.auto-msg-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--t1); }
+.auto-msg-table tr:last-child td { border-bottom: none; }
+.missed-call-name { white-space: nowrap; }
+
+/* ═══════════════════════════════════════════
    RESPONSIVE — MOBILE (<768)
 ═══════════════════════════════════════════ */
 @media (max-width: 767px) {
@@ -1043,9 +1082,11 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
     <button class="demo-bar-btn active" id="btnCustomer" onclick="switchMode('customer')">Customer View</button>
     <button class="demo-bar-btn" id="btnOwner" onclick="switchMode('owner')">Owner Dashboard</button>
   </div>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()" style="display:none;" aria-label="Toggle language"><span id="langEN" class="active-lang">EN</span> | <span id="langES">ES</span></button>
   <button class="demo-bar-theme" onclick="toggleTheme()" aria-label="Toggle theme">
     <span id="themeIcon">☀</span>
   </button>
+  <a href="/demos/" class="demo-bar-back">← All Demos</a>
 </div>
 
 <!-- ═══════════════════ CUSTOMER VIEW ═══════════════════ -->
@@ -1065,13 +1106,13 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
         <span class="stars">★★★★★</span>
         4.9 stars · 127 reviews
       </div>
-      <h1>Your yard deserves better.</h1>
-      <p class="cv-hero-sub">McKinney's most-reviewed landscaping company. We handle everything from lawn care to full outdoor transformations.</p>
+      <h1 data-en="Your yard deserves better." data-es="Tu jardín merece lo mejor.">Your yard deserves better.</h1>
+      <p class="cv-hero-sub" data-en="McKinney's most-reviewed landscaping company. We handle everything from lawn care to full outdoor transformations." data-es="La empresa de paisajismo más valorada de McKinney. Nos encargamos de todo, desde el mantenimiento del césped hasta transformaciones completas.">McKinney's most-reviewed landscaping company. We handle everything from lawn care to full outdoor transformations.</p>
       <div class="cv-hero-ctas">
-        <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+        <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" data-en="Get a Free Estimate" data-es="Solicitar Cotización →">
           Get a Free Estimate
         </button>
-        <button class="btn-outline" onclick="toggleChat()">
+        <button class="btn-outline" onclick="toggleChat()" data-en="💬 Chat With Us" data-es="💬 Escríbenos">
           💬 Chat With Us
         </button>
       </div>
@@ -1105,34 +1146,34 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
   <!-- Services -->
   <div class="cv-services-bg">
     <div class="cv-section">
-      <div class="cv-section-label">What We Do</div>
-      <h2 class="cv-section-title">Professional services for every yard</h2>
-      <p class="cv-section-sub">From weekly maintenance to complete outdoor transformations — we've got McKinney covered.</p>
+      <div class="cv-section-label" data-en="What We Do" data-es="Lo Que Hacemos">What We Do</div>
+      <h2 class="cv-section-title" data-en="Professional services for every yard" data-es="Nuestros Servicios">Professional services for every yard</h2>
+      <p class="cv-section-sub" data-en="From weekly maintenance to complete outdoor transformations — we've got McKinney covered." data-es="Desde mantenimiento semanal hasta transformaciones completas al aire libre.">From weekly maintenance to complete outdoor transformations — we've got McKinney covered.</p>
       <div class="services-grid" id="servicesGrid"></div>
     </div>
   </div>
 
   <!-- Before/After Gallery -->
   <div class="cv-section">
-    <div class="cv-section-label">Our Work</div>
-    <h2 class="cv-section-title">See the transformation</h2>
-    <p class="cv-section-sub">Drag the slider to compare before &amp; after on recent projects across McKinney and Frisco.</p>
+    <div class="cv-section-label" data-en="Our Work" data-es="Nuestro Trabajo">Our Work</div>
+    <h2 class="cv-section-title" data-en="See the transformation" data-es="Vea la Transformación">See the transformation</h2>
+    <p class="cv-section-sub" data-en="Drag the slider to compare before &amp; after on recent projects across McKinney and Frisco." data-es="Proyectos recientes en McKinney y Frisco.">Drag the slider to compare before &amp; after on recent projects across McKinney and Frisco.</p>
     <div class="gallery-grid" id="galleryGrid"></div>
   </div>
 
   <!-- Reviews -->
   <div class="cv-reviews-bg">
     <div class="cv-section">
-      <div class="cv-section-label">Customer Love</div>
-      <h2 class="cv-section-title">What our clients say</h2>
+      <div class="cv-section-label" data-en="Customer Love" data-es="Lo Que Dicen">Customer Love</div>
+      <h2 class="cv-section-title" data-en="What our clients say" data-es="Lo que dicen nuestros clientes">What our clients say</h2>
       <div class="reviews-grid" id="reviewsGrid"></div>
     </div>
   </div>
 
   <!-- Booking -->
   <div id="booking" class="cv-section">
-    <div class="cv-section-label">Get Started</div>
-    <h2 class="cv-section-title">Request a free estimate</h2>
+    <div class="cv-section-label" data-en="Get Started" data-es="Empieza Ya">Get Started</div>
+    <h2 class="cv-section-title" data-en="Request a free estimate" data-es="Solicita una estimación gratis">Request a free estimate</h2>
     <div class="booking-inner">
       <div class="booking-info">
         <h3>Ready to transform your outdoor space?</h3>
@@ -1154,37 +1195,37 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
         <form id="bookingForm" onsubmit="submitBooking(event)">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="firstName">First Name</label>
-              <input class="form-input" id="firstName" type="text" placeholder="Maria" required>
+              <label class="form-label" for="firstName" data-en="First Name" data-es="Tu nombre">First Name</label>
+              <input class="form-input" id="firstName" type="text" placeholder="Maria" data-ph-en="Maria" data-ph-es="María" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="lastName">Last Name</label>
-              <input class="form-input" id="lastName" type="text" placeholder="Garcia" required>
+              <label class="form-label" for="lastName" data-en="Last Name" data-es="Apellido">Last Name</label>
+              <input class="form-input" id="lastName" type="text" placeholder="Garcia" data-ph-en="Garcia" data-ph-es="García" required>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="bookingEmail">Email</label>
-            <input class="form-input" id="bookingEmail" type="email" placeholder="maria@example.com" required>
+            <label class="form-label" for="bookingEmail" data-en="Email" data-es="Correo electrónico">Email</label>
+            <input class="form-input" id="bookingEmail" type="email" placeholder="maria@example.com" data-ph-en="maria@example.com" data-ph-es="maria@ejemplo.com" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="bookingPhone">Phone</label>
-            <input class="form-input" id="bookingPhone" type="tel" placeholder="(214) 555-0000">
+            <label class="form-label" for="bookingPhone" data-en="Phone" data-es="Teléfono">Phone</label>
+            <input class="form-input" id="bookingPhone" type="tel" placeholder="(214) 555-0000" data-ph-en="(214) 555-0000" data-ph-es="(214) 555-0000">
           </div>
           <div class="form-group">
-            <label class="form-label" for="bookingService">Service Interested In</label>
+            <label class="form-label" for="bookingService" data-en="Service Interested In" data-es="¿Qué servicio necesitas?">Service Interested In</label>
             <select class="form-select" id="bookingService">
-              <option value="">Select a service...</option>
-              <option>Lawn Maintenance</option>
-              <option>Landscaping &amp; Design</option>
-              <option>Tree &amp; Shrub Care</option>
-              <option>Not sure yet</option>
+              <option value="" data-en="Select a service..." data-es="Selecciona un servicio...">Select a service...</option>
+              <option data-en="Lawn Maintenance" data-es="Mantenimiento de Jardines">Lawn Maintenance</option>
+              <option data-en="Landscaping &amp; Design" data-es="Diseño de Paisajes">Landscaping &amp; Design</option>
+              <option data-en="Tree &amp; Shrub Care" data-es="Mantenimiento de Árboles">Tree &amp; Shrub Care</option>
+              <option data-en="Not sure yet" data-es="No estoy seguro">Not sure yet</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="bookingMsg">Tell us about your project</label>
-            <textarea class="form-textarea" id="bookingMsg" placeholder="Property size, current condition, goals..."></textarea>
+            <label class="form-label" for="bookingMsg" data-en="Tell us about your project" data-es="Mensaje (opcional)">Tell us about your project</label>
+            <textarea class="form-textarea" id="bookingMsg" placeholder="Property size, current condition, goals..." data-ph-en="Property size, current condition, goals..." data-ph-es="Tamaño de la propiedad, condición actual, objetivos..."></textarea>
           </div>
-          <button class="btn-submit" id="bookingSubmit" type="submit">Request Free Estimate →</button>
+          <button class="btn-submit" id="bookingSubmit" type="submit" data-en="Request Free Estimate →" data-es="Solicitar Cotización →">Request Free Estimate →</button>
         </form>
         <div class="booking-success" id="bookingSuccess">
           <div class="booking-success-icon">🌿</div>
@@ -1198,7 +1239,7 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
   <!-- Footer -->
   <footer class="cv-footer">
     <div class="cv-footer-logo">🌿 Green Valley Landscaping</div>
-    <div class="cv-footer-tagline">McKinney's most-reviewed landscaping company</div>
+    <div class="cv-footer-tagline" data-en="McKinney's most-reviewed landscaping company" data-es="Sirviendo a McKinney, Allen, Frisco y comunidades vecinas">McKinney's most-reviewed landscaping company</div>
     <div class="cv-footer-info">
       <span>📞 (214) 555-0123</span>
       <span>📍 McKinney, TX 75070</span>
@@ -1282,6 +1323,10 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
         <button class="nav-item" id="nav-kb" onclick="showDashView('kb')">
           <span class="nav-icon">📋</span>
           <span class="nav-text">Knowledge Base</span>
+        </button>
+        <button class="nav-item" id="nav-automation" onclick="showDashView('automation')">
+          <span class="nav-icon">📱</span>
+          <span class="nav-text">Automation</span>
         </button>
       </nav>
       <div class="sidebar-bottom">
@@ -1374,6 +1419,15 @@ input[type="range"].ba-slider::-webkit-slider-thumb {
             <div id="kbServicesList"></div>
           </div>
         </div>
+      </div>
+
+      <!-- Automation view -->
+      <div class="dash-view" id="view-automation">
+        <div class="dash-view-header">
+          <div class="dash-view-title">Communication Automation</div>
+          <div class="dash-view-sub">Automated campaigns, missed call recovery, and message tracking</div>
+        </div>
+        <div id="automationPanel"></div>
       </div>
 
     </main>
@@ -1516,7 +1570,51 @@ const MOCK = {
     { name: 'Bob Williams', lastService: 'Mar 2026', serviceType: 'Tree trimming', value: 550, suggestion: 'Annual maintenance reminder', daysAgo: 35 }
   ],
 
-  dormantCustomers: 15
+  dormantCustomers: 15,
+
+  automation: {
+    metrics: [
+      { label: 'Messages Sent', value: '112', trend: 'This month', icon: '✉️' },
+      { label: 'Open Rate', value: '71%', trend: '+6% vs last month', icon: '📬' },
+      { label: 'Replies', value: '18', trend: '16% reply rate', icon: '💬' },
+      { label: 'Booked from Auto', value: '6', trend: '$2,400 revenue', icon: '📅' }
+    ],
+    campaigns: [
+      { icon: '🌱', name: 'Spring Cleanup Campaign', status: 'ACTIVE', sent: 38, desc: 'Sent to customers from last season who haven\'t booked this spring', opens: '74%', replies: 7, booked: 4 },
+      { icon: '⭐', name: 'Review Request (Post-Service)', status: 'ACTIVE', sent: 29, desc: 'Auto-sent 2 hours after job completion', opens: '88%', reviews: 11, avgRating: '4.8★' },
+      { icon: '🔄', name: 'Dormant Customer Reactivation', status: 'ACTIVE', sent: 12, desc: '3-touch sequence for customers inactive 60+ days', opens: '42%', replies: 3, reactivated: 2 }
+    ],
+    missedCalls: [
+      { date: 'Apr 5', name: 'Carlos M.', flow: 'Missed → Auto-text → Booked spring cleanup ($320)', status: '✅' },
+      { date: 'Apr 3', name: 'Unknown', flow: 'Missed → Auto-text → No reply → Follow-up #2 scheduled', status: '⏳' },
+      { date: 'Apr 2', name: 'Linda T.', flow: 'Missed → Auto-text → Called back → Booked mowing ($180)', status: '✅' }
+    ],
+    recentMessages: [
+      { channel: '📱', name: 'James R.', type: 'Review request', status: '✅ Opened' },
+      { channel: '📧', name: 'Maria G.', type: 'Spring campaign', status: '✅ Replied' },
+      { channel: '📱', name: 'Bob T.', type: 'Appt confirm', status: '✅ Sent' },
+      { channel: '📧', name: 'Sarah L.', type: 'Reactivation #1', status: '📬 Sent' },
+      { channel: '📱', name: 'Alex M.', type: 'Missed call', status: '✅ Booked' }
+    ]
+  }
+};
+
+/* ═══════════════════════════════════════════
+   TRANSLATIONS (ES)
+═══════════════════════════════════════════ */
+const TRANS_ES = {
+  heroHeadline: 'Tu Sistema de Negocios, Inteligente',
+  heroSub: 'El chatbot responde preguntas, reservas en línea y seguimiento automático — todo funciona mientras tú trabajas.',
+  services: [
+    { name: 'Mantenimiento de Jardines', desc: 'Corte y bordado semanal, mensual o quincenal' },
+    { name: 'Diseño de Paisajes', desc: 'Diseño personalizado para patios y jardines' },
+    { name: 'Limpieza de Temporada', desc: 'Limpieza de primavera y preparación para el invierno' },
+    { name: 'Instalación de Riego', desc: 'Sistemas eficientes para mantener tu jardín verde' },
+    { name: 'Mantenimiento de Árboles', desc: 'Poda, recorte y remoción de árboles' },
+    { name: 'Proyectos Comerciales', desc: 'Mantenimiento y diseño para propiedades comerciales' }
+  ],
+  chatGreeting: '¡Hola! Soy el asistente de Green Oasis Landscaping. ¿En qué te puedo ayudar hoy?',
+  chatPlaceholder: 'Pregunta sobre nuestros servicios...'
 };
 
 /* ═══════════════════════════════════════════
@@ -1524,6 +1622,7 @@ const MOCK = {
 ═══════════════════════════════════════════ */
 let currentMode = 'customer';
 let currentDashView = 'dashboard';
+let currentLang = 'en';
 let sidebarCollapsed = false;
 let chatOpen = false;
 let chatHistory = [];
@@ -1546,6 +1645,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const pillLabel = document.getElementById('heroPillLabel');
   if (pillIcon) pillIcon.textContent = saved === 'dark' ? '☀' : '☽';
   if (pillLabel) pillLabel.textContent = saved === 'dark' ? 'Try light mode' : 'Try dark mode';
+
+  // Restore language
+  const savedLang = localStorage.getItem('gv-lang') || 'en';
+  if (savedLang === 'es') applyLang('es');
 
   // Render customer view content then init scroll reveal
   renderServices();
@@ -1575,6 +1678,8 @@ function switchMode(mode) {
   document.getElementById('chatWidget').style.display = mode === 'customer' ? '' : 'none';
   document.getElementById('btnCustomer').classList.toggle('active', mode === 'customer');
   document.getElementById('btnOwner').classList.toggle('active', mode === 'owner');
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) langToggle.style.display = mode === 'customer' ? '' : 'none';
   if (mode === 'owner' && !dashboardInitialized) {
     initDashboard();
     dashboardInitialized = true;
@@ -1590,17 +1695,20 @@ function switchMode(mode) {
 ═══════════════════════════════════════════ */
 function showDashView(name) {
   currentDashView = name;
-  const views = ['dashboard', 'leads', 'geo', 'kb'];
+  const views = ['dashboard', 'leads', 'geo', 'kb', 'automation'];
   views.forEach(v => {
-    document.getElementById('view-' + v).classList.remove('active', 'view-enter');
-    document.getElementById('nav-' + v).classList.remove('active');
+    const viewEl = document.getElementById('view-' + v);
+    const navEl = document.getElementById('nav-' + v);
+    if (viewEl) viewEl.classList.remove('active', 'view-enter');
+    if (navEl) navEl.classList.remove('active');
   });
   const view = document.getElementById('view-' + name);
   view.classList.add('active');
   requestAnimationFrame(() => view.classList.add('view-enter'));
   document.getElementById('nav-' + name).classList.add('active');
+  if (name === 'automation') renderAutomation();
   // Update mobile header title
-  const titles = { dashboard: 'Dashboard', leads: 'Leads', geo: 'GEO Score', kb: 'Knowledge Base' };
+  const titles = { dashboard: 'Dashboard', leads: 'Leads', geo: 'GEO Score', kb: 'Knowledge Base', automation: 'Automation' };
   const mh = document.getElementById('mobileHeaderTitle');
   if (mh) mh.textContent = titles[name] || name;
   // Close mobile sidebar
@@ -1654,17 +1762,142 @@ function initScrollReveal() {
 
 function renderServices() {
   const grid = document.getElementById('servicesGrid');
-  grid.innerHTML = MOCK.services.map(s => `
+  const lang = currentLang;
+  const esServices = TRANS_ES.services;
+  // Use top 3 from MOCK but apply ES names/descs if lang=es
+  const displayServices = MOCK.services.map((s, i) => {
+    if (lang === 'es' && esServices[i]) {
+      return { ...s, name: esServices[i].name, desc: esServices[i].desc };
+    }
+    return s;
+  });
+  grid.innerHTML = displayServices.map(s => `
     <div class="service-card reveal">
       <div class="service-icon">${s.icon}</div>
-      <div class="service-name">${s.name}</div>
-      <div class="service-desc">${s.desc}</div>
+      <div class="service-name">${escapeHtml(s.name)}</div>
+      <div class="service-desc">${escapeHtml(s.desc)}</div>
       <div class="service-price">From ${s.price}</div>
       <ul class="service-features">
         ${s.features.map(f => `<li>${escapeHtml(f)}</li>`).join('')}
       </ul>
     </div>
   `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   LANGUAGE TOGGLE
+═══════════════════════════════════════════ */
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('gv-lang', currentLang);
+  applyLang(currentLang);
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+  });
+  document.querySelectorAll('[data-ph-en]').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en');
+  });
+  // Update select options
+  document.querySelectorAll('select option[data-en]').forEach(opt => {
+    opt.textContent = opt.getAttribute('data-' + lang) || opt.getAttribute('data-en');
+  });
+  renderServices();
+  const chatInput = document.getElementById('chatInput');
+  if (chatInput) chatInput.placeholder = lang === 'es' ? TRANS_ES.chatPlaceholder : 'Ask about our services...';
+  if (chatInput && lang === 'es' && document.getElementById('chatMessages').children.length === 0) {
+    // Chat not opened yet — greeting will be set when opened
+  }
+  updateLangToggle(lang);
+}
+
+function updateLangToggle(lang) {
+  const enEl = document.getElementById('langEN');
+  const esEl = document.getElementById('langES');
+  if (!enEl || !esEl) return;
+  if (lang === 'es') {
+    enEl.classList.remove('active-lang');
+    esEl.classList.add('active-lang');
+  } else {
+    enEl.classList.add('active-lang');
+    esEl.classList.remove('active-lang');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   AUTOMATION PANEL
+═══════════════════════════════════════════ */
+function renderAutomation() {
+  const panel = document.getElementById('automationPanel');
+  if (!panel) return;
+  const d = MOCK.automation;
+  panel.innerHTML = `
+    <div class="auto-metrics">
+      ${d.metrics.map(m => `
+        <div class="auto-metric-card">
+          <div class="auto-metric-icon">${m.icon}</div>
+          <div class="auto-metric-value">${m.value}</div>
+          <div class="auto-metric-label">${m.label}</div>
+          <div class="auto-metric-trend">${m.trend}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card" style="margin-bottom:20px;">
+      <div class="kb-section-header"><div class="kb-section-title">Active Campaigns</div></div>
+      ${d.campaigns.map(c => `
+        <div class="campaign-card">
+          <div class="campaign-header">
+            <div class="campaign-name-row">
+              <span class="campaign-icon-el">${c.icon}</span>
+              <span class="campaign-name">${c.name}</span>
+              <span class="campaign-status">● ${c.status}</span>
+            </div>
+            <div class="campaign-desc">${c.desc}</div>
+          </div>
+          <div class="campaign-stats">
+            <span>Sent: <strong>${c.sent}</strong></span>
+            <span>Opens: <strong>${c.opens}</strong></span>
+            ${c.replies !== undefined ? `<span>Replies: <strong>${c.replies}</strong></span>` : ''}
+            ${c.booked !== undefined ? `<span>Booked: <strong>${c.booked}</strong></span>` : ''}
+            ${c.reviews !== undefined ? `<span>Reviews: <strong>${c.reviews}</strong></span>` : ''}
+            ${c.avgRating !== undefined ? `<span>Avg: <strong>${c.avgRating}</strong></span>` : ''}
+            ${c.reactivated !== undefined ? `<span>Reactivated: <strong>${c.reactivated}</strong></span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card" style="margin-bottom:20px;">
+      <div class="kb-section-header"><div class="kb-section-title">Missed Call Recovery</div></div>
+      ${d.missedCalls.map(mc => `
+        <div class="missed-call-item">
+          <span class="missed-call-date">${mc.date}</span>
+          <span class="missed-call-name"><strong>${mc.name}</strong></span>
+          <span class="missed-call-flow">${mc.flow}</span>
+          <span class="missed-call-status">${mc.status}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card">
+      <div class="kb-section-header"><div class="kb-section-title">Recent Automated Messages</div></div>
+      <table class="auto-msg-table">
+        <thead><tr><th>Ch</th><th>Customer</th><th>Type</th><th>Status</th></tr></thead>
+        <tbody>
+          ${d.recentMessages.map(m => `
+            <tr>
+              <td>${m.channel}</td>
+              <td>${m.name}</td>
+              <td>${m.type}</td>
+              <td>${m.status}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
 function renderGallery() {
@@ -1729,7 +1962,10 @@ function toggleChat() {
   const panel = document.getElementById('chatPanel');
   panel.classList.toggle('open', chatOpen);
   if (chatOpen && chatHistory.length === 0) {
-    appendChatMessage('model', "Hi! I'm the Green Valley Landscaping assistant 🌿\n\nI can answer questions about our services, pricing, and help you schedule a free estimate. What can I help you with today?");
+    const greeting = currentLang === 'es'
+      ? TRANS_ES.chatGreeting
+      : "Hi! I'm the Green Valley Landscaping assistant 🌿\n\nI can answer questions about our services, pricing, and help you schedule a free estimate. What can I help you with today?";
+    appendChatMessage('model', greeting);
   }
   if (chatOpen) {
     setTimeout(() => document.getElementById('chatInput').focus(), 100);

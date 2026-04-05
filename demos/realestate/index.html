@@ -139,13 +139,13 @@ body {
 }
 .demo-bar-title { font-size: 13px; font-weight: 600; color: var(--t0); flex: 1; }
 .demo-bar-sub { font-size: 11px; color: var(--t2); }
-.demo-toggle { display: flex; background: var(--bg2); border-radius: 8px; padding: 3px; gap: 3px; }
-.demo-toggle-btn {
+.demo-bar-toggle { display: flex; background: var(--bg2); border-radius: 8px; padding: 3px; gap: 3px; }
+.demo-bar-btn {
   padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
   color: var(--t2); background: transparent; border: none;
   transition: background 0.15s, color 0.15s; white-space: nowrap;
 }
-.demo-toggle-btn.active { background: var(--bg1); color: var(--t0); box-shadow: var(--shadow-sm); }
+.demo-bar-btn.active { background: var(--bg1); color: var(--t0); box-shadow: var(--shadow-sm); }
 .demo-bar-theme {
   width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border);
   background: var(--bg2); color: var(--t1); font-size: 14px;
@@ -155,6 +155,36 @@ body {
   font-size: 12px; color: var(--accent); font-weight: 500; white-space: nowrap;
 }
 .demo-bar-back:hover { text-decoration: underline; }
+.lang-toggle { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 13px; color: var(--t2); cursor: pointer; font-weight: 500; }
+.lang-toggle .active-lang { color: var(--accent); font-weight: 700; }
+.kb-section-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+.kb-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.kb-section-title { font-weight: 700; color: var(--t0); font-size: 15px; }
+.auto-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+.auto-metric-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+.auto-metric-icon { font-size: 22px; margin-bottom: 6px; }
+.auto-metric-value { font-size: 22px; font-weight: 700; color: var(--t0); }
+.auto-metric-label { font-size: 12px; color: var(--t2); margin: 2px 0; }
+.auto-metric-trend { font-size: 11px; color: var(--accent); }
+.campaign-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+.campaign-header { margin-bottom: 8px; }
+.campaign-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.campaign-icon-el { font-size: 18px; }
+.campaign-name { font-weight: 600; color: var(--t0); font-size: 15px; }
+.campaign-status { font-size: 11px; color: var(--accent); font-weight: 600; margin-left: auto; }
+.campaign-desc { font-size: 13px; color: var(--t2); }
+.campaign-stats { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--t2); margin-top: 10px; }
+.campaign-stats strong { color: var(--t0); }
+.missed-call-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.missed-call-item:last-child { border-bottom: none; }
+.missed-call-date { color: var(--t2); white-space: nowrap; min-width: 40px; }
+.missed-call-name { white-space: nowrap; font-weight: 600; color: var(--t0); min-width: 80px; }
+.missed-call-flow { color: var(--t1); flex: 1; }
+.missed-call-status { white-space: nowrap; }
+.auto-msg-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+.auto-msg-table th { padding: 8px 12px; text-align: left; color: var(--t2); font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+.auto-msg-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--t1); }
+.auto-msg-table tr:last-child td { border-bottom: none; }
 
 /* ═══════════════════════════════════════════
    CUSTOMER VIEW
@@ -810,10 +840,11 @@ body {
     <div class="demo-bar-title">Apex Home Solutions</div>
     <div class="demo-bar-sub">Real Estate & Home Services — AI-Powered System</div>
   </div>
-  <div class="demo-toggle">
-    <button class="demo-toggle-btn active" id="btnCustomer" onclick="switchMode('customer')">Customer View</button>
-    <button class="demo-toggle-btn" id="btnOwner" onclick="switchMode('owner')">Owner Dashboard</button>
+  <div class="demo-bar-toggle">
+    <button class="demo-bar-btn active" id="btnCustomer" onclick="switchMode('customer')">Customer View</button>
+    <button class="demo-bar-btn" id="btnOwner" onclick="switchMode('owner')">Owner Dashboard</button>
   </div>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()" style="display:none;" aria-label="Toggle language"><span id="langEN" class="active-lang">EN</span> | <span id="langES">ES</span></button>
   <button class="demo-bar-theme" onclick="toggleTheme()" aria-label="Toggle theme">
     <span id="themeIcon">☀</span>
   </button>
@@ -826,11 +857,11 @@ body {
   <!-- Hero -->
   <section class="cv-hero">
     <div class="cv-hero-inner">
-      <h1>Your Home.<br>Our Expertise.</h1>
-      <p class="cv-hero-sub">Full-service renovation, pools, and property management across Frisco, Plano, McKinney &amp; beyond.</p>
+      <h1 data-en="Your Home.<br>Our Expertise." data-es="Tu Hogar, Tu Inversión">Your Home.<br>Our Expertise.</h1>
+      <p class="cv-hero-sub" data-en="Full-service renovation, pools, and property management across Frisco, Plano, McKinney &amp; beyond." data-es="Remodelación, construcción y mantenimiento del hogar con diseño personalizado y resultados garantizados.">Full-service renovation, pools, and property management across Frisco, Plano, McKinney &amp; beyond.</p>
       <div class="cv-hero-ctas">
-        <button class="btn-primary" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">View Our Projects ↓</button>
-        <button class="btn-outline-white" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Request Consultation →</button>
+        <button class="btn-primary" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})" data-en="View Our Projects ↓" data-es="Ver Nuestros Proyectos ↓">View Our Projects ↓</button>
+        <button class="btn-outline-white" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" data-en="Request Consultation →" data-es="Solicitar Consulta →">Request Consultation →</button>
       </div>
       <div class="cv-hero-trust">
         <div class="trust-pill">🔑 Licensed &amp; Insured</div>
@@ -855,8 +886,8 @@ body {
   <!-- Services -->
   <section class="cv-section">
     <div class="cv-section-inner">
-      <div class="cv-label">Our Services</div>
-      <h2 class="cv-title">Everything your home needs, under one roof</h2>
+      <div class="cv-label" data-en="Our Services" data-es="Nuestros Servicios">Our Services</div>
+      <h2 class="cv-title" data-en="Everything your home needs, under one roof" data-es="Todo lo que tu hogar necesita">Everything your home needs, under one roof</h2>
       <div class="services-grid">
         <div class="svc-card reveal">
           <div class="svc-icon">🏠</div>
@@ -976,23 +1007,23 @@ body {
   <div class="booking-bg">
     <section class="cv-section" id="booking">
       <div class="cv-section-inner">
-        <div class="cv-label">Get Started</div>
-        <h2 class="cv-title">Request a free consultation</h2>
-        <p class="cv-sub">Tell us about your project and we'll reach out within 24 hours.</p>
+        <div class="cv-label" data-en="Get Started" data-es="Empieza Ya">Get Started</div>
+        <h2 class="cv-title" data-en="Request a free consultation" data-es="Solicita una consulta gratis">Request a free consultation</h2>
+        <p class="cv-sub" data-en="Tell us about your project and we'll reach out within 24 hours." data-es="Cuéntanos sobre tu proyecto y te contactaremos en menos de 24 horas.">Tell us about your project and we'll reach out within 24 hours.</p>
         <div class="booking-card">
           <form id="bookingForm" onsubmit="submitBooking(event)" novalidate>
             <div class="booking-grid">
               <div class="form-group">
-                <label class="form-label" for="bfName">Your Name *</label>
-                <input class="form-input" id="bfName" type="text" placeholder="Sarah Mitchell" required>
+                <label class="form-label" for="bfName" data-en="Your Name *" data-es="Tu nombre">Your Name *</label>
+                <input class="form-input" id="bfName" type="text" placeholder="Sarah Mitchell" data-ph-en="Sarah Mitchell" data-ph-es="María García" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="bfPhone">Phone *</label>
-                <input class="form-input" id="bfPhone" type="tel" placeholder="(214) 555-0000" required>
+                <label class="form-label" for="bfPhone" data-en="Phone *" data-es="Teléfono">Phone *</label>
+                <input class="form-input" id="bfPhone" type="tel" placeholder="(214) 555-0000" data-ph-en="(214) 555-0000" data-ph-es="(214) 555-0000" required>
               </div>
               <div class="form-group">
-                <label class="form-label" for="bfEmail">Email *</label>
-                <input class="form-input" id="bfEmail" type="email" placeholder="sarah@example.com" required>
+                <label class="form-label" for="bfEmail" data-en="Email *" data-es="Correo electrónico">Email *</label>
+                <input class="form-input" id="bfEmail" type="email" placeholder="sarah@example.com" data-ph-en="sarah@example.com" data-ph-es="maria@ejemplo.com" required>
               </div>
               <div class="form-group">
                 <label class="form-label">Preferred Contact</label>
@@ -1100,11 +1131,11 @@ body {
                 <input class="form-input" id="bfAddress" type="text" placeholder="Craig Ranch, Frisco TX">
               </div>
               <div class="form-group full">
-                <label class="form-label" for="bfNotes">Anything else we should know? (optional)</label>
-                <textarea class="form-textarea" id="bfNotes" placeholder="Special requirements, HOA restrictions, timeline urgency..."></textarea>
+                <label class="form-label" for="bfNotes" data-en="Anything else we should know? (optional)" data-es="¿Algo más que debamos saber? (opcional)">Anything else we should know? (optional)</label>
+                <textarea class="form-textarea" id="bfNotes" placeholder="Special requirements, HOA restrictions, timeline urgency..." data-ph-en="Special requirements, HOA restrictions, timeline urgency..." data-ph-es="Requisitos especiales, restricciones HOA, urgencia..."></textarea>
               </div>
             </div>
-            <button class="btn-submit" id="bookingSubmitBtn" type="submit">Request Consultation →</button>
+            <button class="btn-submit" id="bookingSubmitBtn" type="submit" data-en="Request Consultation →" data-es="Solicitar Consulta →">Request Consultation →</button>
           </form>
           <div class="form-success" id="bookingSuccess">
             <div class="form-success-icon">🏠</div>
@@ -1119,7 +1150,7 @@ body {
   <!-- Footer -->
   <footer class="cv-footer">
     <div class="cv-footer-logo">🏠 Apex Home Solutions</div>
-    <div class="cv-footer-tagline">Full-service renovation, pools &amp; property management in DFW</div>
+    <div class="cv-footer-tagline" data-en="Full-service renovation, pools &amp; property management in DFW" data-es="Sirviendo a Frisco, McKinney, Plano y todas las comunidades del norte de DFW">Full-service renovation, pools &amp; property management in DFW</div>
     <div class="cv-footer-info">
       <span>📞 (469) 555-0456</span>
       <span>📍 Frisco, TX 75034</span>
@@ -1156,6 +1187,9 @@ body {
       <button class="sidebar-btn" onclick="switchView('view-kb',this)">
         <span class="sidebar-icon">📚</span> Knowledge Base
       </button>
+      <button class="sidebar-btn" onclick="switchView('view-automation',this)">
+        <span class="sidebar-icon">📱</span> Automation
+      </button>
     </nav>
 
     <!-- Main area -->
@@ -1191,6 +1225,13 @@ body {
       <div class="owner-view" id="view-kb">
         <h2 style="font-size:1.1rem;font-weight:700;color:var(--t0);margin-bottom:20px;">Knowledge Base</h2>
         <div class="kb-grid" id="kbGrid"></div>
+      </div>
+
+      <!-- Automation -->
+      <div class="owner-view" id="view-automation">
+        <h2 style="font-size:1.1rem;font-weight:700;color:var(--t0);margin-bottom:4px;">Communication Automation</h2>
+        <p style="font-size:13px;color:var(--t2);margin-bottom:20px;">Automated campaigns, missed call recovery, and message tracking</p>
+        <div id="automationPanel"></div>
       </div>
 
     </main>
@@ -1330,8 +1371,51 @@ const MOCK = {
     { name: 'Patio & Pergola', desc: 'Covered outdoor living spaces with electrical and fans. Starting $10K.' },
     { name: 'Outdoor Kitchens', desc: 'Built-in grills, countertops, refrigeration, and plumbing. Starting $20K.' },
     { name: 'Property Management', desc: 'Full-service rental management at 8% of monthly rent.' }
-  ]
+  ],
+  automation: {
+    metrics: [
+      { label: 'Messages Sent', value: '87', trend: 'This month', icon: '✉️' },
+      { label: 'Open Rate', value: '65%', trend: '+3% vs last month', icon: '📬' },
+      { label: 'Replies', value: '19', trend: '22% reply rate', icon: '💬' },
+      { label: 'Booked from Auto', value: '4', trend: '$8,400 revenue', icon: '📅' }
+    ],
+    campaigns: [
+      { icon: '🏠', name: 'Spring Renovation Outreach', status: 'ACTIVE', sent: 42, desc: 'Sent to homeowners who inquired but didn\'t book in the last 90 days', opens: '68%', replies: 9, booked: 3 },
+      { icon: '⭐', name: 'Review Request (Post-Project)', status: 'ACTIVE', sent: 18, desc: 'Auto-sent 24 hours after project completion', opens: '89%', reviews: 9, avgRating: '4.9★' },
+      { icon: '🔄', name: 'Past Client Reactivation', status: 'ACTIVE', sent: 14, desc: '3-touch sequence for clients with no new projects in 6+ months', opens: '51%', replies: 5, reactivated: 2 }
+    ],
+    missedCalls: [
+      { date: 'Apr 5', name: 'Priya S.', flow: 'Missed → Auto-text → Booked kitchen consult ($450)', status: '✅' },
+      { date: 'Apr 3', name: 'Unknown', flow: 'Missed → Auto-text → No reply → Follow-up #2 scheduled', status: '⏳' },
+      { date: 'Apr 1', name: 'James O.', flow: 'Missed → Auto-text → Called back → Booked pool quote ($250)', status: '✅' }
+    ],
+    recentMessages: [
+      { channel: '📱', name: 'Rohan K.', type: 'Review request', status: '✅ Opened' },
+      { channel: '📧', name: 'Lisa M.', type: 'Renovation outreach', status: '✅ Replied' },
+      { channel: '📱', name: 'David L.', type: 'Project milestone', status: '✅ Sent' },
+      { channel: '📧', name: 'Anita S.', type: 'Reactivation #1', status: '📬 Sent' },
+      { channel: '📱', name: 'Tom R.', type: 'Missed call', status: '✅ Booked' }
+    ]
+  }
 };
+
+/* ═══════════════════════════════════════════
+   TRANSLATIONS (ES)
+═══════════════════════════════════════════ */
+const TRANS_ES = {
+  heroHeadline: 'Tu Hogar, Tu Inversión',
+  heroSub: 'Remodelación, construcción y mantenimiento del hogar con diseño personalizado y resultados garantizados.',
+  services: [
+    { name: 'Remodelación de Interiores', desc: 'Cocinas, baños y espacios de vida' },
+    { name: 'Construcción Exterior', desc: 'Cubiertas, patios y cercas' },
+    { name: 'Mejoras de Energía', desc: 'Eficiencia energética e instalaciones eléctricas' },
+    { name: 'Gestión de Propiedades', desc: 'Mantenimiento integral para propietarios' }
+  ],
+  chatGreeting: '¡Hola! Soy el asistente de DFW Premier Home Services. ¿En qué proyecto podemos ayudarte hoy?',
+  chatPlaceholder: 'Pregunta sobre nuestros servicios...'
+};
+
+let currentLang = 'en';
 
 /* ═══════════════════════════════════════════
    MODE SWITCH
@@ -1342,6 +1426,8 @@ function switchMode(mode) {
   document.getElementById('chatWidget').style.display = mode === 'customer' ? 'block' : 'none';
   document.getElementById('btnCustomer').classList.toggle('active', mode === 'customer');
   document.getElementById('btnOwner').classList.toggle('active', mode === 'owner');
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) langToggle.style.display = mode === 'customer' ? '' : 'none';
   if (mode === 'owner') initDashboard();
 }
 
@@ -1352,6 +1438,7 @@ function switchView(viewId, btn) {
   btn.classList.add('active');
   if (viewId === 'view-geo') initGeoScore();
   if (viewId === 'view-kb') initKb();
+  if (viewId === 'view-automation') renderAutomation();
 }
 
 /* ═══════════════════════════════════════════
@@ -1901,10 +1988,115 @@ function showToast(msg) {
 /* ═══════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════
+   LANGUAGE TOGGLE
+═══════════════════════════════════════════ */
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('apex-lang', currentLang);
+  applyLang(currentLang);
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.innerHTML = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+  });
+  document.querySelectorAll('[data-ph-en]').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en');
+  });
+  updateLangToggle(lang);
+}
+
+function updateLangToggle(lang) {
+  const enEl = document.getElementById('langEN');
+  const esEl = document.getElementById('langES');
+  if (!enEl || !esEl) return;
+  if (lang === 'es') {
+    enEl.classList.remove('active-lang');
+    esEl.classList.add('active-lang');
+  } else {
+    enEl.classList.add('active-lang');
+    esEl.classList.remove('active-lang');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   AUTOMATION PANEL
+═══════════════════════════════════════════ */
+function renderAutomation() {
+  const panel = document.getElementById('automationPanel');
+  if (!panel) return;
+  const d = MOCK.automation;
+  panel.innerHTML = `
+    <div class="auto-metrics">
+      ${d.metrics.map(m => `
+        <div class="auto-metric-card">
+          <div class="auto-metric-icon">${m.icon}</div>
+          <div class="auto-metric-value">${m.value}</div>
+          <div class="auto-metric-label">${m.label}</div>
+          <div class="auto-metric-trend">${m.trend}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card" style="margin-bottom:20px;">
+      <div class="kb-section-header"><div class="kb-section-title">Active Campaigns</div></div>
+      ${d.campaigns.map(c => `
+        <div class="campaign-card">
+          <div class="campaign-header">
+            <div class="campaign-name-row">
+              <span class="campaign-icon-el">${c.icon}</span>
+              <span class="campaign-name">${c.name}</span>
+              <span class="campaign-status">● ${c.status}</span>
+            </div>
+            <div class="campaign-desc">${c.desc}</div>
+          </div>
+          <div class="campaign-stats">
+            <span>Sent: <strong>${c.sent}</strong></span>
+            <span>Opens: <strong>${c.opens}</strong></span>
+            ${c.replies !== undefined ? `<span>Replies: <strong>${c.replies}</strong></span>` : ''}
+            ${c.booked !== undefined ? `<span>Booked: <strong>${c.booked}</strong></span>` : ''}
+            ${c.reviews !== undefined ? `<span>Reviews: <strong>${c.reviews}</strong></span>` : ''}
+            ${c.avgRating !== undefined ? `<span>Avg: <strong>${c.avgRating}</strong></span>` : ''}
+            ${c.reactivated !== undefined ? `<span>Reactivated: <strong>${c.reactivated}</strong></span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card" style="margin-bottom:20px;">
+      <div class="kb-section-header"><div class="kb-section-title">Missed Call Recovery</div></div>
+      ${d.missedCalls.map(mc => `
+        <div class="missed-call-item">
+          <span class="missed-call-date">${mc.date}</span>
+          <span class="missed-call-name">${mc.name}</span>
+          <span class="missed-call-flow">${mc.flow}</span>
+          <span class="missed-call-status">${mc.status}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-section-card">
+      <div class="kb-section-header"><div class="kb-section-title">Recent Automated Messages</div></div>
+      <table class="auto-msg-table">
+        <thead><tr><th>Ch</th><th>Customer</th><th>Type</th><th>Status</th></tr></thead>
+        <tbody>
+          ${d.recentMessages.map(m => `
+            <tr><td>${m.channel}</td><td>${m.name}</td><td>${m.type}</td><td>${m.status}</td></tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   const saved = localStorage.getItem('apex-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
   document.getElementById('themeIcon').textContent = saved === 'dark' ? '☽' : '☀';
+
+  // Restore language
+  const savedLang = localStorage.getItem('apex-lang') || 'en';
+  if (savedLang === 'es') applyLang('es');
 
   renderPortfolio();
   renderReviews();

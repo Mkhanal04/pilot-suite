@@ -168,6 +168,8 @@ body {
 .demo-bar-theme:hover { background: var(--bg3); }
 .demo-bar-back { font-size: 11px; color: var(--t2); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); background: transparent; white-space: nowrap; }
 .demo-bar-back:hover { background: var(--bg2); color: var(--t0); }
+.lang-toggle { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 13px; color: var(--t2); cursor: pointer; font-weight: 500; }
+.lang-toggle .active-lang { color: var(--accent); font-weight: 700; }
 
 /* ═══════════════════════════════════════════
    CUSTOMER VIEW — HERO
@@ -526,6 +528,32 @@ body {
    OWNER DASHBOARD — KNOWLEDGE BASE
 ═══════════════════════════════════════════ */
 .kb-card { background: var(--bg1); border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow-sm); margin-bottom: 16px; }
+.kb-card-title { font-weight: 700; color: var(--t0); font-size: 15px; margin-bottom: 14px; }
+.auto-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 20px; }
+.auto-metric-card { background: var(--bg1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; box-shadow: var(--shadow-sm); }
+.auto-metric-icon { font-size: 22px; margin-bottom: 6px; }
+.auto-metric-value { font-size: 22px; font-weight: 700; color: var(--t0); }
+.auto-metric-label { font-size: 12px; color: var(--t2); margin: 2px 0; }
+.auto-metric-trend { font-size: 11px; color: var(--accent); }
+.campaign-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+.campaign-header { margin-bottom: 8px; }
+.campaign-name-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.campaign-icon-el { font-size: 18px; }
+.campaign-name { font-weight: 600; color: var(--t0); font-size: 14px; }
+.campaign-status { font-size: 11px; color: var(--accent); font-weight: 600; margin-left: auto; }
+.campaign-desc { font-size: 12px; color: var(--t2); }
+.campaign-stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--t2); margin-top: 8px; }
+.campaign-stats strong { color: var(--t0); }
+.missed-call-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.missed-call-item:last-child { border-bottom: none; }
+.missed-call-date { color: var(--t2); white-space: nowrap; min-width: 40px; }
+.missed-call-name { white-space: nowrap; font-weight: 600; color: var(--t0); min-width: 70px; }
+.missed-call-flow { color: var(--t1); flex: 1; }
+.missed-call-status { white-space: nowrap; }
+.auto-msg-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+.auto-msg-table th { padding: 7px 10px; text-align: left; color: var(--t2); font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+.auto-msg-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--t1); }
+.auto-msg-table tr:last-child td { border-bottom: none; }
 .kb-faq { border-bottom: 1px solid var(--border); padding: 14px 0; }
 .kb-faq:last-child { border-bottom: none; }
 .kb-q { font-size: 13px; font-weight: 600; color: var(--t0); margin-bottom: 6px; display: flex; justify-content: space-between; gap: 12px; cursor: pointer; }
@@ -636,6 +664,7 @@ body {
     <button class="demo-bar-btn active" id="btnCustomer" onclick="switchView('customer')">Customer View</button>
     <button class="demo-bar-btn" id="btnOwner" onclick="switchView('owner')">Owner Dashboard</button>
   </div>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()" style="display:none;" aria-label="Toggle language"><span id="langEN" class="active-lang">EN</span> | <span id="langES">ES</span></button>
   <button class="demo-bar-theme" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
   <a href="/demos/" class="demo-bar-back">← All Demos</a>
 </div>
@@ -653,16 +682,16 @@ body {
         <span class="stars">★★★★★</span>
         <span>4.9 · 150+ Reviews · Plano TX</span>
       </div>
-      <h1>Plumbing problems don't wait. Neither do we.</h1>
-      <p class="cv-hero-sub">24/7 emergency service, honest pricing, and licensed plumbers serving Plano, Richardson & East DFW.</p>
+      <h1 data-en="Plumbing problems don't wait. Neither do we." data-es="Plomería de Confianza, Disponible 24/7">Plumbing problems don't wait. Neither do we.</h1>
+      <p class="cv-hero-sub" data-en="24/7 emergency service, honest pricing, and licensed plumbers serving Plano, Richardson &amp; East DFW." data-es="Emergencias, reparaciones e instalaciones — respondemos rápido y hacemos el trabajo bien a la primera.">24/7 emergency service, honest pricing, and licensed plumbers serving Plano, Richardson & East DFW.</p>
       <div class="cv-hero-pills">
         <span class="cv-hero-pill">🚨 24/7 Emergency</span>
         <span class="cv-hero-pill">✅ Licensed &amp; Insured</span>
         <span class="cv-hero-pill">⚡ 60-Min Response</span>
       </div>
       <div class="cv-hero-ctas">
-        <button class="btn-primary" onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})">Request Service →</button>
-        <button class="btn-outline" onclick="document.getElementById('servicesSection').scrollIntoView({behavior:'smooth'})">Our Services ↓</button>
+        <button class="btn-primary" onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})" data-en="Request Service →" data-es="Agendar Servicio →">Request Service →</button>
+        <button class="btn-outline" onclick="document.getElementById('servicesSection').scrollIntoView({behavior:'smooth'})" data-en="Our Services ↓" data-es="Nuestros Servicios ↓">Our Services ↓</button>
       </div>
       <div class="cv-hero-stats">
         <div class="cv-hero-stat">
@@ -688,9 +717,9 @@ body {
   <!-- SERVICES -->
   <section class="cv-services-bg" id="servicesSection">
     <div class="cv-section">
-      <div class="cv-section-label">What We Fix</div>
-      <div class="cv-section-title">Full-Service Plumbing for East DFW</div>
-      <p class="cv-section-sub">From emergencies at 2 AM to planned repiping projects — we handle it all with licensed plumbers and upfront pricing.</p>
+      <div class="cv-section-label" data-en="What We Fix" data-es="Lo Que Hacemos">What We Fix</div>
+      <div class="cv-section-title" data-en="Full-Service Plumbing for East DFW" data-es="Plomería Completa para East DFW">Full-Service Plumbing for East DFW</div>
+      <p class="cv-section-sub" data-en="From emergencies at 2 AM to planned repiping projects — we handle it all with licensed plumbers and upfront pricing." data-es="Desde emergencias a las 2 AM hasta proyectos de retuberías planificados — con plomeros certificados y precios transparentes.">From emergencies at 2 AM to planned repiping projects — we handle it all with licensed plumbers and upfront pricing.</p>
       <div class="services-grid" id="servicesGrid"></div>
     </div>
   </section>
@@ -718,9 +747,9 @@ body {
   <!-- BOOKING FORM -->
   <section class="cv-booking-bg" id="bookingSection">
     <div class="cv-section">
-      <div class="cv-section-label">Book a Service</div>
-      <div class="cv-section-title">We'll Take It From Here</div>
-      <p class="cv-section-sub">Emergency? We call you back within 15 minutes. Scheduling? We'll find a time that works.</p>
+      <div class="cv-section-label" data-en="Book a Service" data-es="Reserva un Servicio">Book a Service</div>
+      <div class="cv-section-title" data-en="We'll Take It From Here" data-es="Nosotros Nos Encargamos">We'll Take It From Here</div>
+      <p class="cv-section-sub" data-en="Emergency? We call you back within 15 minutes. Scheduling? We'll find a time that works." data-es="¿Emergencia? Te llamamos en 15 minutos. ¿Cita? Encontramos el horario que más te convenga.">Emergency? We call you back within 15 minutes. Scheduling? We'll find a time that works.</p>
       <div class="booking-card">
 
         <!-- Urgency Toggle -->
@@ -739,19 +768,19 @@ body {
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Your Name *</label>
-              <input class="form-input" type="text" placeholder="Jane Smith" />
+              <label class="form-label" data-en="Your Name *" data-es="Tu nombre">Your Name *</label>
+              <input class="form-input" type="text" placeholder="Jane Smith" data-ph-en="Jane Smith" data-ph-es="María García" />
             </div>
             <div class="form-group">
-              <label class="form-label">Phone Number *</label>
-              <input class="form-input" type="tel" placeholder="(469) 555-0000" />
+              <label class="form-label" data-en="Phone Number *" data-es="Teléfono">Phone Number *</label>
+              <input class="form-input" type="tel" placeholder="(469) 555-0000" data-ph-en="(469) 555-0000" data-ph-es="(469) 555-0000" />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Brief Description *</label>
-            <textarea class="form-textarea" placeholder="Describe the problem (e.g., burst pipe under sink, no hot water, sewage smell...)" style="min-height:80px;"></textarea>
+            <label class="form-label" data-en="Brief Description *" data-es="Describe la emergencia">Brief Description *</label>
+            <textarea class="form-textarea" placeholder="Describe the problem (e.g., burst pipe under sink, no hot water, sewage smell...)" data-ph-en="Describe the problem (e.g., burst pipe under sink, no hot water, sewage smell...)" data-ph-es="Describe la emergencia (ej. tubería rota, sin agua caliente...)" style="min-height:80px;"></textarea>
           </div>
-          <button class="form-submit emergency-submit" onclick="submitBooking('emergency')">📞 Call Me Now →</button>
+          <button class="form-submit emergency-submit" onclick="submitBooking('emergency')" data-en="📞 Call Me Now →" data-es="Llámame Ahora →">📞 Call Me Now →</button>
           <p class="form-note">We'll call within 15 minutes · (469) 555-0789</p>
         </div>
 
@@ -759,42 +788,42 @@ body {
         <div class="schedule-fields" id="scheduleFields">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Your Name *</label>
-              <input class="form-input" type="text" placeholder="Jane Smith" />
+              <label class="form-label" data-en="Your Name *" data-es="Tu nombre">Your Name *</label>
+              <input class="form-input" type="text" placeholder="Jane Smith" data-ph-en="Jane Smith" data-ph-es="María García" />
             </div>
             <div class="form-group">
-              <label class="form-label">Phone Number *</label>
-              <input class="form-input" type="tel" placeholder="(469) 555-0000" />
+              <label class="form-label" data-en="Phone Number *" data-es="Teléfono">Phone Number *</label>
+              <input class="form-input" type="tel" placeholder="(469) 555-0000" data-ph-en="(469) 555-0000" data-ph-es="(469) 555-0000" />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" type="email" placeholder="jane@email.com" />
+            <label class="form-label" data-en="Email" data-es="Correo">Email</label>
+            <input class="form-input" type="email" placeholder="jane@email.com" data-ph-en="jane@email.com" data-ph-es="maria@ejemplo.com" />
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Service Needed</label>
+              <label class="form-label" data-en="Service Needed" data-es="¿Qué necesitas?">Service Needed</label>
               <select class="form-select">
-                <option value="">Select a service...</option>
-                <option>Drain Cleaning</option>
-                <option>Water Heater</option>
-                <option>Repiping</option>
-                <option>Fixture Install</option>
-                <option>Sewer Line</option>
-                <option>Leak Repair</option>
-                <option>Other</option>
+                <option value="" data-en="Select a service..." data-es="Selecciona un servicio...">Select a service...</option>
+                <option data-en="Drain Cleaning" data-es="Destape de Drenajes">Drain Cleaning</option>
+                <option data-en="Water Heater" data-es="Calentador de Agua">Water Heater</option>
+                <option data-en="Repiping" data-es="Reemplazo de Tuberías">Repiping</option>
+                <option data-en="Fixture Install" data-es="Instalación de Accesorios">Fixture Install</option>
+                <option data-en="Sewer Line" data-es="Línea de Alcantarilla">Sewer Line</option>
+                <option data-en="Leak Repair" data-es="Detección de Fugas">Leak Repair</option>
+                <option data-en="Other" data-es="Otro">Other</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Preferred Date</label>
+              <label class="form-label" data-en="Preferred Date" data-es="¿Cuándo?">Preferred Date</label>
               <input class="form-input" type="date" />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Describe the Problem</label>
-            <textarea class="form-textarea" placeholder="Tell us what's going on..."></textarea>
+            <label class="form-label" data-en="Describe the Problem" data-es="Mensaje (opcional)">Describe the Problem</label>
+            <textarea class="form-textarea" placeholder="Tell us what's going on..." data-ph-en="Tell us what's going on..." data-ph-es="Cuéntanos qué está pasando..."></textarea>
           </div>
-          <button class="form-submit schedule-submit" onclick="submitBooking('schedule')">Schedule Appointment →</button>
+          <button class="form-submit schedule-submit" onclick="submitBooking('schedule')" data-en="Schedule Appointment →" data-es="Agendar Servicio →">Schedule Appointment →</button>
           <p class="form-note">Free estimates on all major work · No obligation</p>
         </div>
 
@@ -805,7 +834,7 @@ body {
   <!-- FOOTER -->
   <footer class="cv-footer">
     <div class="cv-footer-name">🚰 Lone Star Plumbing</div>
-    <p class="cv-footer-tagline">Licensed plumbers serving Plano, Richardson & East DFW — 24/7 emergency service</p>
+    <p class="cv-footer-tagline" data-en="Licensed plumbers serving Plano, Richardson &amp; East DFW — 24/7 emergency service" data-es="Sirviendo a Plano, Allen, McKinney y Richardson — disponibles 24/7">Licensed plumbers serving Plano, Richardson & East DFW — 24/7 emergency service</p>
     <div class="cv-footer-contact">
       <div class="cv-footer-contact-item">📞 <strong>(469) 555-0789</strong></div>
       <div class="cv-footer-contact-item">📍 Plano, TX 75074</div>
@@ -844,6 +873,10 @@ body {
         <span class="nav-icon">📚</span>
         <span>Knowledge Base</span>
       </button>
+      <button class="od-nav-item" id="nav-automation" onclick="showOdView('automation')">
+        <span class="nav-icon">📱</span>
+        <span>Automation</span>
+      </button>
     </nav>
 
     <!-- Main -->
@@ -875,6 +908,13 @@ body {
           <div class="od-main-sub">FAQs your AI chatbot uses to answer customers</div>
         </div>
         <div id="kbContent"></div>
+      </div>
+      <div id="od-automation" class="od-view" style="display:none;">
+        <div class="od-main-header">
+          <div class="od-main-title">Communication Automation</div>
+          <div class="od-main-sub">Automated campaigns, missed call recovery, and message tracking</div>
+        </div>
+        <div id="automationPanel"></div>
       </div>
     </main>
 
@@ -999,8 +1039,53 @@ const DATA = {
     { q: 'Do you offer financing?', a: 'Yes. We partner with GreenSky for 0% financing on jobs over $1,000. Apply at your appointment.' },
     { q: 'Are you licensed?', a: 'Yes. Texas Master Plumber License #M-40XXX. Fully insured with $1M liability coverage.' },
     { q: 'What areas do you serve?', a: 'Plano, Richardson, Murphy, Wylie, Garland, and surrounding East DFW communities.' }
-  ]
+  ],
+  automation: {
+    metrics: [
+      { label: 'Messages Sent', value: '98', trend: 'This month', icon: '✉️' },
+      { label: 'Open Rate', value: '73%', trend: '+5% vs last month', icon: '📬' },
+      { label: 'Replies', value: '21', trend: '21% reply rate', icon: '💬' },
+      { label: 'Booked from Auto', value: '9', trend: '$4,100 revenue', icon: '📅' }
+    ],
+    campaigns: [
+      { icon: '🔧', name: 'Spring Pipe Check', status: 'ACTIVE', sent: 44, desc: 'Sent to customers who haven\'t had a plumbing inspection in 12+ months', opens: '76%', replies: 8, booked: 5 },
+      { icon: '⭐', name: 'Review Request (Post-Service)', status: 'ACTIVE', sent: 33, desc: 'Auto-sent 1 hour after job completion', opens: '82%', reviews: 14, avgRating: '4.9★' },
+      { icon: '🔄', name: 'Dormant Customer Reactivation', status: 'ACTIVE', sent: 11, desc: '3-touch sequence for customers inactive 90+ days', opens: '40%', replies: 3, reactivated: 2 }
+    ],
+    missedCalls: [
+      { date: 'Apr 5', name: 'Maria C.', flow: 'Missed → Auto-text → Booked pipe repair ($340)', status: '✅' },
+      { date: 'Apr 4', name: 'Unknown', flow: 'Missed → Auto-text → No reply → Follow-up #2 scheduled', status: '⏳' },
+      { date: 'Apr 3', name: 'Dan W.', flow: 'Missed → Auto-text → Called back → Booked water heater ($890)', status: '✅' }
+    ],
+    recentMessages: [
+      { channel: '📱', name: 'Sarah K.', type: 'Review request', status: '✅ Opened' },
+      { channel: '📧', name: 'Jose M.', type: 'Pipe check outreach', status: '✅ Replied' },
+      { channel: '📱', name: 'Pat R.', type: 'Appt confirm', status: '✅ Sent' },
+      { channel: '📧', name: 'Kim L.', type: 'Reactivation #1', status: '📬 Sent' },
+      { channel: '📱', name: 'Mark S.', type: 'Missed call', status: '✅ Booked' }
+    ]
+  }
 };
+
+/* ═══════════════════════════════════════════
+   TRANSLATIONS (ES)
+═══════════════════════════════════════════ */
+const TRANS_ES = {
+  heroHeadline: 'Plomería de Confianza, Disponible 24/7',
+  heroSub: 'Emergencias, reparaciones e instalaciones — respondemos rápido y hacemos el trabajo bien a la primera.',
+  services: [
+    { name: 'Reparaciones de Emergencia', desc: 'Disponible 24/7 para tuberías rotas e inundaciones' },
+    { name: 'Instalación de Calentadores', desc: 'Instalación y reemplazo de calentadores de agua' },
+    { name: 'Destape de Drenajes', desc: 'Limpieza de drenajes obstruidos en cocina y baño' },
+    { name: 'Detección de Fugas', desc: 'Localización precisa sin daño estructural' },
+    { name: 'Reemplazo de Tuberías', desc: 'Tuberías nuevas para hogares y negocios' },
+    { name: 'Inspecciones de Plomería', desc: 'Revisión completa para prevenir problemas futuros' }
+  ],
+  chatGreeting: '¡Hola! Soy el asistente de Lone Star Plumbing. ¿Tienes una emergencia o quieres agendar un servicio?',
+  chatPlaceholder: 'Pregunta sobre nuestros servicios...'
+};
+
+let currentLang = 'en';
 
 /* ═══════════════════════════════════════════
    RENDER — CUSTOMER VIEW
@@ -1012,7 +1097,15 @@ function escapeHtml(s) {
 function renderServices() {
   const el = document.getElementById('servicesGrid');
   if (!el) return;
-  el.innerHTML = DATA.services.map(s => `
+  const lang = currentLang;
+  const esServices = TRANS_ES.services;
+  const displayServices = DATA.services.map((s, i) => {
+    if (lang === 'es' && esServices[i]) {
+      return { ...s, name: esServices[i].name, desc: esServices[i].desc };
+    }
+    return s;
+  });
+  el.innerHTML = displayServices.map(s => `
     <div class="service-card reveal">
       <div class="service-icon">${s.icon}</div>
       <div class="service-name">${escapeHtml(s.name)}</div>
@@ -1024,6 +1117,113 @@ function renderServices() {
     </div>
   `).join('');
   initScrollReveal();
+}
+
+/* ═══════════════════════════════════════════
+   LANGUAGE TOGGLE
+═══════════════════════════════════════════ */
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('ls-lang', currentLang);
+  applyLang(currentLang);
+}
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+  });
+  document.querySelectorAll('[data-ph-en]').forEach(el => {
+    el.placeholder = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en');
+  });
+  document.querySelectorAll('select option[data-en]').forEach(opt => {
+    opt.textContent = opt.getAttribute('data-' + lang) || opt.getAttribute('data-en');
+  });
+  renderServices();
+  const chatInput = document.getElementById('chatInput');
+  if (chatInput) chatInput.placeholder = lang === 'es' ? TRANS_ES.chatPlaceholder : 'Ask about our services...';
+  updateLangToggle(lang);
+}
+
+function updateLangToggle(lang) {
+  const enEl = document.getElementById('langEN');
+  const esEl = document.getElementById('langES');
+  if (!enEl || !esEl) return;
+  if (lang === 'es') {
+    enEl.classList.remove('active-lang');
+    esEl.classList.add('active-lang');
+  } else {
+    enEl.classList.add('active-lang');
+    esEl.classList.remove('active-lang');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   AUTOMATION PANEL
+═══════════════════════════════════════════ */
+function renderAutomation() {
+  const panel = document.getElementById('automationPanel');
+  if (!panel) return;
+  const d = DATA.automation;
+  panel.innerHTML = `
+    <div class="auto-metrics">
+      ${d.metrics.map(m => `
+        <div class="auto-metric-card">
+          <div class="auto-metric-icon">${m.icon}</div>
+          <div class="auto-metric-value">${m.value}</div>
+          <div class="auto-metric-label">${m.label}</div>
+          <div class="auto-metric-trend">${m.trend}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-card" style="margin-bottom:20px;">
+      <div class="kb-card-title">Active Campaigns</div>
+      ${d.campaigns.map(c => `
+        <div class="campaign-card">
+          <div class="campaign-header">
+            <div class="campaign-name-row">
+              <span class="campaign-icon-el">${c.icon}</span>
+              <span class="campaign-name">${c.name}</span>
+              <span class="campaign-status">● ${c.status}</span>
+            </div>
+            <div class="campaign-desc">${c.desc}</div>
+          </div>
+          <div class="campaign-stats">
+            <span>Sent: <strong>${c.sent}</strong></span>
+            <span>Opens: <strong>${c.opens}</strong></span>
+            ${c.replies !== undefined ? `<span>Replies: <strong>${c.replies}</strong></span>` : ''}
+            ${c.booked !== undefined ? `<span>Booked: <strong>${c.booked}</strong></span>` : ''}
+            ${c.reviews !== undefined ? `<span>Reviews: <strong>${c.reviews}</strong></span>` : ''}
+            ${c.avgRating !== undefined ? `<span>Avg: <strong>${c.avgRating}</strong></span>` : ''}
+            ${c.reactivated !== undefined ? `<span>Reactivated: <strong>${c.reactivated}</strong></span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-card" style="margin-bottom:20px;">
+      <div class="kb-card-title">Missed Call Recovery</div>
+      ${d.missedCalls.map(mc => `
+        <div class="missed-call-item">
+          <span class="missed-call-date">${mc.date}</span>
+          <span class="missed-call-name">${mc.name}</span>
+          <span class="missed-call-flow">${mc.flow}</span>
+          <span class="missed-call-status">${mc.status}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="kb-card">
+      <div class="kb-card-title">Recent Automated Messages</div>
+      <table class="auto-msg-table">
+        <thead><tr><th>Ch</th><th>Customer</th><th>Type</th><th>Status</th></tr></thead>
+        <tbody>
+          ${d.recentMessages.map(m => `
+            <tr><td>${m.channel}</td><td>${m.name}</td><td>${m.type}</td><td>${m.status}</td></tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
 
 function renderGallery() {
@@ -1351,14 +1551,15 @@ function switchView(view) {
   document.getElementById('ownerView').classList.toggle('active', view === 'owner');
   document.getElementById('btnCustomer').classList.toggle('active', view === 'customer');
   document.getElementById('btnOwner').classList.toggle('active', view === 'owner');
-
+  const langToggle = document.getElementById('langToggle');
+  if (langToggle) langToggle.style.display = view === 'customer' ? '' : 'none';
   if (view === 'owner') {
     renderDashboard();
   }
 }
 
 function showOdView(view) {
-  ['dashboard', 'pipeline', 'geo', 'kb'].forEach(v => {
+  ['dashboard', 'pipeline', 'geo', 'kb', 'automation'].forEach(v => {
     const el = document.getElementById('od-' + v);
     if (el) el.style.display = v === view ? 'block' : 'none';
     const nav = document.getElementById('nav-' + v);
@@ -1367,6 +1568,7 @@ function showOdView(view) {
   if (view === 'pipeline') renderPipeline();
   if (view === 'geo') renderGeo();
   if (view === 'kb') renderKb();
+  if (view === 'automation') renderAutomation();
 }
 
 /* ═══════════════════════════════════════════
@@ -1415,7 +1617,10 @@ function toggleChat() {
   win.classList.toggle('hidden', !chatOpen);
   if (chatOpen && !chatInitialized) {
     chatInitialized = true;
-    addBotMsg('Hi! I\'m here for Lone Star Plumbing. 🔧 Do you have a plumbing emergency, or are you looking to schedule a service?');
+    const greeting = currentLang === 'es'
+      ? TRANS_ES.chatGreeting
+      : 'Hi! I\'m here for Lone Star Plumbing. 🔧 Do you have a plumbing emergency, or are you looking to schedule a service?';
+    addBotMsg(greeting);
   }
 }
 
@@ -1530,6 +1735,10 @@ function showToast(msg) {
   } else {
     updateThemeBtn('dark');
   }
+
+  // Restore language
+  const savedLang = localStorage.getItem('ls-lang') || 'en';
+  if (savedLang === 'es') applyLang('es');
 
   renderServices();
   renderGallery();
