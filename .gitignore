@@ -3,14 +3,26 @@
 .env.local
 .env.production
 .env.*.local
+.env.vercel
 
 # OS files
 .DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
+Desktop.ini
 
-# Editor
+# Editor / IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# Local tooling
+.claude/
+.cursor/
+.vercel/
 
 # Logs
 *.log
