@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FleetPride &mdash; Milan Khanal</title>
+<meta name="description" content="Sr. Business Analyst on M&A integration at FleetPride. Post-acquisition merger work on Karmak Fusion ERP across newly acquired distribution centers.">
+<meta property="og:title" content="FleetPride &mdash; Milan Khanal">
+<meta property="og:description" content="Sr. Business Analyst on M&A integration. Post-acquisition merger work on Karmak Fusion ERP.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://milankhanal.com/work/fleetpride">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --green: #16A34A; --amber: #CA8A04; --teal: #0D9488;
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --green: #22C55E; --amber: #EAB308; --teal: #0D9488;
+    --navBg: rgba(9,9,11,0.85);
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body { background: var(--bg); color: var(--t0); font-family: 'Outfit', system-ui, sans-serif; font-size: 16px; line-height: 1.65; min-height: 100vh; transition: background 0.4s, color 0.4s; }
+
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navBg); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; padding: 0 24px; transition: background 0.4s; }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; }
+
+  main { padding-top: 56px; }
+  .narrow { max-width: 760px; margin: 0 auto; }
+  .section { padding: 72px 24px; }
+  @media (max-width: 640px) { .section { padding: 56px 20px; } }
+
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: block; }
+  .t-hero { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4.6vw, 46px); font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--t0); margin-bottom: 20px; }
+  .t-section { font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.8vw, 28px); font-weight: 500; line-height: 1.25; letter-spacing: -0.015em; color: var(--t0); margin-bottom: 16px; margin-top: 48px; }
+  .t-body { font-size: 16.5px; color: var(--t1); line-height: 1.7; }
+  .t-body + .t-body { margin-top: 16px; }
+
+  .crumb { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 13px; color: var(--t2); margin-bottom: 32px; }
+  .crumb a { color: var(--t2); transition: color 0.2s; }
+  .crumb a:hover { color: var(--t0); }
+  .crumb .sep { color: var(--t3); font-size: 12px; }
+  .crumb .current { color: var(--t0); font-weight: 500; }
+
+  .role-meta { display: flex; flex-wrap: wrap; gap: 10px 18px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--t2); letter-spacing: 0.02em; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .role-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .role-meta strong { color: var(--t1); font-weight: 500; }
+
+  .bullet-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 14px; }
+  .bullet-list li { position: relative; padding-left: 22px; font-size: 16px; color: var(--t1); line-height: 1.65; }
+  .bullet-list li::before { content: ''; position: absolute; left: 0; top: 11px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--t2); margin-top: 48px; transition: gap 0.2s, color 0.2s; }
+  .back-link:hover { color: var(--t0); gap: 10px; }
+
+  .cta-block { background: var(--bg1); border: 1px solid var(--border); border-radius: 12px; padding: 40px; margin-top: 48px; }
+  .cta-lines { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 28px; list-style: none; padding: 0; }
+  .cta-lines li { font-size: 15px; color: var(--t1); }
+  .cta-btn { display: inline-block; padding: 12px 24px; background: var(--t0); color: var(--bg); border-radius: 8px; font-size: 14px; font-weight: 500; font-family: inherit; transition: transform 0.15s ease, opacity 0.15s ease; }
+  .cta-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+
+  .footer { padding: 28px 24px; border-top: 1px solid var(--border); max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--t2); flex-wrap: wrap; gap: 8px; margin-top: 80px; }
+  .footer strong { color: var(--t0); }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+
+  @media (max-width: 640px) { .role-meta { font-size: 11px; gap: 8px 14px; } .cta-block { padding: 28px 22px; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link" aria-current="page">Work</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="narrow">
+
+      <div class="crumb" data-reveal>
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/work">Work</a>
+        <span class="sep">/</span>
+        <span class="current">FleetPride</span>
+      </div>
+
+      <div data-reveal>
+        <span class="eyebrow">Role</span>
+        <h1 class="t-hero">FleetPride</h1>
+        <p class="t-body" style="color: var(--t1); font-size: 18px;">Sr. Business Analyst on M&amp;A integration &mdash; post-acquisition merger work on the Karmak Fusion ERP platform across newly acquired distribution centers.</p>
+        <div class="role-meta">
+          <span><strong>Nov 2021</strong> &mdash; May 2022</span>
+          <span><strong>Irving, TX</strong></span>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">Context</h2>
+        <p class="t-body">FleetPride's post-acquisition integration brought newly acquired distribution centers onto the Karmak Fusion ERP platform. Short engagement focused on the integration workstream.</p>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">What I did</h2>
+        <ul class="bullet-list">
+          <li>Mapped business processes between legacy and target ERP systems to surface integration risk.</li>
+          <li>Supported merger integration workstreams across newly acquired distribution centers.</li>
+        </ul>
+      </div>
+
+      <a href="/work" class="back-link" data-reveal>&larr; Back to Work</a>
+
+      <div class="cta-block" data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="t-section" style="margin-top: 0;">Running an M&amp;A integration that needs clear process mapping?</h2>
+        <ul class="cta-lines">
+          <li>&rarr; Hiring for a senior delivery or analyst role?</li>
+          <li>&rarr; Need someone who can map legacy-to-target ERP flows fast?</li>
+          <li>&rarr; Want to compare notes on post-acquisition integration?</li>
+        </ul>
+        <a class="cta-btn" href="mailto:milan.khanal25@gmail.com">Get in touch</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span><strong>Milan Khanal</strong> &middot; Enterprise Delivery &times; AI Product Building</span>
+    <div class="footer-links">
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    function glyph() { return document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E'; }
+    btn.innerHTML = glyph();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      btn.innerHTML = glyph();
+    });
+  })();
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) { el.classList.add('revealed'); }
+      else { io.observe(el); }
+    });
+    setTimeout(function () {
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        if (!el.classList.contains('revealed')) el.classList.add('revealed');
+      });
+    }, 1500);
+  })();
+</script>
+</body>
+</html>
