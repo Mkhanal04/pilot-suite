@@ -7,7 +7,6 @@ Source for [milankhanal.com](https://milankhanal.com) — Milan Khanal's portfol
 - **Portfolio** (`index.html`, `content/`) — React 18 SPA. Positioning, timeline, and pointers to the prototypes below.
 - **TradePilot** (`tradepilot/`) — Decision intelligence for supply chain. Six views, five AI agents, guided tour.
 - **TalentPilot** (`talentpilot/`) — Decision intelligence for recruiting. Seven views, four AI agents, guided tour.
-- **FinPilot** (`finpilot/`) — Financial reconciliation prototype. Data ingestion, schema mapping, dashboard.
 - **API** (`api/`) — Vercel serverless functions. Gemini calls stay server-side; the browser never sees the key.
 
 ## Stack
