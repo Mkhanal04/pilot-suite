@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Milan Khanal</title>
+<meta name="description" content="Ten years across supply chain, healthcare, finance, automotive, and ESG. Selected enterprise engagements from 2016 to today.">
+<meta property="og:title" content="Work — Milan Khanal">
+<meta property="og:description" content="Ten years across supply chain, healthcare, finance, automotive, and ESG. Selected enterprise engagements from 2016 to today.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://milankhanal.com/work">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // Init theme before paint to avoid FOUC
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --blueS: rgba(37,99,235,0.06); --blueB: rgba(37,99,235,0.14);
+    --green: #16A34A; --greenS: rgba(22,163,74,0.06); --greenB: rgba(22,163,74,0.14);
+    --amber: #CA8A04; --amberS: rgba(202,138,4,0.06); --amberB: rgba(202,138,4,0.14);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.06); --tealB: rgba(13,148,136,0.14);
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --blueS: rgba(59,130,246,0.08); --blueB: rgba(59,130,246,0.18);
+    --green: #22C55E; --greenS: rgba(34,197,94,0.08); --greenB: rgba(34,197,94,0.18);
+    --amber: #EAB308; --amberS: rgba(234,179,8,0.08); --amberB: rgba(234,179,8,0.18);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.08); --tealB: rgba(13,148,136,0.18);
+    --navBg: rgba(9,9,11,0.85);
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body {
+    background: var(--bg);
+    color: var(--t0);
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navBg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    height: 56px; display: flex; align-items: center; padding: 0 24px;
+    transition: background 0.4s;
+  }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .theme-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg2);
+    color: var(--t1); font-size: 14px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ═══ MAIN ═══ */
+  main { padding-top: 56px; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 840px; margin: 0 auto; }
+  .section { padding: 72px 24px; }
+  @media (max-width: 640px) { .section { padding: 56px 20px; } }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 12px; display: block;
+  }
+
+  .t-hero {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(34px, 5vw, 50px);
+    font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--t0); margin-bottom: 20px;
+  }
+
+  .t-section {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(24px, 3.2vw, 32px);
+    font-weight: 400; line-height: 1.25; letter-spacing: -0.015em;
+    color: var(--t0); margin-bottom: 12px;
+  }
+
+  .t-body { font-size: 16px; color: var(--t1); line-height: 1.65; }
+
+  .t-caption { font-size: 13px; color: var(--t2); line-height: 1.5; }
+
+  .crumb {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--t2);
+    margin-bottom: 32px;
+  }
+  .crumb a { color: var(--t2); transition: color 0.2s; }
+  .crumb a:hover { color: var(--t0); }
+  .crumb .sep { color: var(--t3); font-size: 12px; }
+  .crumb .current { color: var(--t0); font-weight: 500; }
+
+  /* ═══ ROLE CARDS ═══ */
+  .role-list {
+    display: flex; flex-direction: column;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .role-card {
+    display: block;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    transition: padding-left 0.25s ease;
+  }
+  .role-card:hover { padding-left: 8px; }
+  .role-card-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 16px; margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .role-card-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 22px; font-weight: 500; color: var(--t0);
+    letter-spacing: -0.01em; line-height: 1.3;
+  }
+  .role-card-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--t2);
+    letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .role-card-sub {
+    font-size: 14px; color: var(--t2);
+    margin-bottom: 14px;
+  }
+  .role-card-body {
+    font-size: 15.5px; color: var(--t1); line-height: 1.65;
+    max-width: 720px;
+  }
+  .role-card-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 16px; font-size: 13px;
+    color: var(--blue); font-weight: 500;
+    transition: gap 0.2s;
+  }
+  .role-card.is-live .role-card-cta { }
+  .role-card.is-stub .role-card-cta { color: var(--t2); cursor: default; }
+  .role-card:hover .role-card-cta { gap: 10px; }
+  .role-card.is-stub:hover .role-card-cta { gap: 6px; }
+
+  /* ═══ CTA BLOCK ═══ */
+  .cta-block {
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    margin-top: 48px;
+  }
+  .cta-lines { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 28px; }
+  .cta-lines li {
+    font-size: 15px; color: var(--t1);
+    list-style: none;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--t0); color: var(--bg);
+    border-radius: 8px; font-size: 14px; font-weight: 500;
+    font-family: inherit;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .cta-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+
+  /* ═══ FOOTER ═══ */
+  .footer {
+    padding: 28px 24px;
+    border-top: 1px solid var(--border);
+    max-width: 1080px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--t2);
+    flex-wrap: wrap; gap: 8px;
+    margin-top: 80px;
+  }
+  .footer strong { color: var(--t0); }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+
+  @media (max-width: 640px) {
+    .role-card-head { flex-direction: column; gap: 4px; }
+    .role-card-dates { font-size: 11px; }
+    .cta-block { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link" aria-current="page">Work</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="crumb" data-reveal>
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Work</span>
+      </div>
+
+      <div class="narrow" data-reveal>
+        <span class="eyebrow">Work</span>
+        <h1 class="t-hero">Ten years across enterprise AI, supply chain, healthcare, finance, automotive, and ESG.</h1>
+        <p class="t-body" style="max-width: 640px;">Mostly through staffing partners. Listed below in reverse chronological order.</p>
+      </div>
+
+      <div class="role-list" data-reveal>
+
+        <a href="/work/crc-group" class="role-card is-live">
+          <div class="role-card-head">
+            <div class="role-card-title">CRC Group</div>
+            <div class="role-card-dates">Apr 2025 &mdash; Present</div>
+          </div>
+          <div class="role-card-sub">Product Strategy &amp; Delivery Lead &middot; Dallas, TX &middot; via Synergech</div>
+          <p class="role-card-body">Cut 3+ months from a healthcare billing build using prototype-driven discovery. Now leading migration planning for two AI-enabled insurance platforms.</p>
+          <span class="role-card-cta">Read more &rarr;</span>
+        </a>
+
+        <div class="role-card is-stub" aria-disabled="true">
+          <div class="role-card-head">
+            <div class="role-card-title">Toyota North America</div>
+            <div class="role-card-dates">Jan 2024 &mdash; Jan 2025</div>
+          </div>
+          <div class="role-card-sub">Delivery Lead, Global Planning System &middot; Plano, TX &middot; via Aquent</div>
+          <p class="role-card-body">Delivery lead on demand forecasting modernization across North America and Japan operations.</p>
+          <span class="role-card-cta">Detail coming soon</span>
+        </div>
+
+        <div class="role-card is-stub" aria-disabled="true">
+          <div class="role-card-head">
+            <div class="role-card-title">Dell Technologies</div>
+            <div class="role-card-dates">Jun 2022 &mdash; Apr 2023</div>
+          </div>
+          <div class="role-card-sub">Product Owner, ESG Reporting &middot; Remote &middot; via Aligned Automation</div>
+          <p class="role-card-body">Translated regulatory disclosure requirements into a working backlog for sustainability reporting. Project ended with the April 2023 layoffs.</p>
+          <span class="role-card-cta">Detail coming soon</span>
+        </div>
+
+        <div class="role-card is-stub" aria-disabled="true">
+          <div class="role-card-head">
+            <div class="role-card-title">FleetPride</div>
+            <div class="role-card-dates">Nov 2021 &mdash; May 2022</div>
+          </div>
+          <div class="role-card-sub">Sr. Business Analyst, M&amp;A Integration &middot; Irving, TX</div>
+          <p class="role-card-body">Post-acquisition merger work on Karmak Fusion ERP across newly acquired distribution centers.</p>
+          <span class="role-card-cta">Detail coming soon</span>
+        </div>
+
+        <div class="role-card is-stub" aria-disabled="true">
+          <div class="role-card-head">
+            <div class="role-card-title">World Kinect Services</div>
+            <div class="role-card-dates">May 2016 &mdash; Nov 2021</div>
+          </div>
+          <div class="role-card-sub">Sr. Business Analyst, Land &amp; Aviation Divisions &middot; Miami, FL</div>
+          <p class="role-card-body">Drove 80% logistics process automation. Led the Oracle 11i replacement program. Sat in the middle of the org's Waterfall-to-Agile transition.</p>
+          <span class="role-card-cta">Detail coming soon</span>
+        </div>
+
+      </div>
+
+      <div class="cta-block" data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="t-section">Looking for someone who ships AI products, not just talks about them?</h2>
+        <ul class="cta-lines">
+          <li>&rarr; Hiring for a senior product or delivery role?</li>
+          <li>&rarr; Need a hand compressing a discovery-to-prototype sprint?</li>
+          <li>&rarr; Want to compare notes on enterprise AI delivery?</li>
+        </ul>
+        <a class="cta-btn" href="mailto:milan.khanal25@gmail.com">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span><strong>Milan Khanal</strong> &middot; Enterprise Delivery &times; AI Product Building</span>
+    <div class="footer-links">
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // Theme toggle
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    function glyph() {
+      return document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+    }
+    btn.innerHTML = glyph();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      btn.innerHTML = glyph();
+    });
+  })();
+
+  // Scroll reveal (vanilla IntersectionObserver + safety timer)
+  (function () {
+    var els = document.querySelectorAll('[data-reveal]');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    els.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('revealed');
+      } else {
+        io.observe(el);
+      }
+    });
+    setTimeout(function () {
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        if (!el.classList.contains('revealed')) el.classList.add('revealed');
+      });
+    }, 1500);
+  })();
+</script>
+</body>
+</html>

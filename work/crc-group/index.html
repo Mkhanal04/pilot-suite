@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRC Group &mdash; Milan Khanal</title>
+<meta name="description" content="Product Strategy & Delivery Lead at CRC Group via Synergech. Goldengate billing modernization (3+ months saved, $2M cash-flow optimization) and migration planning for two AI-enabled insurance platforms.">
+<meta property="og:title" content="CRC Group &mdash; Milan Khanal">
+<meta property="og:description" content="Product Strategy & Delivery Lead at CRC Group via Synergech. Goldengate billing modernization and AI-enabled insurance platform migration.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://milankhanal.com/work/crc-group">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --blueS: rgba(37,99,235,0.06); --blueB: rgba(37,99,235,0.14);
+    --green: #16A34A; --greenS: rgba(22,163,74,0.06); --greenB: rgba(22,163,74,0.14);
+    --amber: #CA8A04; --amberS: rgba(202,138,4,0.06); --amberB: rgba(202,138,4,0.14);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.06); --tealB: rgba(13,148,136,0.14);
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --blueS: rgba(59,130,246,0.08); --blueB: rgba(59,130,246,0.18);
+    --green: #22C55E; --greenS: rgba(34,197,94,0.08); --greenB: rgba(34,197,94,0.18);
+    --amber: #EAB308; --amberS: rgba(234,179,8,0.08); --amberB: rgba(234,179,8,0.18);
+    --teal: #0D9488; --tealS: rgba(13,148,136,0.08); --tealB: rgba(13,148,136,0.18);
+    --navBg: rgba(9,9,11,0.85);
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body {
+    background: var(--bg);
+    color: var(--t0);
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navBg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    height: 56px; display: flex; align-items: center; padding: 0 24px;
+    transition: background 0.4s;
+  }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .theme-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg2);
+    color: var(--t1); font-size: 14px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ═══ MAIN ═══ */
+  main { padding-top: 56px; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 760px; margin: 0 auto; }
+  .section { padding: 72px 24px; }
+  @media (max-width: 640px) { .section { padding: 56px 20px; } }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 12px; display: block;
+  }
+
+  .t-hero {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(32px, 4.6vw, 46px);
+    font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--t0); margin-bottom: 20px;
+  }
+
+  .t-section {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(22px, 2.8vw, 28px);
+    font-weight: 500; line-height: 1.25; letter-spacing: -0.015em;
+    color: var(--t0); margin-bottom: 16px; margin-top: 48px;
+  }
+
+  .t-body { font-size: 16.5px; color: var(--t1); line-height: 1.7; }
+  .t-body + .t-body { margin-top: 16px; }
+
+  .t-caption { font-size: 13px; color: var(--t2); line-height: 1.5; }
+
+  /* Breadcrumb */
+  .crumb {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    font-size: 13px; color: var(--t2);
+    margin-bottom: 32px;
+  }
+  .crumb a { color: var(--t2); transition: color 0.2s; }
+  .crumb a:hover { color: var(--t0); }
+  .crumb .sep { color: var(--t3); font-size: 12px; }
+  .crumb .current { color: var(--t0); font-weight: 500; }
+
+  /* Role header meta */
+  .role-meta {
+    display: flex; flex-wrap: wrap; gap: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--t2);
+    letter-spacing: 0.02em;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .role-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .role-meta strong { color: var(--t1); font-weight: 500; }
+
+  /* Bulleted outcomes */
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .bullet-list li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 16px; color: var(--t1); line-height: 1.65;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute; left: 0; top: 11px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  /* Subsection */
+  .subsection {
+    margin-top: 36px;
+    padding: 24px 0 4px;
+    border-top: 1px solid var(--border);
+  }
+  .subsection-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--t2);
+    margin-bottom: 8px; display: block;
+  }
+  .subsection-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 20px; font-weight: 500;
+    color: var(--t0); letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  /* Stack chips */
+  .stack {
+    margin-top: 12px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    padding: 5px 12px;
+    border-radius: 14px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--t1);
+    letter-spacing: 0.02em;
+  }
+
+  /* Related + status line */
+  .note {
+    margin-top: 14px;
+    font-size: 14px; color: var(--t2);
+    font-style: italic;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--t2);
+    margin-top: 48px;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .back-link:hover { color: var(--t0); gap: 10px; }
+
+  /* CTA */
+  .cta-block {
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    margin-top: 48px;
+  }
+  .cta-lines { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 28px; list-style: none; padding: 0; }
+  .cta-lines li { font-size: 15px; color: var(--t1); }
+  .cta-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--t0); color: var(--bg);
+    border-radius: 8px; font-size: 14px; font-weight: 500;
+    font-family: inherit;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .cta-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+
+  /* Footer */
+  .footer {
+    padding: 28px 24px;
+    border-top: 1px solid var(--border);
+    max-width: 1080px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--t2);
+    flex-wrap: wrap; gap: 8px;
+    margin-top: 80px;
+  }
+  .footer strong { color: var(--t0); }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+
+  @media (max-width: 640px) {
+    .role-meta { font-size: 11px; gap: 8px 14px; }
+    .cta-block { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link" aria-current="page">Work</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="section">
+    <div class="narrow">
+
+      <div class="crumb" data-reveal>
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <a href="/work">Work</a>
+        <span class="sep">/</span>
+        <span class="current">CRC Group</span>
+      </div>
+
+      <div data-reveal>
+        <span class="eyebrow">Role</span>
+        <h1 class="t-hero">CRC Group</h1>
+        <p class="t-body" style="color: var(--t1); font-size: 18px;">Product Strategy &amp; Delivery Lead on a healthcare billing modernization program and the migration of two AI-enabled insurance platforms.</p>
+        <div class="role-meta">
+          <span><strong>Apr 2025</strong> &mdash; Present</span>
+          <span><strong>Dallas, TX</strong></span>
+          <span>via <strong>Synergech</strong></span>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">Context</h2>
+        <p class="t-body">CRC Group runs $900M+ in healthcare premium volume. Two parallel tracks ran across my time there. The first was a billing modernization program (Goldengate) that needed to ship clean enough to support future M&amp;A. The second is the current migration of two AI-enabled insurance platforms (Incepty + ClaimZilla) onto the CRC enterprise stack.</p>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">What I did</h2>
+
+        <div class="subsection">
+          <span class="subsection-label">Goldengate &middot; Apr &ndash; Oct 2025</span>
+          <div class="subsection-title">Billing modernization, M&amp;A-ready architecture</div>
+          <ul class="bullet-list">
+            <li>Cut 3+ months from the discovery-to-build timeline by running prototype-driven discovery directly with billing stakeholders, instead of the usual waterfall spec cycle.</li>
+            <li>Designed an M&amp;A-ready billing architecture that supported $2M in cash-flow optimization through cleaner reconciliation workflows.</li>
+            <li>Project re-prioritized to 2027; transitioned to the Incepty / ClaimZilla migration.</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <span class="subsection-label">Incepty + ClaimZilla &middot; Nov 2025 &mdash; Present</span>
+          <div class="subsection-title">Migration planning for two AI-enabled insurance platforms</div>
+          <ul class="bullet-list">
+            <li>Leading discovery and migration planning for two AI-enabled insurance platforms (submission intake + claims workflows) moving from Euclid to the CRC enterprise stack.</li>
+            <li>Decomposing undocumented workflows across Salesforce, Microsoft AI Foundry, SharePoint, PHP/Azure, KYC services, and APIM.</li>
+            <li>Mapping system interactions to surface migration risk; aligning business stakeholders with engineering leads on scope and sequencing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">Outcomes</h2>
+        <ul class="bullet-list">
+          <li><strong style="color: var(--t0);">3+ months saved</strong> on discovery-to-build timeline via prototype-driven discovery.</li>
+          <li><strong style="color: var(--t0);">$2M cash-flow optimization</strong> supported by the billing architecture design.</li>
+          <li><strong style="color: var(--t0);">Two AI platform migrations</strong> currently in discovery and planning &mdash; Incepty (submission intake) and ClaimZilla (claims workflows).</li>
+        </ul>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">Stack</h2>
+        <div class="stack">
+          <span class="chip">Salesforce</span>
+          <span class="chip">Microsoft AI Foundry</span>
+          <span class="chip">SharePoint</span>
+          <span class="chip">PHP</span>
+          <span class="chip">Azure</span>
+          <span class="chip">APIM</span>
+        </div>
+      </div>
+
+      <div data-reveal>
+        <h2 class="t-section">Related</h2>
+        <p class="note">Goldengate case study in draft. Link will land here when published.</p>
+      </div>
+
+      <a href="/work" class="back-link" data-reveal>&larr; Back to Work</a>
+
+      <div class="cta-block" data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="t-section" style="margin-top: 0;">Want to compare notes on enterprise AI delivery?</h2>
+        <ul class="cta-lines">
+          <li>&rarr; Hiring for a senior product or delivery role?</li>
+          <li>&rarr; Need a hand compressing a discovery-to-prototype sprint?</li>
+          <li>&rarr; Have a migration or modernization that's stuck in discovery?</li>
+        </ul>
+        <a class="cta-btn" href="mailto:milan.khanal25@gmail.com">Get in touch</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span><strong>Milan Khanal</strong> &middot; Enterprise Delivery &times; AI Product Building</span>
+    <div class="footer-links">
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    function glyph() {
+      return document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E';
+    }
+    btn.innerHTML = glyph();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      btn.innerHTML = glyph();
+    });
+  })();
+
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        el.classList.add('revealed');
+      } else {
+        io.observe(el);
+      }
+    });
+    setTimeout(function () {
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        if (!el.classList.contains('revealed')) el.classList.add('revealed');
+      });
+    }, 1500);
+  })();
+</script>
+</body>
+</html>
