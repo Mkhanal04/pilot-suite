@@ -26,7 +26,7 @@
     {
       "year": "2025\u2013now",
       "label": "Building",
-      "text": "TradePilot (supply chain) + TalentPilot (recruiting) + FinPilot (financial data) -- same architecture, three industries",
+      "text": "TradePilot (supply chain) + TalentPilot (recruiting), same architecture across two industries",
       "color": "green"
     }
   ],
@@ -310,198 +310,8 @@
         },
         "caseStudy": null
       }
-    },
-    {
-      "slug": "finpilot",
-      "type": "product",
-      "title": "FinPilot",
-      "domain": "Financial Data",
-      "color": "teal",
-      "status": "live",
-      "date": "2026-04",
-      "appUrl": "/finpilot/",
-      "summary": "AI-assisted financial data reconciliation. Schema mapping, confidence triage, and Glass Box reasoning for the exceptions that spreadsheets can't explain.",
-      "desc": "Investment operations teams spend 60% of their exception investigation time on noise -- formatting differences, timing mismatches, rounding variances. FinPilot filters the noise so analysts spend their expertise on the 10% that requires human judgment. Same HCAI architecture, third industry.",
-      "problem": "Financial data reconciliation across custodians, administrators, and internal systems is manual, spreadsheet-dependent, and drowning in false positives. 91% of firms still rely on Excel. The 'last mile' of exception handling -- where matches are ambiguous and judgment is required -- has no AI tooling that operations teams actually trust.",
-      "approach": "Built an AI-assisted reconciliation layer with 3 specialized agents. Schema Mapper normalizes field names and identifiers across sources with confidence scoring. Reconciliation Engine matches records with intelligent tolerance. Exception Analyst investigates flagged items with root cause hypotheses and numbered evidence. Conservative 70% auto-resolve threshold -- trust is earned, not assumed. Exception Workbench replaces the Decision Queue pattern because reconciliation workflows are exception-based, not decision-queue-based.",
-      "tags": [
-        "Exception Workbench",
-        "Glass Box",
-        "Schema Mapping"
-      ],
-      "pillars": [
-        "Schema Intelligence",
-        "Confidence Triage",
-        "Glass Box",
-        "Exception Analysis",
-        "Human-in-the-Loop",
-        "Audit Trail"
-      ],
-      "stats": {
-        "views": 3,
-        "agents": 3,
-        "tour": true
-      },
-      "detail": {
-        "heroStatement": "AI-assisted financial data reconciliation. When data arrives from custodians, administrators, and internal systems in different schemas with different identifiers, FinPilot's agents map the fields, run the reconciliation, and triage the results -- with full transparency into why every match was made and every exception was flagged. Built on the same 10-80-10 architecture: humans upload and label sources (10%), AI maps schemas and reconciles (80%), humans review exceptions and approve resolutions (10%).",
-        "architectureSnapshot": {
-          "layers": [
-            {
-              "name": "Data Layer",
-              "items": [
-                "Custodian Reports",
-                "Administrator NAV",
-                "Internal Portfolio System",
-                "Market Data Feeds"
-              ],
-              "color": "teal"
-            },
-            {
-              "name": "Agent Layer -- 3 AI Agents",
-              "items": [
-                "Schema Mapper",
-                "Reconciliation Engine",
-                "Exception Analyst"
-              ],
-              "color": "blue"
-            },
-            {
-              "name": "Glass Box Layer",
-              "items": [
-                "Field Mapping Rationale",
-                "Confidence Scoring",
-                "Root Cause Analysis",
-                "Source Attribution"
-              ],
-              "color": "green"
-            },
-            {
-              "name": "Human Decision Layer",
-              "items": [
-                "Sarah (Ops Analyst)",
-                "Exception Review",
-                "Resolution Approval"
-              ],
-              "color": "amber"
-            },
-            {
-              "name": "Audit Trail",
-              "items": [
-                "Every AI Recommendation Logged",
-                "Every Human Decision Tracked",
-                "Exportable for Compliance"
-              ],
-              "color": "green"
-            }
-          ],
-          "framework": "10-80-10: Analyst uploads and labels data sources (10%) -- AI agents map schemas, reconcile records, and triage exceptions (80%) -- Analyst reviews flagged items and approves resolutions (10%)"
-        },
-        "patternTransfer": {
-          "text": "Same architecture that powers TradePilot (supply chain) and TalentPilot (recruiting). Third industry, same decision intelligence patterns. The deliberate adaptation: Exception Workbench replaces Decision Queue because reconciliation is exception-based, not decision-based.",
-          "siblingSlug": "tradepilot",
-          "comparisonRow": {
-            "dimension": "Core Pattern",
-            "thisProduct": "Data upload -- schema mapping -- confidence triage -- exception investigation -- human resolution",
-            "sibling": "Tariff exposure -- dollar-quantified impact -- cross-department ripple -- human approval"
-          }
-        },
-        "keyMetrics": [
-          {
-            "value": "60%",
-            "label": "of manually investigated exceptions are noise -- FinPilot filters them automatically"
-          },
-          {
-            "value": "3 sources",
-            "label": "with incompatible schemas reconciled through AI-assisted field mapping"
-          },
-          {
-            "value": "70%",
-            "label": "auto-resolve threshold -- conservative by design, adjustable as trust builds"
-          },
-          {
-            "value": "3 stories",
-            "label": "stock split timing, identifier cross-reference, and a genuine break the AI honestly escalates"
-          }
-        ],
-        "differentiator": {
-          "text": "Unlike deterministic reconciliation platforms that automate the easy 90%, FinPilot focuses on the ambiguous last mile -- where schema mapping is uncertain, exceptions are ambiguous, and the human needs to see the reasoning before trusting the result. Glass Box transparency isn't a feature; it's the adoption strategy.",
-          "label": "What makes this different"
-        },
-        "caseStudy": {
-          "title": "Sarah's Monday Morning: Before and After",
-          "subtitle": "What happens when three data sources with different schemas, different identifiers, and different formats need to agree -- and 60% of the 'exceptions' turn out to be nothing.",
-          "sections": [
-            {
-              "heading": "The Scenario",
-              "body": "Sarah Chen, Senior Operations Analyst at a mid-market investment manager ($8B AUM), sits down at 7:30 AM. Three browser tabs: custodian portal, administrator SFTP folder, Excel. Three CSV downloads. Three different column names, date formats, and security identifiers. She pastes them into a 47-tab reconciliation workbook someone built three years ago. VLOOKUP formulas flag 47 exceptions out of 312 positions."
-            },
-            {
-              "heading": "The Manual Process",
-              "body": "Of the 47 exceptions: 28 are formatting differences (rounding, decimal precision). 11 are timing mismatches (a dividend reinvested yesterday -- one source updated, the other hasn't). 5 are corporate actions (stock split, name change) that one system processed and another didn't. 3 are genuine breaks she can't explain. It's 11:30 AM. She's spent 4 hours. 60% of her time went to things that weren't actually problems."
-            },
-            {
-              "heading": "With FinPilot",
-              "body": "Same three files. Upload to FinPilot: 5 minutes. Schema Mapper identifies that 'Security_ID' maps to 'cusip_number' maps to ISIN, normalizes dates, flags naming differences. Sarah reviews and approves -- still in control. Reconciliation Engine runs: 265 auto-resolved, 37 flagged with root cause hypotheses, 10 escalated. Sarah skips the 265. Scans the 37 flagged -- each shows which source disagrees, by how much, and a probable cause ('Stock split effective yesterday -- Custodian A reflects post-split, Administrator hasn't updated'). She accepts 32 recommendations, overrides 3, escalates 2. The 10 escalated items get her full attention. Total time: 45 minutes."
-            },
-            {
-              "heading": "What This Demonstrates",
-              "body": "FinPilot doesn't eliminate the human. It eliminates the noise. Same analyst, same data, but her time goes to problems that deserve her expertise. The conservative 70% auto-resolve threshold means the system starts cautious and earns trust over time. Every recommendation shows its reasoning. Every human decision is logged for audit. This is what Glass Box AI looks like in financial operations -- not a black box that claims 99% accuracy, but a transparent system that says 'here's what I found, here's why, and here's what I don't know.'"
-            }
-          ]
-        }
-      }
     }
   ],
-  "architectureComparison": {
-    "sectionLabel": "The Framework",
-    "title": "One accountability framework. Three industries.",
-    "body": "Built for the moment a human decides whether to trust it. The same architecture powers all three products because it was designed around the decision, not the domain.",
-    "closing": "The domain changes. The architecture doesn't.",
-    "columns": [
-      {
-        "label": "Supply Chain",
-        "product": "TradePilot",
-        "color": "blue"
-      },
-      {
-        "label": "Recruiting",
-        "product": "TalentPilot",
-        "color": "amber"
-      },
-      {
-        "label": "Financial Data",
-        "product": "FinPilot",
-        "color": "teal"
-      }
-    ],
-    "rows": [
-      {
-        "layer": "Primary Workflow",
-        "left": "Decision Queue -- 5 decisions, dollar-quantified, deadline-sorted",
-        "center": "Decision Queue -- 8 decisions, priority-ranked, compliance-flagged",
-        "right": "Exception Workbench -- flagged items triaged by confidence, root cause hypotheses attached"
-      },
-      {
-        "layer": "AI Agents",
-        "left": "5 agents: Trade Policy, Logistics, AP Controller, Inventory, Sourcing",
-        "center": "4 agents: Signal Scout, Enrichment, Pipeline Monitor, Compliance",
-        "right": "3 agents: Schema Mapper, Reconciliation Engine, Exception Analyst"
-      },
-      {
-        "layer": "Evidence Chain",
-        "left": "Federal Register sources, supplier data, 95% confidence scoring",
-        "center": "LinkedIn signals, GitHub analysis, counter-factual bias detection",
-        "right": "Source-by-source variance, field mapping rationale, root cause with numbered evidence"
-      },
-      {
-        "layer": "Human Controls",
-        "left": "Approve, reject, or override with audit trail",
-        "center": "Same controls + bias check at every decision point",
-        "right": "Accept, override, or escalate exception resolutions + adjustable confidence thresholds",
-        "badge": "Identical pattern"
-      }
-    ]
-  },
   "domainTable": [
     {
       "domain": "Supply Chain",
@@ -514,12 +324,6 @@
       "product": "TalentPilot",
       "status": "live",
       "slug": "talentpilot"
-    },
-    {
-      "domain": "Financial Data",
-      "product": "FinPilot",
-      "status": "building",
-      "slug": "finpilot"
     }
   ]
 }

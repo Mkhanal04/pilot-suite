@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Milan Khanal — Human-Centered AI · Trust & Decision Intelligence</title>
-<meta name="description" content="I design decision intelligence systems with transparent reasoning, human-in-the-loop controls, and real-time bias monitoring. Domain-agnostic HCAI architecture proven across supply chain, recruiting, and financial data reconciliation.">
+<meta name="description" content="I design decision intelligence systems with transparent reasoning, human-in-the-loop controls, and real-time bias monitoring. Domain-agnostic HCAI architecture proven across supply chain and recruiting.">
 <meta property="og:title" content="Milan Khanal — Human-Centered AI · Trust & Decision Intelligence">
 <meta property="og:description" content="Decision intelligence systems designed for trust, explainability, and human oversight. Three industries. One framework. See the proof of concepts live.">
 <meta property="og:type" content="website">
@@ -371,7 +371,7 @@ function Portfolio() {
   );
 
   // === PAGE: HOME ===
-  const HomePage = () => { const ac = content.architectureComparison; return (
+  const HomePage = () => { return (
     <>
       {/* HERO */}
       <section style={{ padding: isMobile ? "80px 20px 40px" : "100px 24px 48px" }}>
@@ -462,7 +462,7 @@ function Portfolio() {
             { num: "01", title: "Prototype-First Discovery", body: "Don't write a 50-page requirements doc. Build something real and let stakeholders react to it. Working software forces decisions that documents defer. At CRC Group, a functional prototype during discovery shifted a $900M billing rebuild from \"system replacement\" to \"enterprise product\", accelerating the MVP by 3+ months.", prevents: "We built the wrong thing." },
             { num: "02", title: "AI-Enabled Development", body: "When the PM can build a proof of concept independently, the feedback loop goes from \"let me write a ticket\" to \"let me show you.\" 2,000+ hours of applied AI prototyping: three working products across three industries, each built in weeks. Engineering builds what's already been proven to matter.", prevents: "We ran out of time for discovery." },
             { num: "03", title: "OKR-Driven Prioritization", body: "The question isn't \"what features should we build?\" It's \"what needle are we trying to move?\" At Dell, this meant killing technically interesting features that didn't move ESG metrics. At CRC Group, framing the problem as \"where is money leaking?\" revealed $2M in optimization that a feature-first approach would have missed.", prevents: "We shipped features nobody needed." },
-            { num: "04", title: "Adoption-First Design", body: "Build for the person who uses it 8 hours a day, not the executive who approves the budget. At World Kinect, driver ride-alongs revealed why a technically sound mobile app was failing, leading to 80% less manual processing. In FinPilot, the auto-resolve threshold is set at 70%, not 95%. In regulated finance, trust is earned through conservative defaults, not aggressive automation.", prevents: "We built it but nobody uses it." }
+            { num: "04", title: "Adoption-First Design", body: "Build for the person who uses it 8 hours a day, not the executive who approves the budget. At World Kinect, driver ride-alongs revealed why a technically sound mobile app was failing, leading to 80% less manual processing. Enterprise software lives or dies on whether the person at the keyboard trusts it. Conservative defaults, visible reasoning, and reversible actions earn that trust. Aggressive automation burns it.", prevents: "We built it but nobody uses it." }
           ].map((pillar, i) => (
             <R key={i} delay={0.08 * i}>
               <div style={{ ...s.card, padding: isMobile ? "20px" : "24px", display: "flex", flexDirection: "column", height: "100%" }}>
@@ -520,83 +520,11 @@ function Portfolio() {
       </div></section>
       <div style={s.divider} />
 
-      {/* THE FRAMEWORK — architecture comparison */}
-      <section id="framework" style={s.section}><div style={s.container}>
-        <R><SectionHeader label={ac.sectionLabel} title={ac.title} body={ac.body} t={t} s={s} /></R>
-        {!isMobile ? (
-          <div style={{ marginTop: 40 }}>
-            {/* Column headers */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 20 }}>
-              {ac.columns.map((col, ci) => {
-                const cc = colorMap[col.color] || t.blue;
-                return (
-                  <div key={ci} style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: ci === 2 ? "flex-end" : "flex-start" }}>
-                    {ci === 2 && <div style={{ textAlign: "right" }}><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>{col.label}</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>{col.product}</div></div>}
-                    <span style={{ width: 10, height: 10, borderRadius: "50%", background: cc, display: "inline-block", flexShrink: 0 }} />
-                    {ci !== 2 && <div><div style={{ fontFamily: sans, fontSize: 17, fontWeight: 600, color: t.t0, lineHeight: 1.2 }}>{col.label}</div><div style={{ fontFamily: mono, fontSize: 11, color: t.t2 }}>{col.product}</div></div>}
-                  </div>
-                );
-              })}
-            </div>
-            {/* Rows */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {ac.rows.map((row, i) => {
-                const vals = [row.left, row.center, row.right];
-                return (
-                  <R key={i} delay={0.05 * i}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, alignItems: "stretch" }}>
-                      {ac.columns.map((col, ci) => {
-                        const cc = colorMap[col.color] || t.blue;
-                        const cS = `${cc}10`;
-                        const cB = `${cc}28`;
-                        return (
-                          <div key={ci} style={{ background: `${cc}08`, border: `1px solid ${cc}22`, borderRadius: 10, padding: "16px 20px" }}>
-                            <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: cc, marginBottom: 6 }}>{row.layer}</div>
-                            <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{vals[ci]}</div>
-                            {row.badge && ci === 0 && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </R>
-                );
-              })}
-            </div>
-          </div>
-        ) : (
-          /* Mobile: stacked cards per row */
-          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 28 }}>
-            {ac.rows.map((row, i) => {
-              const vals = [row.left, row.center, row.right];
-              return (
-                <R key={i} delay={0.05 * i}>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: t.t2, textAlign: "center" }}>{row.layer}</div>
-                    {ac.columns.map((col, ci) => {
-                      const cc = colorMap[col.color] || t.blue;
-                      return (
-                        <div key={ci} style={{ background: `${cc}08`, border: `1px solid ${cc}22`, borderRadius: 10, padding: "14px 16px" }}>
-                          <div style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: cc, marginBottom: 4 }}>{col.product}</div>
-                          <div style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{vals[ci]}</div>
-                          {row.badge && ci === 0 && <span style={{ fontFamily: mono, fontSize: 10, fontWeight: 600, color: t.green, background: t.greenS, border: `1px solid ${t.greenB}`, padding: "3px 10px", borderRadius: 4, display: "inline-block", marginTop: 8 }}>{row.badge}</span>}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </R>
-              );
-            })}
-          </div>
-        )}
-        <R delay={0.2}><p style={{ fontSize: 15, color: t.t2, fontStyle: "italic", textAlign: "center", marginTop: 40 }}>{ac.closing}</p></R>
-      </div></section>
-      <div style={s.divider} />
-
       {/* THESIS */}
       <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
         <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Design for the decision, not just the data.</h2>
           <p style={{ ...s.tBody, marginBottom: 16 }}>Enterprise AI fixates on data pipelines and model accuracy. But the moment that matters is when a human looks at an AI recommendation and decides whether to act on it. Every system I build is designed around that moment: transparent evidence chains, configurable autonomy, bias checks at point of decision.</p>
-          <p style={{ ...s.tBody, marginBottom: 24 }}>The architecture is domain-agnostic -- proven across supply chain, recruiting, and financial data reconciliation. Good decision design doesn{"'"}t change when the industry does.</p>
+          <p style={{ ...s.tBody, marginBottom: 24 }}>The architecture is domain-agnostic, proven across supply chain and recruiting so far. Good decision design doesn{"'"}t change when the industry does.</p>
           <a href="https://calendly.com/milan-khanal25/new-meeting" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute walkthrough {"\u2192"}</a>
         </div></R>
         <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
