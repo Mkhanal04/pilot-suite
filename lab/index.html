@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab — Milan Khanal</title>
+<meta name="description" content="Things I've built, mostly on the side. One is a live commercial product. The rest are prototypes that proved an idea — about a domain, a stack, or how a small team can ship faster.">
+<meta property="og:title" content="Lab — Milan Khanal">
+<meta property="og:description" content="Things I've built, mostly on the side. One is a live commercial product. The rest are prototypes that proved an idea.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://milankhanal.com/lab">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --blueS: rgba(37,99,235,0.06); --blueB: rgba(37,99,235,0.14);
+    --green: #16A34A; --greenS: rgba(22,163,74,0.06); --greenB: rgba(22,163,74,0.14);
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --blueS: rgba(59,130,246,0.08); --blueB: rgba(59,130,246,0.18);
+    --green: #22C55E; --greenS: rgba(34,197,94,0.08); --greenB: rgba(34,197,94,0.18);
+    --navBg: rgba(9,9,11,0.85);
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body {
+    background: var(--bg); color: var(--t0);
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 16px; line-height: 1.65;
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navBg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    height: 56px; display: flex; align-items: center; padding: 0 24px;
+    transition: background 0.4s;
+  }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .nav-cta { font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 8px; background: var(--t0); color: var(--bg); transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.9; }
+  .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; }
+  .mobile-toggle { display: none; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 16px; cursor: pointer; align-items: center; justify-content: center; font-family: inherit; }
+  .mobile-menu { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg1); border-bottom: 1px solid var(--border); padding: 20px 24px; flex-direction: column; gap: 16px; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 15px; color: var(--t1); }
+  .mobile-menu .nav-cta { align-self: flex-start; }
+  @media (max-width: 760px) {
+    .nav-links .nav-link, .nav-links .nav-cta { display: none; }
+    .mobile-toggle { display: flex; }
+  }
+
+  /* ═══ MAIN ═══ */
+  main { padding-top: 56px; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .section { padding: 72px 24px; }
+  @media (max-width: 640px) { .section { padding: 56px 20px; } }
+
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: block; }
+  .t-hero { font-family: 'Newsreader', Georgia, serif; font-size: clamp(34px, 5vw, 50px); font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--t0); margin-bottom: 20px; }
+  .t-intro { font-size: 17px; color: var(--t1); line-height: 1.7; max-width: 720px; }
+
+  .crumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--t2); margin-bottom: 32px; padding-top: 32px; }
+  .crumb a { color: var(--t2); transition: color 0.2s; }
+  .crumb a:hover { color: var(--t0); }
+  .crumb .sep { color: var(--t3); font-size: 12px; }
+  .crumb .current { color: var(--t0); font-weight: 500; }
+
+  /* ═══ LAB GRID ═══ */
+  .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 48px; }
+  .lab-card { background: var(--bg1); border: 1px solid var(--border); border-radius: 12px; padding: 24px 26px 22px; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; height: 100%; }
+  .lab-card:hover { border-color: var(--borderH); transform: translateY(-2px); }
+  .lab-card.is-live { border-color: var(--greenB); background: linear-gradient(var(--bg1), var(--bg1)) padding-box, linear-gradient(135deg, var(--green), transparent) border-box; border: 1px solid transparent; }
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 5px; background: var(--bg2); color: var(--t2); border: 1px solid var(--border); }
+  .tag-live { background: var(--green); color: #fff; border-color: var(--green); }
+  .lab-title { font-family: 'Newsreader', Georgia, serif; font-size: 22px; font-weight: 500; color: var(--t0); letter-spacing: -0.01em; margin-bottom: 10px; line-height: 1.3; }
+  .lab-body { font-size: 14.5px; color: var(--t1); line-height: 1.65; margin-bottom: 14px; flex: 1; }
+  .lab-stack { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t2); letter-spacing: 0.02em; margin-bottom: 14px; line-height: 1.6; }
+  .lab-cta { font-size: 13px; color: var(--blue); font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.2s; margin-top: auto; padding-top: 4px; }
+  .lab-card:hover .lab-cta { gap: 10px; }
+
+  /* ═══ FOOTER ═══ */
+  .footer { padding: 28px 24px; border-top: 1px solid var(--border); margin-top: 80px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--t2); flex-wrap: wrap; gap: 12px; }
+  .footer strong { color: var(--t0); font-weight: 500; }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link">Work</a>
+      <a href="/lab" class="nav-link" aria-current="page">Lab</a>
+      <a href="/writing" class="nav-link">Writing</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/work">Work</a>
+    <a href="/lab" aria-current="page">Lab</a>
+    <a href="/writing">Writing</a>
+    <a href="/about">About</a>
+    <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<main>
+  <section class="section" style="padding-top: 48px;">
+    <div class="container">
+      <nav class="crumb" data-reveal aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Lab</span>
+      </nav>
+
+      <div class="narrow" data-reveal>
+        <span class="eyebrow">Lab</span>
+        <h1 class="t-hero">Prototypes that proved an idea.</h1>
+        <p class="t-intro">Things I've built, mostly on the side. One is a live commercial product. The rest are prototypes that proved an idea, about a domain, a stack, or how a small team can ship faster.</p>
+      </div>
+
+      <div class="lab-grid">
+
+        <a href="https://krevio.net" target="_blank" rel="noopener noreferrer" class="lab-card is-live" data-reveal>
+          <div class="tag-row">
+            <span class="tag tag-live">Live Product</span>
+          </div>
+          <div class="lab-title">Krevio</div>
+          <p class="lab-body">Productized AI service: websites + 24/7 chat for local service businesses. Priced like SaaS, delivered done-for-you. Live at krevio.net.</p>
+          <div class="lab-stack">Gemini &middot; Google TTS &middot; Vercel &middot; Supabase</div>
+          <span class="lab-cta">Visit krevio.net &rarr;</span>
+        </a>
+
+        <a href="/tradepilot" class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+          </div>
+          <div class="lab-title">TradePilot</div>
+          <p class="lab-body">Supply chain decision intelligence. AI agents watch tariff exposure, logistics risk, and payment timing. Surface the call. Human makes it.</p>
+          <div class="lab-stack">Claude &middot; Multi-agent &middot; Audit trail</div>
+          <span class="lab-cta">Try it &rarr;</span>
+        </a>
+
+        <a href="/talentpilot" class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+          </div>
+          <div class="lab-title">TalentPilot</div>
+          <p class="lab-body">Recruiting workflow built around bias mitigation and human oversight. Same decision-package architecture as TradePilot, applied to hiring.</p>
+          <div class="lab-stack">Claude &middot; n8n</div>
+          <span class="lab-cta">Try it &rarr;</span>
+        </a>
+
+        <div class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+          </div>
+          <div class="lab-title">AutoPilot</div>
+          <p class="lab-body">Bilingual (English / Spanish) automotive sales chatbot. Handles inbound questions with seamless code-switching.</p>
+          <div class="lab-stack">OpenAI &middot; n8n</div>
+          <span class="lab-cta" style="color: var(--t2);">Coming soon</span>
+        </div>
+
+        <div class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+            <span class="tag">Academic</span>
+          </div>
+          <div class="lab-title">BizPilot AI</div>
+          <p class="lab-body">Academic prototype from the Texas Tech Human-Centered AI program.</p>
+          <span class="lab-cta" style="color: var(--t2);">Coming soon</span>
+        </div>
+
+        <div class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+            <span class="tag">Tooling</span>
+          </div>
+          <div class="lab-title">Multi-Agent Orchestration Framework</div>
+          <p class="lab-body">File-based coordination system for multi-agent AI builds. Compresses build cycles and reduces context failures across multiple AI agents.</p>
+          <span class="lab-cta" style="color: var(--t2);">Coming soon</span>
+        </div>
+
+        <div class="lab-card" data-reveal>
+          <div class="tag-row">
+            <span class="tag">Prototype</span>
+            <span class="tag">AI-Human</span>
+          </div>
+          <div class="lab-title">Digital Human (ADA)</div>
+          <p class="lab-body">Exploration of AI-human interaction interfaces using Unreal Engine and NVIDIA Audio2Face.</p>
+          <span class="lab-cta" style="color: var(--t2);">Coming soon</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 <strong>Milan Khanal</strong> &middot; Dallas, TX</span>
+    <div class="footer-links">
+      <a href="/work">Work</a>
+      <a href="/lab">Lab</a>
+      <a href="/writing">Writing</a>
+      <a href="/about">About</a>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var themeBtn = document.getElementById('themeBtn');
+  function syncThemeIcon() {
+    var m = document.documentElement.getAttribute('data-theme');
+    themeBtn.innerHTML = m === 'dark' ? '&#9728;' : '&#9790;';
+  }
+  syncThemeIcon();
+  themeBtn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeIcon();
+  });
+
+  var mobileToggle = document.getElementById('mobileToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  mobileToggle.addEventListener('click', function () {
+    mobileMenu.classList.toggle('open');
+    mobileToggle.innerHTML = mobileMenu.classList.contains('open') ? '&#10005;' : '&#9776;';
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    var rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('revealed');
+    } else {
+      io.observe(el);
+    }
+  });
+  setTimeout(function () {
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      if (!el.classList.contains('revealed')) el.classList.add('revealed');
+    });
+  }, 1500);
+</script>
+
+</body>
+</html>

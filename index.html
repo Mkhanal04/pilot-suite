@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milan Khanal — Human-Centered AI · Trust & Decision Intelligence</title>
-<meta name="description" content="I design decision intelligence systems with transparent reasoning, human-in-the-loop controls, and real-time bias monitoring. Domain-agnostic HCAI architecture proven across supply chain and recruiting.">
-<meta property="og:title" content="Milan Khanal — Human-Centered AI · Trust & Decision Intelligence">
-<meta property="og:description" content="Decision intelligence systems designed for trust, explainability, and human oversight. Three industries. One framework. See the proof of concepts live.">
+<title>Milan Khanal — Senior Product & Delivery · AI-Enabled Prototyping</title>
+<meta name="description" content="10 years of enterprise delivery across supply chain, healthcare, and finance. Using AI to cut the time from 'let's figure this out' to 'here's the working version' from months down to weeks.">
+<meta property="og:title" content="Milan Khanal — Working prototype in weeks. Not quarters.">
+<meta property="og:description" content="Senior enterprise product and delivery. Prototype-driven discovery, applied in the wild. Based in Dallas.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://milankhanal.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -337,14 +337,21 @@ function Portfolio() {
   const typeLabels = { product: "Product", "case-study": "Case Study" };
 
   // === NAV ===
+  const navItems = [
+    { l: "Work", href: "/work" },
+    { l: "Lab", href: "/lab" },
+    { l: "Writing", href: "/writing" },
+    { l: "About", href: "/about" },
+  ];
   const Nav = () => (
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: t.navBg, backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: `1px solid ${t.border}`, height: 56, display: "flex", alignItems: "center", padding: "0 24px", transition: "background 0.4s" }}>
       <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span onClick={() => go("home")} style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", cursor: "pointer", color: t.t0 }}>Milan Khanal</span>
+        <a href="/" style={{ fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", color: t.t0, textDecoration: "none" }}>Milan Khanal</a>
         <div style={{ display: isMobile ? "none" : "flex", alignItems: "center", gap: 24 }}>
-          {[{ l: "Story", a: () => { if (page !== 'home') { go("home"); setTimeout(() => document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }), 300); } else { document.getElementById('story')?.scrollIntoView({ behavior: 'smooth' }); } } }, { l: "Method", a: () => { if (page !== 'home') { go("home"); setTimeout(() => document.getElementById('method')?.scrollIntoView({ behavior: 'smooth' }), 300); } else { document.getElementById('method')?.scrollIntoView({ behavior: 'smooth' }); } } }, { l: "Work", a: () => go("work") }, { l: "Framework", a: () => { if (page !== 'home') { go("home"); setTimeout(() => document.getElementById('framework')?.scrollIntoView({ behavior: 'smooth' }), 300); } else { document.getElementById('framework')?.scrollIntoView({ behavior: 'smooth' }); } } }, { l: "Thesis", a: () => { if (page !== 'home') { go("home"); setTimeout(() => document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }), 300); } else { document.getElementById('thesis')?.scrollIntoView({ behavior: 'smooth' }); } } }, { l: "Contact", a: () => { if (page !== 'home') { go("home"); setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300); } else { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); } } }].map(n => (
-            <span key={n.l} onClick={n.a} style={{ fontSize: 13, color: (page === "work" && n.l === "Work") ? t.t0 : t.t2, cursor: "pointer", fontWeight: (page === "work" && n.l === "Work") ? 500 : 400, transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => { if (!(page === "work" && n.l === "Work")) e.target.style.color = t.t2; }}>{n.l}</span>
+          {navItems.map(n => (
+            <a key={n.l} href={n.href} style={{ fontSize: 13, color: t.t2, fontWeight: 400, transition: "color 0.2s", textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>{n.l}</a>
           ))}
+          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, fontWeight: 500, padding: "7px 14px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch</a>
           <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
         </div>
         <div style={{ display: isMobile ? "flex" : "none", alignItems: "center", gap: 8 }}>
@@ -352,203 +359,129 @@ function Portfolio() {
           <button onClick={() => setMobileNav(!mobileNav)} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mobileNav ? "\u2715" : "\u2630"}</button>
         </div>
       </div>
-      {mobileNav && <div style={{ position: "absolute", top: 56, left: 0, right: 0, background: t.bg1, borderBottom: `1px solid ${t.border}`, padding: "16px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
-        {[{ l: "Home", a: () => go("home") }, { l: "Work", a: () => go("work") }].map(n => <span key={n.l} onClick={n.a} style={{ fontSize: 15, color: t.t1, cursor: "pointer" }}>{n.l}</span>)}
+      {mobileNav && <div style={{ position: "absolute", top: 56, left: 0, right: 0, background: t.bg1, borderBottom: `1px solid ${t.border}`, padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {navItems.map(n => <a key={n.l} href={n.href} style={{ fontSize: 15, color: t.t1, textDecoration: "none" }}>{n.l}</a>)}
+        <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 14, fontWeight: 500, padding: "10px 16px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", textAlign: "center", alignSelf: "flex-start" }}>Get in touch</a>
       </div>}
     </nav>
   );
 
   const Footer = () => (
-    <footer style={{ padding: "28px 24px", borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1080, margin: "0 auto", fontSize: 12, color: t.t2, flexWrap: "wrap", gap: 8 }}>
-      <span><strong style={{ color: t.t0 }}>Milan Khanal</strong> {"\u00b7"} Enterprise Delivery × AI Product Building</span>
-      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-        <a href="mailto:milan.khanal25@gmail.com" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
-        <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
-        <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
-        <span>{"\u00a9"} 2026</span>
+    <footer style={{ padding: "28px 24px", borderTop: `1px solid ${t.border}`, marginTop: 40 }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12, color: t.t2, flexWrap: "wrap", gap: 12 }}>
+        <span>{"\u00a9"} 2026 <strong style={{ color: t.t0, fontWeight: 500 }}>Milan Khanal</strong> {"\u00b7"} Dallas, TX</span>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <a href="/work" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Work</a>
+          <a href="/lab" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Lab</a>
+          <a href="/writing" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Writing</a>
+          <a href="/about" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>About</a>
+        </div>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
+          <a href="mailto:milan.khanal25@gmail.com" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
+          <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
+        </div>
       </div>
     </footer>
   );
 
   // === PAGE: HOME ===
-  const HomePage = () => { return (
+  const HomePage = () => {
+    const buckets = [
+      { l: "Work", href: "/work", body: "Ten years of enterprise delivery across supply chain, healthcare, finance, automotive, and ESG." },
+      { l: "Lab", href: "/lab", body: "Things I've built, mostly on the side. One is a live commercial product. The rest are prototypes that proved an idea." },
+      { l: "Writing", href: "/writing", body: "Notes from the field. How discovery, prototyping, and AI delivery actually go in the wild." },
+    ];
+    const ctaLines = [
+      "Hiring for a senior product or delivery role?",
+      "Need a hand compressing a discovery-to-prototype sprint?",
+      "Want to compare notes on enterprise AI delivery?",
+    ];
+    return (
     <>
-      {/* HERO */}
-      <section style={{ padding: isMobile ? "80px 20px 40px" : "100px 24px 48px" }}>
+      {/* ── HERO ── */}
+      <section style={{ padding: isMobile ? "96px 20px 40px" : "120px 24px 56px" }}>
         <div style={s.container}>
-          {isMobile ? (
-            <>
-              <R delay={0.05}>
-                <div style={{ textAlign: "center", marginBottom: 28 }}>
-                  <img src="/content/headshot.jpg" alt="Milan Khanal" style={{ width: 140, height: 140, borderRadius: "50%", objectFit: "cover", objectPosition: "center 20%", border: `3px solid ${t.border}`, marginBottom: 14, display: "block", margin: "0 auto 14px" }} />
-                  <div style={{ fontWeight: 600, fontSize: 18, color: t.t0, marginBottom: 4 }}>Milan Khanal</div>
-                  <div style={{ fontSize: 13, color: t.t1, lineHeight: 1.5, marginBottom: 12 }}>Human-Centered AI · Trust &amp; Decision Intelligence</div>
-                  <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-                    <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
-                    <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
-                  </div>
-                </div>
-              </R>
-              <R delay={0.12}><h1 style={{ ...s.tHero, marginBottom: 20 }}>I don't pitch AI products. I ship them.</h1></R>
-              <R delay={0.2}>
-                <p style={{ ...s.tBody, marginBottom: 24 }}>10 years bridging enterprise operations and technical build teams across Toyota, Dell, CRC Group, and World Kinect. Now I build them myself. Using AI-assisted development and Human-Centered AI principles, I compress the idea-to-validation cycle from months to weeks — and every product you see here is live, functional, and applies the same trust-first architecture to a different industry.</p>
-              </R>
-              <R delay={0.28}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 8 }}>
-                  {[{ num: "$900M+", label: "platform shipped" }, { num: "80%", label: "less manual processing" }, { num: "5 industries", label: "10+ years" }, { num: "3 live products", label: "click below" }].map((stat, i) => (
-                    <div key={i} style={{ borderLeft: `3px solid ${t.blue}`, paddingLeft: 12 }}>
-                      <div style={{ fontWeight: 700, fontSize: 18, color: t.t0, letterSpacing: "-0.01em" }}>{stat.num}</div>
-                      <div style={{ fontSize: 12, color: t.t2, marginTop: 2 }}>{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </R>
-            </>
-          ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 56, alignItems: "start" }}>
-              <R delay={0.05}>
-                <div>
-                  <img src="/content/headshot.jpg" alt="Milan Khanal" style={{ width: 140, height: 140, borderRadius: "50%", objectFit: "cover", objectPosition: "center 20%", border: `3px solid ${t.border}`, marginBottom: 16, display: "block" }} />
-                  <div style={{ fontWeight: 600, fontSize: 16, color: t.t0, marginBottom: 4 }}>Milan Khanal</div>
-                  <div style={{ fontSize: 13, color: t.t1, lineHeight: 1.5, marginBottom: 14 }}>Human-Centered AI · Trust &amp; Decision Intelligence</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                    <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn ↗</a>
-                    <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: t.t2, textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub ↗</a>
-                  </div>
-                </div>
-              </R>
-              <div>
-                <R delay={0.12}><h1 style={{ ...s.tHero, maxWidth: 720, marginBottom: 20 }}>I don't pitch AI products. I ship them.</h1></R>
-                <R delay={0.2}>
-                  <p style={{ ...s.tBody, marginBottom: 28, maxWidth: 640 }}>10 years bridging enterprise operations and technical build teams across Toyota, Dell, CRC Group, and World Kinect. Now I build them myself. Using AI-assisted development and Human-Centered AI principles, I compress the idea-to-validation cycle from months to weeks — and every product you see here is live, functional, and applies the same trust-first architecture to a different industry.</p>
-                </R>
-                <R delay={0.28}>
-                  <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
-                    {[{ num: "$900M+", label: "platform shipped" }, { num: "80%", label: "less manual processing" }, { num: "5 industries", label: "10+ years" }, { num: "3 live products", label: "click below" }].map((stat, i) => (
-                      <div key={i} style={{ borderLeft: `3px solid ${t.blue}`, paddingLeft: 12 }}>
-                        <div style={{ fontWeight: 700, fontSize: 20, color: t.t0, letterSpacing: "-0.01em" }}>{stat.num}</div>
-                        <div style={{ fontSize: 12, color: t.t2, marginTop: 2 }}>{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </R>
-              </div>
-            </div>
-          )}
+          <div style={{ ...s.narrow, textAlign: isMobile ? "left" : "left" }}>
+            <R delay={0.05}><h1 style={{ ...s.tHero, marginBottom: 20 }}>Working prototype in weeks. Not quarters.</h1></R>
+            <R delay={0.15}><p style={{ ...s.tBody, fontSize: 18, maxWidth: 720, marginBottom: 14 }}>10 years of enterprise delivery across supply chain, healthcare, and finance. Now using AI to cut the time from "let's figure this out" to "here's the working version" from months down to weeks.</p></R>
+            <R delay={0.22}><p style={{ fontSize: 15, color: t.t2, fontStyle: "italic", marginBottom: 28, maxWidth: 640 }}>Build the prototype during discovery, not after.</p></R>
+            <R delay={0.28}>
+              <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
+            </R>
+          </div>
         </div>
       </section>
-      <div style={{ ...s.divider, margin: "0 auto" }} />
 
-      {/* STORY */}
-      <section id="story" style={s.section}><div style={s.container}>
-        <R><SectionHeader label="The Story" title="How I got here." t={t} s={s} /></R>
-        <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 0 }}>
-          {content.timeline.map((row, i) => ({ ...row, color: colorMap[row.color] })).map((row, i) => (
-            <R key={row.label} delay={0.05 * i}><div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "120px 100px 1fr", gap: isMobile ? 4 : 16, padding: "16px 0", borderBottom: i < 2 ? `1px solid ${t.border}` : "none", alignItems: "baseline" }}>
-              <span style={{ fontFamily: mono, fontSize: 12, color: t.t2 }}>{row.year}</span>
-              <span style={{ fontSize: 14, fontWeight: 600, color: row.color }}>{row.label}</span>
-              <span style={{ fontSize: 14, color: t.t1, lineHeight: 1.5 }}>{row.text}</span>
-            </div></R>
-          ))}
-        </div>
-      </div></section>
-      <div style={s.divider} />
-
-      {/* HOW I WORK */}
-      <section id="method" style={s.section}><div style={s.container}>
-        <R><SectionHeader label="How I Work" title="Four pillars. Each one prevents a different failure mode." body="Most PMs show you a strategy deck. I show you a working prototype. This methodology is built from 10+ years of enterprise delivery, from Toyota's global planning systems to a $900M healthcare billing platform. Each pillar exists because I've seen what happens without it." t={t} s={s} /></R>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16, marginTop: 32 }}>
-          {[
-            { num: "01", title: "Prototype-First Discovery", body: "Don't write a 50-page requirements doc. Build something real and let stakeholders react to it. Working software forces decisions that documents defer. At CRC Group, a functional prototype during discovery shifted a $900M billing rebuild from \"system replacement\" to \"enterprise product\", accelerating the MVP by 3+ months.", prevents: "We built the wrong thing." },
-            { num: "02", title: "AI-Enabled Development", body: "When the PM can build a proof of concept independently, the feedback loop goes from \"let me write a ticket\" to \"let me show you.\" 2,000+ hours of applied AI prototyping: three working products across three industries, each built in weeks. Engineering builds what's already been proven to matter.", prevents: "We ran out of time for discovery." },
-            { num: "03", title: "OKR-Driven Prioritization", body: "The question isn't \"what features should we build?\" It's \"what needle are we trying to move?\" At Dell, this meant killing technically interesting features that didn't move ESG metrics. At CRC Group, framing the problem as \"where is money leaking?\" revealed $2M in optimization that a feature-first approach would have missed.", prevents: "We shipped features nobody needed." },
-            { num: "04", title: "Adoption-First Design", body: "Build for the person who uses it 8 hours a day, not the executive who approves the budget. At World Kinect, driver ride-alongs revealed why a technically sound mobile app was failing, leading to 80% less manual processing. Enterprise software lives or dies on whether the person at the keyboard trusts it. Conservative defaults, visible reasoning, and reversible actions earn that trust. Aggressive automation burns it.", prevents: "We built it but nobody uses it." }
-          ].map((pillar, i) => (
-            <R key={i} delay={0.08 * i}>
-              <div style={{ ...s.card, padding: isMobile ? "20px" : "24px", display: "flex", flexDirection: "column", height: "100%" }}>
-                <div style={{ display: "flex", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
-                  <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 600, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 8px", borderRadius: 5, flexShrink: 0, marginTop: 2 }}>{pillar.num}</span>
-                  <h3 style={{ fontSize: 16, fontWeight: 600, color: t.t0, lineHeight: 1.3 }}>{pillar.title}</h3>
-                </div>
-                <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.65, flex: 1 }}>{pillar.body}</p>
-                <div style={{ marginTop: 16, paddingTop: 12, borderTop: `1px solid ${t.border}` }}>
-                  <span style={{ fontFamily: mono, fontSize: 11, color: t.t2, fontStyle: "italic" }}>Prevents: "{pillar.prevents}"</span>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-      </div></section>
-      <div style={s.divider} />
-
-      {/* WORK */}
-      <section id="work" style={s.section}><div style={s.container}>
-        <R><SectionHeader label="Featured Work" title="Working hypotheses you can click." body="Each prototype tests whether the same architecture holds in a new domain. Different industry, same intelligence framework. Try them." t={t} s={s} /></R>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 32 }}>
-          {allWork.filter(w => w.type === "product" && (w.status === "live" || w.status === "building")).map((product, i) => {
-            const c = colorMap[product.color];
-            return (
-              <R key={product.slug} delay={i * 0.12}><div style={{ ...s.card, overflow: "hidden", cursor: "pointer", transition: "border-color 0.3s, transform 0.3s" }} onClick={() => go("detail", product.slug)} onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-3px)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
-                {/* Live app preview — stacked layout for maximum visual impact */}
-                <div style={{ position: "relative" }}>
-                  <LiveAppPreview appUrl={product.appUrl} t={t} color={c} isMobile={isMobile} title={product.title} />
-                  {/* Domain badge overlay */}
-                  <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "4px 10px", borderRadius: 6, position: "absolute", top: 16, right: 16, zIndex: 2, backdropFilter: "blur(8px)" }}>{product.domain}</span>
-                </div>
-                {/* Product details below the preview */}
-                <div style={{ padding: isMobile ? "20px 20px 24px" : "24px 32px 28px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                    <span style={{ fontSize: 20, fontWeight: 600, letterSpacing: "-0.01em" }}>{product.title}</span>
-                    {statusBadge(product.status)}
-                  </div>
-                  <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{product.desc}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>{product.tags.map(tag => <span key={tag} style={{ fontSize: 11, color: t.blue, background: t.blueS, border: `1px solid ${t.blueB}`, padding: "3px 9px", borderRadius: 5, fontWeight: 500 }}>{tag}</span>)}</div>
-                  <div style={{ paddingTop: 16, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: 12, color: t.t2 }}>{product.stats.views} views {"\u00b7"} {product.stats.agents} agents {"\u00b7"} Guided tour</span>
-                    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                      <span style={{ fontSize: 13, color: t.t1, fontWeight: 500, cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); go("detail", product.slug); }}>View details {"\u2192"}</span>
-                      <a href={product.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 13, color: t.blue, fontWeight: 500, textDecoration: "none", cursor: "pointer" }}>Try it {"\u2192"}</a>
-                    </div>
-                  </div>
-                </div>
-              </div></R>
-            );
-          })}
-        </div>
-        {/* See all work link */}
-        <R delay={0.15}><div style={{ textAlign: "center", marginTop: 24 }}><span onClick={() => go("work")} style={{ fontSize: 14, color: t.blue, cursor: "pointer", fontWeight: 500 }}>View all work {"\u2192"}</span></div></R>
-      </div></section>
-      <div style={s.divider} />
-
-      {/* THESIS */}
-      <section id="thesis" style={s.section}><div style={{ ...s.container, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 40 : 60, alignItems: "start" }}>
-        <R><div><span style={s.tLabel}>The Thesis</span><h2 style={s.tSection}>Design for the decision, not just the data.</h2>
-          <p style={{ ...s.tBody, marginBottom: 16 }}>Enterprise AI fixates on data pipelines and model accuracy. But the moment that matters is when a human looks at an AI recommendation and decides whether to act on it. Every system I build is designed around that moment: transparent evidence chains, configurable autonomy, bias checks at point of decision.</p>
-          <p style={{ ...s.tBody, marginBottom: 24 }}>The architecture is domain-agnostic, proven across supply chain and recruiting so far. Good decision design doesn{"'"}t change when the industry does.</p>
-          <a href="https://calendly.com/milan-khanal25/new-meeting" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, cursor: "pointer", textDecoration: "none" }}>Book a 30-minute walkthrough {"\u2192"}</a>
-        </div></R>
-        <R delay={0.1}><div style={{ ...s.card, padding: 28 }}>
-          <div style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: t.t2, marginBottom: 20 }}>Architecture {"\u00b7"} Applied Across Domains</div>
-          {content.domainTable.map((row, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 24px 1fr", alignItems: "center", padding: "12px 0", borderBottom: i < content.domainTable.length - 1 ? `1px solid ${t.border}` : "none", fontSize: 14 }}>
-              <span style={{ color: t.t1 }}>{row.domain}</span><span style={{ color: t.blue, textAlign: "center", fontFamily: mono, fontSize: 12 }}>{"\u2192"}</span><span style={{ color: row.status === "live" ? t.t0 : t.t2, fontWeight: row.status === "live" ? 500 : 400, textAlign: "right", fontStyle: row.status === "live" ? "normal" : "italic" }}>{row.status === "next" ? row.product + " (next)" : row.product}</span>
-            </div>
-          ))}
-        </div></R>
-      </div></section>
-      <div style={s.divider} />
-
-      {/* CONTACT */}
-      <section id="contact" style={{ ...s.section, background: t.bg1 }}><div style={{ ...s.narrow, textAlign: "center" }}>
-        <R><span style={{ ...s.tLabel, textAlign: "center" }}>Get in Touch</span><h2 style={{ ...s.tSection, textAlign: "center" }}>Let's talk about your AI product bet.</h2>
-          <p style={{ ...s.tBody, marginBottom: 32, textAlign: "center" }}>I help enterprises go from AI strategy to working prototype in weeks. If you have budget but no clear product vision, let's talk.</p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "12px 24px", background: t.blue, color: "#fff", fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>milan.khanal25@gmail.com {"\u2192"}</a>
-            <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>LinkedIn</a>
-            <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", padding: "12px 24px", border: `1px solid ${t.border}`, color: t.t1, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none" }}>GitHub</a>
+      {/* ── THREE-BUCKET TEASER STRIP ── */}
+      <section style={{ padding: isMobile ? "24px 20px 56px" : "32px 24px 72px" }}>
+        <div style={s.container}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr", gap: 16 }}>
+            {buckets.map((b, i) => (
+              <R key={b.l} delay={0.08 * i}>
+                <a href={b.href} style={{ ...s.card, padding: "24px 24px 20px", display: "block", textDecoration: "none", transition: "border-color 0.2s, transform 0.2s", height: "100%" }} onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
+                  <div style={{ fontFamily: font, fontSize: 22, fontWeight: 500, color: t.t0, marginBottom: 10, letterSpacing: "-0.01em" }}>{b.l}</div>
+                  <p style={{ fontSize: 14.5, color: t.t1, lineHeight: 1.6, marginBottom: 14 }}>{b.body}</p>
+                  <span style={{ fontSize: 13, color: t.blue, fontWeight: 500 }}>Read more {"\u2192"}</span>
+                </a>
+              </R>
+            ))}
           </div>
-        </R>
-      </div></section>
+        </div>
+      </section>
+      <div style={s.divider} />
+
+      {/* ── FEATURED PROOF ── */}
+      <section style={s.section}>
+        <div style={{ ...s.container }}>
+          <div style={s.narrow}>
+            <R><span style={s.tLabel}>Recent proof</span></R>
+            <R delay={0.05}><h2 style={{ ...s.tSection, marginBottom: 16 }}>Cut three months from a healthcare billing build.</h2></R>
+            <R delay={0.1}><p style={{ ...s.tBody, fontSize: 17, maxWidth: 720, marginBottom: 24 }}>At CRC Group, running prototype-driven discovery instead of waiting for the spec to firm up compressed the discovery-to-build timeline by a full quarter on a $900M+ healthcare billing platform.</p></R>
+            <R delay={0.15}><a href="/work/crc-group" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: t.blue, fontWeight: 500, textDecoration: "none", borderBottom: `1px solid ${t.blue}`, paddingBottom: 2, transition: "gap 0.2s" }} onMouseEnter={e => e.target.style.gap = "10px"} onMouseLeave={e => e.target.style.gap = "6px"}>Read the case study {"\u2192"}</a></R>
+          </div>
+        </div>
+      </section>
+      <div style={s.divider} />
+
+      {/* ── QUICK ABOUT STRIP ── */}
+      <section style={{ ...s.section, background: t.bg1 }}>
+        <div style={s.container}>
+          <div style={s.narrow}>
+            <R><span style={s.tLabel}>About</span></R>
+            <R delay={0.05}>
+              <p style={{ ...s.tBody, fontSize: 17, lineHeight: 1.7, marginBottom: 20, maxWidth: 720 }}>
+                Based in Dallas. Currently leading discovery and migration on two AI-enabled insurance platforms at CRC Group. On the side, building <a href="https://krevio.net" target="_blank" rel="noopener noreferrer" style={{ color: t.t0, fontWeight: 500, borderBottom: `1px solid ${t.border}`, textDecoration: "none" }}>Krevio</a>, a productized AI service for local contractors. Finishing a B.S. in Human-Centered AI at Texas Tech.
+              </p>
+            </R>
+            <R delay={0.1}><a href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: t.blue, fontWeight: 500, textDecoration: "none" }}>More about me {"\u2192"}</a></R>
+          </div>
+        </div>
+      </section>
+      <div style={s.divider} />
+
+      {/* ── HYBRID CTA BLOCK ── */}
+      <section style={s.section}>
+        <div style={s.container}>
+          <div style={s.narrow}>
+            <R><span style={s.tLabel}>Get in touch</span></R>
+            <R delay={0.05}><h2 style={{ ...s.tSection, marginBottom: 28 }}>Any of these sound like you?</h2></R>
+            <R delay={0.1}>
+              <ul style={{ listStyle: "none", padding: 0, margin: "0 0 32px", display: "flex", flexDirection: "column", gap: 12 }}>
+                {ctaLines.map((line, i) => (
+                  <li key={i} style={{ fontSize: 16, color: t.t1, lineHeight: 1.6, paddingLeft: 24, position: "relative" }}>
+                    <span style={{ position: "absolute", left: 0, color: t.blue, fontFamily: mono, fontSize: 14 }}>{"\u2192"}</span>
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            </R>
+            <R delay={0.15}>
+              <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
+            </R>
+          </div>
+        </div>
+      </section>
     </>
   ); };
 
