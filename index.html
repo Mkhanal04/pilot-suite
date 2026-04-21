@@ -120,6 +120,22 @@ function R({ children, delay = 0, style = {} }) {
   return <div data-reveal style={{ transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`, ...style }}>{children}</div>;
 }
 
+// Copies email to clipboard and briefly swaps the anchor text so the click
+// always produces visible feedback even when the OS has no default mail
+// handler (in which case the native mailto: navigation is a silent no-op).
+const MAIL_ADDR = "milan.khanal25@gmail.com";
+function copyEmailOnClick(e) {
+  try { navigator.clipboard && navigator.clipboard.writeText(MAIL_ADDR); } catch (_) {}
+  const el = e.currentTarget;
+  if (el._mailFeedbackTimer) return;
+  const originalHTML = el.innerHTML;
+  el.innerHTML = "Email copied \u2713";
+  el._mailFeedbackTimer = setTimeout(() => {
+    el.innerHTML = originalHTML;
+    el._mailFeedbackTimer = null;
+  }, 1600);
+}
+
 function SectionHeader({ label, title, body, t, s, narrow }) {
   const wrapper = narrow ? s.narrow : {};
   return <div style={wrapper}><span style={s.tLabel}>{label}</span><h2 style={s.tSection}>{title}</h2>{body && <p style={{ ...s.tBody, maxWidth: 640 }}>{body}</p>}</div>;
@@ -427,7 +443,7 @@ function Portfolio() {
           {navItems.map(n => (
             <a key={n.l} href={n.href} style={{ fontSize: 13, color: t.t2, fontWeight: 400, transition: "color 0.2s", textDecoration: "none" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>{n.l}</a>
           ))}
-          <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 13, fontWeight: 500, padding: "7px 14px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch</a>
+          <a href="mailto:milan.khanal25@gmail.com" onClick={copyEmailOnClick} style={{ fontSize: 13, fontWeight: 500, padding: "7px 14px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch</a>
           <button onClick={() => setMode(mode === "dark" ? "light" : "dark")} style={{ width: 32, height: 32, borderRadius: 8, border: `1px solid ${t.border}`, background: t.bg2, color: t.t1, fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>{mode === "dark" ? "\u2600" : "\u263E"}</button>
         </div>
         <div style={{ display: isMobile ? "flex" : "none", alignItems: "center", gap: 8 }}>
@@ -437,7 +453,7 @@ function Portfolio() {
       </div>
       {mobileNav && <div style={{ position: "absolute", top: 56, left: 0, right: 0, background: t.bg1, borderBottom: `1px solid ${t.border}`, padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16 }}>
         {navItems.map(n => <a key={n.l} href={n.href} style={{ fontSize: 15, color: t.t1, textDecoration: "none" }}>{n.l}</a>)}
-        <a href="mailto:milan.khanal25@gmail.com" style={{ fontSize: 14, fontWeight: 500, padding: "10px 16px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", textAlign: "center", alignSelf: "flex-start" }}>Get in touch</a>
+        <a href="mailto:milan.khanal25@gmail.com" onClick={copyEmailOnClick} style={{ fontSize: 14, fontWeight: 500, padding: "10px 16px", borderRadius: 8, background: t.t0, color: t.bg, textDecoration: "none", textAlign: "center", alignSelf: "flex-start" }}>Get in touch</a>
       </div>}
     </nav>
   );
@@ -454,7 +470,7 @@ function Portfolio() {
         </div>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
           <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>LinkedIn</a>
-          <a href="mailto:milan.khanal25@gmail.com" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
+          <a href="mailto:milan.khanal25@gmail.com" onClick={copyEmailOnClick} style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>Email</a>
           <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer" style={{ color: t.t2, textDecoration: "none", transition: "color 0.2s" }} onMouseEnter={e => e.target.style.color = t.t0} onMouseLeave={e => e.target.style.color = t.t2}>GitHub</a>
         </div>
       </div>
@@ -493,7 +509,7 @@ function Portfolio() {
               </div>
             </R>
             <R delay={0.28}>
-              <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
+              <a href="mailto:milan.khanal25@gmail.com" onClick={copyEmailOnClick} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
             </R>
           </div>
         </div>
@@ -511,7 +527,7 @@ function Portfolio() {
                   {"\u201C"}An outstanding project... demonstrating an intentional focus on trust, transparency, and traceability that truly reflects human-centered leadership.{"\u201D"}
                 </p>
                 <footer style={{ fontSize: 14, color: t.t2, lineHeight: 1.5 }}>
-                  {"\u2014"} <strong style={{ color: t.t1, fontWeight: 500 }}>Dr. Melanie Schmitt, Texas Tech University</strong> <span style={{ color: t.t3 }}>(Validating the TradePilot AI Architecture)</span>
+                  {"\u2014"} <strong style={{ color: t.t1, fontWeight: 500 }}>Dr. Melanie Schmitt, Texas Tech University</strong> <span style={{ color: t.t1 }}>(Validating the TradePilot AI Architecture)</span>
                 </footer>
               </blockquote>
             </R>
@@ -613,7 +629,7 @@ function Portfolio() {
               </ul>
             </R>
             <R delay={0.15}>
-              <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
+              <a href="mailto:milan.khanal25@gmail.com" onClick={copyEmailOnClick} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
             </R>
           </div>
         </div>
