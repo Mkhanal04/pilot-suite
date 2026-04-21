@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Milan Khanal</title>
+<meta name="description" content="Senior product and delivery operator. 10 years of enterprise work across supply chain, healthcare, finance, automotive, and ESG. Now using AI to compress discovery-to-prototype cycles.">
+<meta property="og:title" content="About — Milan Khanal">
+<meta property="og:description" content="Senior product and delivery operator. 10 years of enterprise work. Using AI to compress discovery-to-prototype cycles.">
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://milankhanal.com/about">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --blueS: rgba(37,99,235,0.06); --blueB: rgba(37,99,235,0.14);
+    --navBg: rgba(250,250,250,0.88);
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --blueS: rgba(59,130,246,0.08); --blueB: rgba(59,130,246,0.18);
+    --navBg: rgba(9,9,11,0.85);
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body {
+    background: var(--bg); color: var(--t0);
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 16px; line-height: 1.65;
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+  }
+
+  /* ═══ NAV ═══ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navBg);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    height: 56px; display: flex; align-items: center; padding: 0 24px;
+    transition: background 0.4s;
+  }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .nav-cta { font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 8px; background: var(--t0); color: var(--bg); transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.9; }
+  .theme-btn {
+    width: 32px; height: 32px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg2);
+    color: var(--t1); font-size: 14px;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-family: inherit;
+  }
+  .mobile-toggle { display: none; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 16px; cursor: pointer; align-items: center; justify-content: center; font-family: inherit; }
+  .mobile-menu { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg1); border-bottom: 1px solid var(--border); padding: 20px 24px; flex-direction: column; gap: 16px; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 15px; color: var(--t1); }
+  .mobile-menu .nav-cta { align-self: flex-start; }
+
+  @media (max-width: 760px) {
+    .nav-links .nav-link, .nav-links .nav-cta { display: none; }
+    .mobile-toggle { display: flex; }
+  }
+
+  /* ═══ MAIN ═══ */
+  main { padding-top: 56px; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .section { padding: 72px 24px; }
+  @media (max-width: 640px) { .section { padding: 56px 20px; } }
+
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; display: block; }
+
+  .t-hero { font-family: 'Newsreader', Georgia, serif; font-size: clamp(34px, 5vw, 50px); font-weight: 400; line-height: 1.15; letter-spacing: -0.02em; color: var(--t0); margin-bottom: 24px; }
+  .t-body { font-size: 17px; color: var(--t1); line-height: 1.75; }
+  .t-body + .t-body { margin-top: 20px; }
+
+  .crumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--t2); margin-bottom: 32px; padding-top: 32px; }
+  .crumb a { color: var(--t2); transition: color 0.2s; }
+  .crumb a:hover { color: var(--t0); }
+  .crumb .sep { color: var(--t3); font-size: 12px; }
+  .crumb .current { color: var(--t0); font-weight: 500; }
+
+  .inline-link { color: var(--t0); border-bottom: 1px solid var(--border); transition: border-color 0.2s; font-weight: 500; }
+  .inline-link:hover { border-color: var(--blue); color: var(--blue); }
+
+  .quick-facts { margin-top: 56px; border-top: 1px solid var(--border); padding-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 640px) { .quick-facts { grid-template-columns: 1fr; gap: 16px; } }
+  .fact-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .fact-body { font-size: 14.5px; color: var(--t1); line-height: 1.55; }
+
+  /* ═══ FOOTER ═══ */
+  .footer { padding: 28px 24px; border-top: 1px solid var(--border); margin-top: 80px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--t2); flex-wrap: wrap; gap: 12px; }
+  .footer strong { color: var(--t0); font-weight: 500; }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link">Work</a>
+      <a href="/lab" class="nav-link">Lab</a>
+      <a href="/writing" class="nav-link">Writing</a>
+      <a href="/about" class="nav-link" aria-current="page">About</a>
+      <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/work">Work</a>
+    <a href="/lab">Lab</a>
+    <a href="/writing">Writing</a>
+    <a href="/about" aria-current="page">About</a>
+    <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<main>
+  <section class="section" style="padding-top: 48px;">
+    <div class="container">
+      <div class="narrow">
+        <nav class="crumb" data-reveal aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span class="sep">/</span>
+          <span class="current">About</span>
+        </nav>
+
+        <div data-reveal>
+          <span class="eyebrow">About</span>
+          <h1 class="t-hero">A senior operator using AI to ship faster.</h1>
+        </div>
+
+        <div data-reveal>
+          <p class="t-body">I'm Milan. I've spent the last ten years helping enterprises ship things, usually through staffing partners, usually as the bridge between business stakeholders who know what they need and engineering teams who know how to build it.</p>
+          <p class="t-body">Lately I've been using AI to compress that bridge. The discovery phase used to be where momentum died. Now I treat it as the place to build the prototype, not just talk about it.</p>
+          <p class="t-body">Currently at <a href="/work/crc-group" class="inline-link">CRC Group</a> leading discovery and migration on two AI-enabled insurance platforms. Before that: Toyota, Dell, FleetPride, and five and a half years at World Kinect Services where I cut my teeth on real operational work.</p>
+          <p class="t-body">On the side I run <a href="https://krevio.net" target="_blank" rel="noopener noreferrer" class="inline-link">Krevio</a>, a productized AI service for local contractors that I built in evenings and weekends. It's small, but it ships.</p>
+          <p class="t-body">I'm finishing a B.S. in Human-Centered AI at Texas Tech in late 2026. The degree is partly to keep up with the technical fundamentals and partly because I think AI in enterprise is going to live or die on whether the humans actually trust the systems we build.</p>
+          <p class="t-body">If any of that resonates, <a href="mailto:milan.khanal25@gmail.com" class="inline-link">get in touch</a>.</p>
+        </div>
+
+        <div class="quick-facts" data-reveal>
+          <div>
+            <span class="fact-label">Based in</span>
+            <div class="fact-body">Dallas, TX</div>
+          </div>
+          <div>
+            <span class="fact-label">Currently</span>
+            <div class="fact-body">CRC Group, via Synergech (Apr 2025&ndash;Present)</div>
+          </div>
+          <div>
+            <span class="fact-label">Side project</span>
+            <div class="fact-body"><a href="https://krevio.net" target="_blank" rel="noopener noreferrer" class="inline-link">Krevio</a>&nbsp;&mdash; AI front office for local service businesses</div>
+          </div>
+          <div>
+            <span class="fact-label">Studying</span>
+            <div class="fact-body">B.S. Human-Centered AI, Texas Tech University (late 2026)</div>
+          </div>
+          <div>
+            <span class="fact-label">Find me</span>
+            <div class="fact-body"><a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer" class="inline-link">LinkedIn</a> &middot; <a href="https://github.com/Mkhanal04" target="_blank" rel="noopener noreferrer" class="inline-link">GitHub</a></div>
+          </div>
+          <div>
+            <span class="fact-label">Resume</span>
+            <div class="fact-body">Available on request</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 <strong>Milan Khanal</strong> &middot; Dallas, TX</span>
+    <div class="footer-links">
+      <a href="/work">Work</a>
+      <a href="/lab">Lab</a>
+      <a href="/writing">Writing</a>
+      <a href="/about">About</a>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  var themeBtn = document.getElementById('themeBtn');
+  function syncThemeIcon() {
+    var m = document.documentElement.getAttribute('data-theme');
+    themeBtn.innerHTML = m === 'dark' ? '&#9728;' : '&#9790;';
+  }
+  syncThemeIcon();
+  themeBtn.addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeIcon();
+  });
+
+  // Mobile menu
+  var mobileToggle = document.getElementById('mobileToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  mobileToggle.addEventListener('click', function () {
+    mobileMenu.classList.toggle('open');
+    mobileToggle.innerHTML = mobileMenu.classList.contains('open') ? '&#10005;' : '&#9776;';
+  });
+
+  // Scroll reveal
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    var rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('revealed');
+    } else {
+      io.observe(el);
+    }
+  });
+  setTimeout(function () {
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      if (!el.classList.contains('revealed')) el.classList.add('revealed');
+    });
+  }, 1500);
+</script>
+
+</body>
+</html>
