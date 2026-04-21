@@ -334,7 +334,83 @@ function Portfolio() {
   );
 
 
-  const typeLabels = { product: "Product", "case-study": "Case Study" };
+  const typeLabels = { product: "Product", "case-study": "Case Study", engagement: "Engagement" };
+
+  const WorkCard = ({ item }) => {
+    const c = colorMap[item.color] || t.blue;
+    const isEngagement = item.type === "engagement";
+    const clickable = item.status !== "coming";
+    const hasValidation = !!item.validation;
+    const handleClick = () => {
+      if (!clickable) return;
+      if (isEngagement && item.appUrl) { window.location.href = item.appUrl; }
+      else { go("detail", item.slug); }
+    };
+    return (
+      <div onClick={handleClick} style={{ ...s.card, padding: 0, overflow: "hidden", cursor: clickable ? "pointer" : "default", opacity: item.status === "coming" ? 0.6 : 1, transition: "border-color 0.3s, transform 0.3s", borderLeft: isEngagement ? `3px solid ${c}` : undefined }} onMouseEnter={e => { if (clickable) { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; } }} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
+        {item.type === "product" && item.status === "live" && (
+          <div style={{ height: 140, background: `linear-gradient(135deg, ${c}08, ${c}15)`, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden" }}>
+            <div style={{ width: 44, height: 44, borderRadius: 10, background: `linear-gradient(135deg, ${c}30, ${c}10)`, border: `1px solid ${c}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ fontFamily: mono, fontSize: 13, color: c, fontWeight: 600 }}>{item.title.substring(0,2).toUpperCase()}</span>
+            </div>
+            <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c }}>Live Prototype</span>
+          </div>
+        )}
+        <div style={{ padding: "20px 24px 24px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+              <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "3px 8px", borderRadius: 5 }}>{item.domain}</span>
+              <span style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{typeLabels[item.type] || item.type}</span>
+            </div>
+            {statusBadge(item.status)}
+          </div>
+          <div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: isEngagement ? 4 : 8 }}>{item.title}</div>
+          {isEngagement && item.role && (
+            <div style={{ fontSize: 13, color: t.t2, marginBottom: 10 }}>{item.role}</div>
+          )}
+          {isEngagement && item.metrics && item.metrics.length > 0 && (
+            <div style={{ fontFamily: mono, fontSize: 12, color: c, fontWeight: 600, marginBottom: 14, letterSpacing: "0.01em", lineHeight: 1.5 }}>
+              {item.metrics.join("  \u2502  ")}
+            </div>
+          )}
+          {item.status === "coming" && (
+            <div style={{ fontSize: 11, fontFamily: mono, color: t.t3, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Prototype in progress</div>
+          )}
+          <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{item.summary}</p>
+          {item.tags && item.tags.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+              {item.tags.slice(0,4).map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{tag}</span>)}
+            </div>
+          )}
+          {hasValidation && (
+            <div style={{ marginTop: 16, padding: "12px 14px", background: t.blueS, border: `1px solid ${t.blueB}`, borderRadius: 8 }}>
+              <div style={{ fontFamily: mono, fontSize: 10, color: t.blue, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{item.validation.badge}</div>
+              <p style={{ fontSize: 12.5, color: t.t1, fontStyle: "italic", lineHeight: 1.55, marginBottom: 6 }}>{"\u201C"}{item.validation.quote}{"\u201D"}</p>
+              <div style={{ fontSize: 11, color: t.t2 }}>{"\u2014"} {item.validation.attribution}</div>
+            </div>
+          )}
+          {item.date && !isEngagement && (
+            <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</div>
+          )}
+          {item.status === "live" && (
+            <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 12, color: t.t2 }}>{item.stats?.views || 0} views {"\u00b7"} {item.stats?.agents || 0} agents</span>
+              <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                <span style={{ fontSize: 12, color: t.t1, fontWeight: 500, cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); go("detail", item.slug); }}>View details {"\u2192"}</span>
+                {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 12, color: t.blue, fontWeight: 500, textDecoration: "none" }}>Try it {"\u2192"}</a>}
+              </div>
+            </div>
+          )}
+          {isEngagement && (
+            <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 12, color: t.t3 }}>{item.date && new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</span>
+              <span style={{ fontSize: 12, color: c, fontWeight: 500 }}>Read case study {"\u2192"}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   // === NAV ===
   const navItems = [
@@ -402,16 +478,89 @@ function Portfolio() {
       {/* ── HERO ── */}
       <section style={{ padding: isMobile ? "96px 20px 40px" : "120px 24px 56px" }}>
         <div style={s.container}>
-          <div style={{ ...s.narrow, textAlign: isMobile ? "left" : "left" }}>
-            <R delay={0.05}><h1 style={{ ...s.tHero, marginBottom: 20 }}>Working prototype in weeks. Not quarters.</h1></R>
-            <R delay={0.15}><p style={{ ...s.tBody, fontSize: 18, maxWidth: 720, marginBottom: 14 }}>10 years of enterprise delivery across supply chain, healthcare, and finance. Now using AI to cut the time from "let's figure this out" to "here's the working version" from months down to weeks.</p></R>
-            <R delay={0.22}><p style={{ fontSize: 15, color: t.t2, fontStyle: "italic", marginBottom: 28, maxWidth: 640 }}>Build the prototype during discovery, not after.</p></R>
+          <div style={{ ...s.narrow, textAlign: "left" }}>
+            <R delay={0.00}><span style={s.tLabel}>AI Delivery Lead & Prototype Designer</span></R>
+            <R delay={0.05}><h1 style={{ ...s.tHero, marginBottom: 20 }}>Working Software in Weeks, Not Quarters.</h1></R>
+            <R delay={0.15}><p style={{ ...s.tBody, fontSize: 18, maxWidth: 720, marginBottom: 28 }}>I bridge the gap between executive strategy and technical execution. After 10 years of leading platform delivery at Toyota, Dell, CRC Group, and World Kinect, I now use AI-assisted development to compress the discovery-to-prototype cycle from months to weeks.</p></R>
+            <R delay={0.22}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: isMobile ? 14 : 24, marginBottom: 32, paddingTop: 14, paddingBottom: 14, borderTop: `1px solid ${t.border}`, borderBottom: `1px solid ${t.border}`, filter: "grayscale(100%)" }}>
+                {["TOYOTA", "DELL", "CRC GROUP", "WORLD KINECT"].map((name, i, arr) => (
+                  <React.Fragment key={name}>
+                    <span style={{ fontFamily: mono, fontSize: isMobile ? 11 : 12, fontWeight: 600, letterSpacing: "0.18em", color: t.t2 }}>{name}</span>
+                    {i < arr.length - 1 && <span style={{ color: t.t3, fontSize: 10 }}>{"\u2022"}</span>}
+                  </React.Fragment>
+                ))}
+              </div>
+            </R>
             <R delay={0.28}>
               <a href="mailto:milan.khanal25@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 24px", background: t.t0, color: t.bg, fontSize: 14, fontWeight: 500, borderRadius: 8, textDecoration: "none", transition: "opacity 0.2s" }} onMouseEnter={e => e.target.style.opacity = "0.9"} onMouseLeave={e => e.target.style.opacity = "1"}>Get in touch {"\u2192"}</a>
             </R>
           </div>
         </div>
       </section>
+      <div style={s.divider} />
+
+      {/* ── HCAI METHODOLOGY VALIDATION ── */}
+      <section style={s.section}>
+        <div style={s.container}>
+          <div style={s.narrow}>
+            <R><span style={s.tLabel}>HCAI Methodology Validation</span></R>
+            <R delay={0.05}>
+              <blockquote style={{ borderLeft: `3px solid ${t.blue}`, padding: "6px 0 6px 24px", margin: 0 }}>
+                <p style={{ fontFamily: font, fontStyle: "italic", fontSize: "clamp(20px, 2.6vw, 26px)", lineHeight: 1.4, color: t.t0, marginBottom: 16, letterSpacing: "-0.01em" }}>
+                  {"\u201C"}An outstanding project... demonstrating an intentional focus on trust, transparency, and traceability that truly reflects human-centered leadership.{"\u201D"}
+                </p>
+                <footer style={{ fontSize: 14, color: t.t2, lineHeight: 1.5 }}>
+                  {"\u2014"} <strong style={{ color: t.t1, fontWeight: 500 }}>Dr. Melanie Schmitt, Texas Tech University</strong> <span style={{ color: t.t3 }}>(Validating the TradePilot AI Architecture)</span>
+                </footer>
+              </blockquote>
+            </R>
+          </div>
+        </div>
+      </section>
+      <div style={s.divider} />
+
+      {/* ── TWO-BUCKET WORK PREVIEW ── */}
+      <section style={s.section}>
+        <div style={s.container}>
+          {/* Bucket 1 — Enterprise Delivery */}
+          <div style={{ marginBottom: 56 }}>
+            <R>
+              <div style={{ marginBottom: 24 }}>
+                <span style={s.tLabel}>Bucket 1 {"\u00b7"} Enterprise Delivery</span>
+                <h2 style={{ ...s.tSection, marginBottom: 6 }}>Operator Track Record</h2>
+                <p style={{ ...s.tBody, maxWidth: 640, color: t.t2 }}>Ten years shipping platforms at CRC Group, World Kinect, Dell, and Toyota.</p>
+              </div>
+            </R>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
+              {allWork.filter(w => w.type === "engagement").map(item => (
+                <R key={item.slug}><WorkCard item={item} /></R>
+              ))}
+            </div>
+          </div>
+
+          {/* Bucket 2 — Prototype Lab */}
+          <div>
+            <R>
+              <div style={{ marginBottom: 24 }}>
+                <span style={s.tLabel}>Bucket 2 {"\u00b7"} Prototype Lab</span>
+                <h2 style={{ ...s.tSection, marginBottom: 6 }}>Applied AI & HCAI</h2>
+                <p style={{ ...s.tBody, maxWidth: 640, color: t.t2 }}>Live prototypes that validate architecture patterns across industries.</p>
+              </div>
+            </R>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
+              {allWork.filter(w => w.type === "product" && w.status !== "coming").map(item => (
+                <R key={item.slug}><WorkCard item={item} /></R>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginTop: 40, textAlign: "center" }}>
+            <a href="/work" onClick={(e) => { e.preventDefault(); go("work"); }} style={{ fontSize: 14, color: t.blue, fontWeight: 500, textDecoration: "none", borderBottom: `1px solid ${t.blue}`, paddingBottom: 2 }}>View all work {"\u2192"}</a>
+          </div>
+        </div>
+      </section>
+      <div style={s.divider} />
 
       {/* ── THREE-BUCKET TEASER STRIP ── */}
       <section style={{ padding: isMobile ? "24px 20px 56px" : "32px 24px 72px" }}>
@@ -426,19 +575,6 @@ function Portfolio() {
                 </a>
               </R>
             ))}
-          </div>
-        </div>
-      </section>
-      <div style={s.divider} />
-
-      {/* ── FEATURED PROOF ── */}
-      <section style={s.section}>
-        <div style={{ ...s.container }}>
-          <div style={s.narrow}>
-            <R><span style={s.tLabel}>Recent proof</span></R>
-            <R delay={0.05}><h2 style={{ ...s.tSection, marginBottom: 16 }}>Cut three months from a healthcare billing build.</h2></R>
-            <R delay={0.1}><p style={{ ...s.tBody, fontSize: 17, maxWidth: 720, marginBottom: 24 }}>At CRC Group, running prototype-driven discovery instead of waiting for the spec to firm up compressed the discovery-to-build timeline by a full quarter on a $900M+ healthcare billing platform.</p></R>
-            <R delay={0.15}><a href="/work/crc-group" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: t.blue, fontWeight: 500, textDecoration: "none", borderBottom: `1px solid ${t.blue}`, paddingBottom: 2, transition: "gap 0.2s" }} onMouseEnter={e => e.target.style.gap = "10px"} onMouseLeave={e => e.target.style.gap = "6px"}>Read the case study {"\u2192"}</a></R>
           </div>
         </div>
       </section>
@@ -487,61 +623,41 @@ function Portfolio() {
 
   // === PAGE: WORK LISTING ===
   const WorkPage = () => {
-    const filtered = (filter === "all" ? allWork : allWork.filter(w => filter === "products" ? w.type === "product" : w.type === "case-study")).filter(w => w.status !== "coming");
+    const engagements = allWork.filter(w => w.type === "engagement" && w.status !== "coming");
+    const products = allWork.filter(w => w.type === "product" && w.status !== "coming");
+    const gridStyle = { display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "280px" : "340px"}, 1fr))`, gap: 16 };
     return (
       <section style={{ padding: "120px 24px 80px" }}><div style={s.container}>
         <Breadcrumb items={[{ label: "Home", onClick: () => go("home") }, { label: "Work" }]} />
-        <span style={s.tLabel}>All Work</span>
-        <h1 style={{ ...s.tSection, fontSize: "clamp(28px, 4vw, 40px)", marginBottom: 8 }}>Products, case studies, and thinking.</h1>
-        <p style={{ ...s.tBody, marginBottom: 32, maxWidth: 560 }}>Live prototypes, project deep-dives, and frameworks. Each piece maps back to the same architecture.</p>
-        <div style={{ display: "flex", gap: 8, marginBottom: 40, flexWrap: "wrap" }}>
-          {[{ k: "all", l: "All" }, { k: "products", l: "Products" }, { k: "case-studies", l: "Case Studies" }].map(f => (
-            <button key={f.k} onClick={() => setFilter(f.k)} style={{ padding: "6px 16px", borderRadius: 8, fontSize: 13, fontWeight: 500, border: `1px solid ${filter === f.k ? t.blue : t.border}`, background: filter === f.k ? t.blueS : "transparent", color: filter === f.k ? t.blue : t.t2, cursor: "pointer" }}>{f.l}</button>
-          ))}
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? "280px" : "320px"}, 1fr))`, gap: 16 }}>
-          {filtered.map(item => {
-            const c = colorMap[item.color];
-            const clickable = item.status !== "coming";
-            return (
-              <R key={item.slug}><div onClick={() => clickable && go("detail", item.slug)} style={{ ...s.card, padding: 0, overflow: "hidden", cursor: clickable ? "pointer" : "default", opacity: item.status === "coming" ? 0.6 : 1, transition: "border-color 0.3s, transform 0.3s" }} onMouseEnter={e => { if (clickable) { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; }}} onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
-                {item.type === "product" && item.status === "live" && (
-                  <div style={{ height: 140, background: `linear-gradient(135deg, ${c}08, ${c}15)`, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 8, position: "relative", overflow: "hidden" }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 10, background: `linear-gradient(135deg, ${c}30, ${c}10)`, border: `1px solid ${c}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ fontFamily: mono, fontSize: 13, color: c, fontWeight: 600 }}>{item.title.substring(0,2).toUpperCase()}</span>
-                    </div>
-                    <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c }}>{item.status === "live" ? "Live Prototype" : item.status}</span>
-                  </div>
-                )}
-                <div style={{ padding: "20px 24px 24px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                      <span style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: c, background: `${c}12`, border: `1px solid ${c}25`, padding: "3px 8px", borderRadius: 5 }}>{item.domain}</span>
-                      <span style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{typeLabels[item.type] || item.type}</span>
-                    </div>
-                    {statusBadge(item.status)}
-                  </div>
-                  <div style={{ fontFamily: font, fontSize: 18, color: t.t0, marginBottom: 8 }}>{item.title}</div>
-                  {item.status === "coming" && (
-                    <div style={{ fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: t.t3, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Prototype in progress</div>
-                  )}
-                  <p style={{ fontSize: 14, color: t.t1, lineHeight: 1.6, marginBottom: 16 }}>{item.summary}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>{(item.tags || []).slice(0, 4).map(tag => <span key={tag} style={{ fontSize: 11, color: t.t2, background: t.bg2, padding: "3px 8px", borderRadius: 5 }}>{tag}</span>)}</div>
-                  {item.date && <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, fontSize: 12, color: t.t3 }}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "short" })}</div>}
-                  {item.status === "live" && (
-                    <div style={{ marginTop: 14, paddingTop: 12, borderTop: `1px solid ${t.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: 12, color: t.t2 }}>{item.stats?.views || 0} views {"\u00b7"} {item.stats?.agents || 0} agents</span>
-                      <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                        <span style={{ fontSize: 12, color: t.t1, fontWeight: 500, cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); go("detail", item.slug); }}>View details {"\u2192"}</span>
-                        {item.appUrl && <a href={item.appUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 12, color: t.blue, fontWeight: 500, textDecoration: "none" }}>Try it {"\u2192"}</a>}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div></R>
-            );
-          })}
-        </div>
+        <span style={s.tLabel}>The Work</span>
+        <h1 style={{ ...s.tSection, fontSize: "clamp(28px, 4vw, 40px)", marginBottom: 8 }}>Operator track record and applied AI prototypes.</h1>
+        <p style={{ ...s.tBody, marginBottom: 48, maxWidth: 640 }}>Ten years of enterprise delivery, and the applied AI prototypes that came out of it. Grouped by what they prove.</p>
+
+        {/* Bucket 1 — Enterprise Delivery */}
+        {engagements.length > 0 && (
+          <div style={{ marginBottom: 56 }}>
+            <div style={{ marginBottom: 20 }}>
+              <span style={s.tLabel}>Bucket 1 {"\u00b7"} Enterprise Delivery</span>
+              <h2 style={{ ...s.tSection, marginBottom: 4, fontSize: "clamp(22px, 2.6vw, 28px)" }}>Operator Track Record</h2>
+            </div>
+            <div style={gridStyle}>
+              {engagements.map(item => <R key={item.slug}><WorkCard item={item} /></R>)}
+            </div>
+          </div>
+        )}
+
+        {/* Bucket 2 — Prototype Lab */}
+        {products.length > 0 && (
+          <div>
+            <div style={{ marginBottom: 20 }}>
+              <span style={s.tLabel}>Bucket 2 {"\u00b7"} Prototype Lab</span>
+              <h2 style={{ ...s.tSection, marginBottom: 4, fontSize: "clamp(22px, 2.6vw, 28px)" }}>Applied AI & HCAI</h2>
+            </div>
+            <div style={gridStyle}>
+              {products.map(item => <R key={item.slug}><WorkCard item={item} /></R>)}
+            </div>
+          </div>
+        )}
       </div></section>
     );
   };

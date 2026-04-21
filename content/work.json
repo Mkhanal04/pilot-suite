@@ -62,6 +62,11 @@
         "agents": 5,
         "tour": true
       },
+      "validation": {
+        "badge": "\u2605 Validated by Texas Tech HCAI Faculty",
+        "quote": "An outstanding project... demonstrating an intentional focus on trust, transparency, and traceability that truly reflects human-centered leadership.",
+        "attribution": "Dr. Melanie Schmitt, Texas Tech University"
+      },
       "detail": {
         "heroStatement": "Decision intelligence for supply chain. When tariffs change or suppliers miss deadlines, TradePilot's AI agents detect, quantify, and recommend \u2014 with full transparency into why. Built on a 'Neuro-Symbolic' architecture: we use deterministic code to bound and cage the probabilistic LLM. Human-configured guardrails and Glass Box compliance checks ensure the AI never executes a final action.",
         "architectureSnapshot": {
@@ -310,6 +315,47 @@
         },
         "caseStudy": null
       }
+    },
+    {
+      "slug": "crc-group",
+      "type": "engagement",
+      "title": "CRC Group: $900M Billing Transformation",
+      "role": "Product Strategy & Delivery Lead",
+      "domain": "Healthcare",
+      "color": "teal",
+      "status": "completed",
+      "date": "2025-12",
+      "appUrl": "/work/crc-group/",
+      "metrics": [
+        "Accelerated MVP by 3+ months",
+        "$2M+ optimization identified"
+      ],
+      "summary": "Bypassed offshore UX bottlenecks by acting as the proxy designer. Used AI-assisted development to build a functional end-to-end billing prototype during the discovery phase, shifting the executive roadmap from a \"legacy system replacement\" to a modern enterprise product.",
+      "tags": [
+        "Proxy Designer",
+        "AI-Assisted Dev",
+        "Enterprise Product"
+      ]
+    },
+    {
+      "slug": "world-kinect",
+      "type": "engagement",
+      "title": "World Kinect: Logistics Automation",
+      "role": "Sr. Business Analyst (Digital Transformation)",
+      "domain": "Energy & Logistics",
+      "color": "green",
+      "status": "completed",
+      "date": "2024-08",
+      "appUrl": "/work/world-kinect/",
+      "metrics": [
+        "80% reduction in manual processing"
+      ],
+      "summary": "Led adoption-first design initiatives including field user-research and driver ride-alongs. Salvaged a failing mobile app rollout by aligning vendor software with actual human workflows.",
+      "tags": [
+        "Field Research",
+        "Adoption-First Design",
+        "Mobile Rollout"
+      ]
     }
   ],
   "domainTable": [

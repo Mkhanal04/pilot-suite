@@ -29,3 +29,6 @@ Desktop.ini
 
 # Dependencies (if ever added)
 node_modules/
+
+# Source spec material (not website content)
+Developer Specification Report/
