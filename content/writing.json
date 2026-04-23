@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "lastUpdated": "2026-04-23",
+    "version": "1.0"
+  },
+  "articles": [
+    {
+      "slug": "ai-cost-crisis",
+      "title": "Solving the AI Cost Crisis",
+      "deck": "Gartner forecasts 40% of agentic AI projects will be cancelled by 2027. Not because the models aren\u2019t capable, but because the economics don\u2019t hold. Here\u2019s the routing pattern I keep returning to.",
+      "date": "2026-04",
+      "readMinutes": 6,
+      "category": "Field notes",
+      "featured": true,
+      "status": "live"
+    },
+    {
+      "slug": "cutting-three-months-from-discovery",
+      "title": "Cutting Three Months from Discovery",
+      "deck": "How prototype-driven discovery compressed a healthcare billing build by a quarter, and what I\u2019d do differently next time.",
+      "date": "2026-04",
+      "readMinutes": 7,
+      "category": "Case study",
+      "featured": false,
+      "status": "coming"
+    }
+  ]
+}

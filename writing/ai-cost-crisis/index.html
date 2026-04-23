@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solving the AI Cost Crisis &mdash; Milan Khanal</title>
+<meta name="description" content="Field notes on enterprise AI cost-routing. Why the &ldquo;Ferrari-for-pizza&rdquo; problem isn't solved by smarter models, and how a complexity router maps traffic to the cheapest compute layer that's still safe.">
+<meta property="og:title" content="Solving the AI Cost Crisis &mdash; Milan Khanal">
+<meta property="og:description" content="Field notes on the 3-tier routing architecture I've been prototyping for enterprise AI cost-control.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://milankhanal.com/writing/ai-cost-crisis">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      var mode = saved === 'dark' || saved === 'light' ? saved : 'light';
+      document.documentElement.setAttribute('data-theme', mode);
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
+  })();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #63636E; border-radius: 3px; }
+
+  [data-theme="light"] {
+    --bg: #FAFAFA; --bg1: #FFFFFF; --bg2: #F4F4F5; --bg3: #E4E4E7;
+    --border: rgba(0,0,0,0.06); --borderH: rgba(0,0,0,0.12);
+    --t0: #18181B; --t1: #3F3F46; --t2: #71717A; --t3: #D4D4D8;
+    --blue: #2563EB; --green: #16A34A; --amber: #CA8A04; --teal: #0D9488;
+    --navBg: rgba(250,250,250,0.88);
+    --theme-landscape: #4285F4;
+    --theme-challenges: #34A853;
+    --theme-infrastructure: #EA4335;
+  }
+  [data-theme="dark"] {
+    --bg: #09090B; --bg1: #0F0F12; --bg2: #17171C; --bg3: #1E1E26;
+    --border: rgba(255,255,255,0.06); --borderH: rgba(255,255,255,0.13);
+    --t0: #F4F4F5; --t1: #D4D4D8; --t2: #A1A1AA; --t3: #3F3F46;
+    --blue: #3B82F6; --green: #22C55E; --amber: #EAB308; --teal: #0D9488;
+    --navBg: rgba(9,9,11,0.85);
+    --theme-landscape: #4285F4;
+    --theme-challenges: #34A853;
+    --theme-infrastructure: #EA4335;
+  }
+
+  *:focus-visible { outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 4px; }
+  *:focus:not(:focus-visible) { outline: none; }
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+  [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+  body { background: var(--bg); color: var(--t0); font-family: 'Outfit', system-ui, sans-serif; font-size: 16px; line-height: 1.65; min-height: 100vh; transition: background 0.4s, color 0.4s; }
+
+  /* ═══ NAV (shared pattern) ═══ */
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--navBg); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); height: 56px; display: flex; align-items: center; padding: 0 24px; transition: background 0.4s; }
+  .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--t0); }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-link { font-size: 13px; color: var(--t2); transition: color 0.2s; }
+  .nav-link:hover { color: var(--t0); }
+  .nav-link[aria-current="page"] { color: var(--t0); font-weight: 500; }
+  .nav-cta { font-size: 13px; font-weight: 500; padding: 7px 14px; border-radius: 8px; background: var(--t0); color: var(--bg); transition: opacity 0.2s; }
+  .nav-cta:hover { opacity: 0.9; }
+  .theme-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 14px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; }
+  .mobile-toggle { display: none; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg2); color: var(--t1); font-size: 16px; cursor: pointer; align-items: center; justify-content: center; font-family: inherit; }
+  .mobile-menu { display: none; position: absolute; top: 56px; left: 0; right: 0; background: var(--bg1); border-bottom: 1px solid var(--border); padding: 20px 24px; flex-direction: column; gap: 16px; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 15px; color: var(--t1); }
+  .mobile-menu .nav-cta { align-self: flex-start; }
+  @media (max-width: 760px) {
+    .nav-links .nav-link, .nav-links .nav-cta { display: none; }
+    .mobile-toggle { display: flex; }
+  }
+
+  /* ═══ STICKY BREADCRUMB (NEW, per spec §3) ═══ */
+  .crumb-sticky {
+    position: sticky; top: 56px; z-index: 99;
+    background: var(--navBg);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 13px; color: var(--t2);
+    transition: background 0.4s;
+  }
+  .crumb-sticky-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; }
+  .crumb-sticky .back { display: inline-flex; align-items: center; gap: 6px; color: var(--t1); font-weight: 500; transition: color 0.2s, gap 0.2s; }
+  .crumb-sticky .back:hover { color: var(--t0); gap: 9px; }
+  .crumb-sticky .divider { color: var(--t3); }
+  .crumb-sticky .title { color: var(--t0); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 640px) {
+    .crumb-sticky .divider, .crumb-sticky .title { display: none; }
+    .crumb-sticky { padding: 10px 20px; }
+  }
+
+  /* ═══ MAIN / LAYOUT ═══ */
+  main { padding-top: 56px; }
+  .section { padding: 56px 24px 72px; }
+  @media (max-width: 640px) { .section { padding: 40px 20px 56px; } }
+  .narrow { max-width: 760px; margin: 0 auto; }
+
+  /* ═══ PROSE (Newsreader editorial body, per spec §2.1) ═══ */
+  .prose {
+    max-width: 760px; margin: 0 auto;
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 19px; line-height: 1.6;
+    color: var(--t1);
+  }
+  .prose p { margin-top: 20px; }
+  .prose p:first-child { margin-top: 0; }
+  .prose strong { color: var(--t0); font-weight: 500; }
+  .prose em, .prose i { font-style: italic; }
+  .prose a.inline { color: var(--t0); border-bottom: 1px solid var(--borderH); transition: border-color 0.2s; }
+  .prose a.inline:hover { border-bottom-color: var(--t0); }
+  @media (max-width: 640px) { .prose { font-size: 17px; line-height: 1.65; } }
+
+  /* ═══ ARTICLE HERO ═══ */
+  .article-hero { margin-bottom: 48px; }
+  .article-hero .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; display: block; }
+  .article-hero h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400; line-height: 1.12;
+    letter-spacing: -0.02em; color: var(--t0);
+    margin-bottom: 20px;
+  }
+  .article-hero .deck {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(18px, 2.2vw, 22px);
+    font-weight: 400; line-height: 1.5;
+    color: var(--t1); font-style: italic;
+    margin-bottom: 28px;
+  }
+  .article-meta {
+    display: flex; flex-wrap: wrap; gap: 10px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--t2);
+    letter-spacing: 0.02em;
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .article-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .article-meta strong { color: var(--t1); font-weight: 500; }
+
+  /* ═══ SECTIONS ═══ */
+  .t-section {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(26px, 3.2vw, 32px);
+    font-weight: 500; line-height: 1.22;
+    letter-spacing: -0.015em;
+    color: var(--t0);
+    margin-top: 64px; margin-bottom: 20px;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--t2);
+    display: block; margin-bottom: 10px; margin-top: 64px;
+  }
+  .section-eyebrow + .t-section { margin-top: 4px; }
+
+  /* ═══ STAT CALLOUTS (spec §4.1) ═══ */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 36px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stat-callout {
+    padding: 28px 20px;
+    border-right: 1px solid var(--border);
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+  .stat-callout:last-child { border-right: none; }
+  .stat-callout .stat-value {
+    display: block;
+    font-weight: 600;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--t0);
+    margin-bottom: 10px;
+  }
+  .stat-callout.is-primary .stat-value { font-size: clamp(52px, 8vw, 84px); }
+  .stat-callout .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--t2);
+    line-height: 1.5;
+  }
+  @media (max-width: 640px) {
+    .stat-row { grid-template-columns: 1fr; }
+    .stat-callout { border-right: none; border-bottom: 1px solid var(--border); padding: 22px 0; }
+    .stat-callout:last-child { border-bottom: none; }
+  }
+  .stat-sources {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--t3);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* ═══ TIER CARDS (neutral per user choice) ═══ */
+  .tier-stack { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .tier-card {
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+  }
+  .tier-card .tier-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--t2);
+    display: block; margin-bottom: 8px;
+  }
+  .tier-card h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 22px; font-weight: 500;
+    line-height: 1.3; letter-spacing: -0.01em;
+    color: var(--t0);
+    margin-bottom: 12px;
+  }
+  .tier-card p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 17px; line-height: 1.6;
+    color: var(--t1);
+  }
+  .tier-card p + p { margin-top: 12px; }
+  .tier-card strong { color: var(--t0); font-weight: 500; }
+  .tier-card .tier-meta {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--t2);
+    margin-bottom: 14px;
+  }
+  .tier-card .tier-meta .sep { color: var(--t3); }
+  @media (max-width: 640px) { .tier-card { padding: 22px 22px; } }
+
+  /* ═══ ROI LIST (§4 — bold label + description, no hero numbers) ═══ */
+  .roi-list { display: flex; flex-direction: column; margin: 24px 0; }
+  .roi-item {
+    padding: 18px 0;
+    border-top: 1px solid var(--border);
+  }
+  .roi-item:last-child { border-bottom: 1px solid var(--border); }
+  .roi-item .roi-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--t0);
+    display: block; margin-bottom: 6px;
+  }
+  .roi-item p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 17px; line-height: 1.6;
+    color: var(--t1);
+  }
+
+  /* ═══ MINI-SPOTLIGHT (Regnology inside Tier 2) ═══ */
+  .mini-spotlight {
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: var(--bg2);
+    border-left: 2px solid var(--t3);
+    border-radius: 0 8px 8px 0;
+  }
+  .mini-spotlight .mini-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--t2);
+    display: block; margin-bottom: 8px;
+  }
+  .mini-spotlight p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 16px; line-height: 1.55;
+    color: var(--t1);
+  }
+  .mini-spotlight strong { color: var(--t0); font-weight: 500; }
+
+  /* ═══ RELATED-WORK CARD (TradePilot cross-link) ═══ */
+  .related-work-card {
+    display: block;
+    margin-top: 32px;
+    padding: 22px 26px;
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .related-work-card:hover { border-color: var(--borderH); transform: translateY(-1px); }
+  .related-work-card .rw-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--t2);
+    display: block; margin-bottom: 6px;
+  }
+  .related-work-card .rw-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--t0); display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  .related-work-card .rw-arrow { color: var(--t2); font-size: 16px; transition: transform 0.2s, color 0.2s; }
+  .related-work-card:hover .rw-arrow { color: var(--t0); transform: translateX(3px); }
+  .related-work-card .rw-body {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 15.5px; line-height: 1.55;
+    color: var(--t1); margin-top: 8px;
+  }
+
+  /* ═══ IMAGE ASSETS (spec §5) ═══ */
+  .img-fullbleed {
+    position: relative; left: 50%; right: 50%;
+    margin-left: -50vw; margin-right: -50vw;
+    width: 100vw;
+    margin-top: 40px; margin-bottom: 36px;
+  }
+  .img-fullbleed img {
+    display: block;
+    max-width: 1400px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 0;
+  }
+  @media (min-width: 1400px) {
+    .img-fullbleed img { border-radius: 12px; }
+  }
+  .img-inset {
+    display: block;
+    width: 100%; height: auto;
+    border-radius: 10px;
+    margin-top: 32px; margin-bottom: 16px;
+  }
+  .img-caption {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--t2);
+    text-align: center;
+    max-width: 600px;
+    margin: 14px auto 0;
+    padding: 0 20px;
+  }
+
+  /* ═══ ARCHITECTURE DIAGRAM (inline SVG, theme-aware via CSS vars) ═══ */
+  .diagram-figure { margin: 40px auto 36px; max-width: 760px; padding: 0 24px; }
+  .arch-diagram { width: 100%; height: auto; display: block; font-family: 'Outfit', system-ui, sans-serif; }
+  .arch-diagram .node-fill        { fill: var(--bg1); stroke: var(--border); stroke-width: 1.5; }
+  .arch-diagram .node-fill-router { fill: var(--bg2); stroke: var(--borderH); stroke-width: 2; }
+  .arch-diagram .node-title       { fill: var(--t0); font-weight: 500; font-size: 15px; }
+  .arch-diagram .node-sub         { fill: var(--t2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; }
+  .arch-diagram .edge             { stroke: var(--t3); stroke-width: 1.5; fill: none; }
+  .arch-diagram .edge-label       { fill: var(--t2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
+
+  /* ═══ CASE-STUDY COMPONENTS (spec §2.2 / §4.4 / §4.2 — available for future pieces) ═══ */
+  .themed-block { padding: 36px 40px; border-radius: 14px; margin-top: 40px; color: #FFFFFF; }
+  .themed-block .theme-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.78);
+    display: block; margin-bottom: 10px;
+  }
+  .themed-block h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(24px, 3vw, 30px); font-weight: 500;
+    line-height: 1.2; letter-spacing: -0.015em;
+    color: #FFFFFF; margin-bottom: 14px;
+  }
+  .themed-block p, .themed-block li {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 17px; line-height: 1.6;
+    color: rgba(255,255,255,0.92);
+  }
+  .themed-block p + p { margin-top: 14px; }
+  .themed-block.theme-challenges    { background: var(--theme-challenges); }
+  .themed-block.theme-infrastructure{ background: var(--theme-infrastructure); }
+  .themed-block.theme-landscape     { background: var(--theme-landscape); }
+  @media (max-width: 640px) { .themed-block { padding: 28px 24px; } }
+
+  .challenge-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 28px;
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+  .challenge-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--t2);
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .challenge-table td {
+    padding: 14px 16px 14px 0;
+    font-size: 15px; color: var(--t1);
+    border-bottom: 1px solid var(--border);
+  }
+  .challenge-table td:last-child {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--t0);
+    text-align: right;
+    padding-right: 0;
+  }
+
+  .quote-block cite.multi-line { white-space: pre-line; }
+
+  /* ═══ INDUSTRY LIST (spec §4.3 — block-char progress bars) ═══ */
+  .industry-list {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 28px;
+    padding: 22px 24px;
+    background: var(--bg1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .industry-bar {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 14px;
+  }
+  .industry-bar .ib-label { color: var(--t1); font-weight: 500; }
+  .industry-bar .ib-bar {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--t0);
+    white-space: nowrap;
+  }
+  .industry-bar .ib-bar .dim { color: var(--t3); }
+  .industry-bar .ib-value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--t0);
+    min-width: 44px;
+    text-align: right;
+  }
+  @media (max-width: 640px) {
+    .industry-bar { grid-template-columns: 1fr auto; gap: 8px; }
+    .industry-bar .ib-bar { grid-column: 1 / -1; order: 3; font-size: 11.5px; }
+  }
+
+  /* ═══ QUOTE BLOCK (spec §4.2 — defined for template, not used in this article) ═══ */
+  .quote-block {
+    margin-top: 36px;
+    padding: 8px 0 8px 24px;
+    border-left: 3px solid var(--t0);
+  }
+  .quote-block p {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-size: 20px; line-height: 1.5;
+    color: var(--t0);
+  }
+  .quote-block cite {
+    display: block;
+    margin-top: 14px;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--t2);
+  }
+  .quote-block cite strong { color: var(--t1); font-weight: 500; }
+
+  /* ═══ BACK LINK + CTA BLOCK (reused) ═══ */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 13px; color: var(--t2);
+    margin-top: 56px;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .back-link:hover { color: var(--t0); gap: 10px; }
+
+  .cta-block {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 40px;
+    margin-top: 48px;
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+  .cta-block .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 12px; display: block;
+  }
+  .cta-block h2 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(22px, 2.8vw, 28px);
+    font-weight: 500; line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--t0);
+    margin-bottom: 16px;
+  }
+  .cta-lines { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 28px; list-style: none; padding: 0; }
+  .cta-lines li { font-size: 15px; color: var(--t1); }
+  .cta-btn { display: inline-block; padding: 12px 24px; background: var(--t0); color: var(--bg); border-radius: 8px; font-size: 14px; font-weight: 500; font-family: inherit; transition: transform 0.15s ease, opacity 0.15s ease; }
+  .cta-btn:hover { transform: translateY(-1px); opacity: 0.92; }
+  @media (max-width: 640px) { .cta-block { padding: 28px 22px; } }
+
+  /* ═══ FOOTER ═══ */
+  .footer { padding: 28px 24px; border-top: 1px solid var(--border); max-width: 1080px; margin: 80px auto 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--t2); flex-wrap: wrap; gap: 8px; }
+  .footer strong { color: var(--t0); }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { color: var(--t2); transition: color 0.2s; }
+  .footer-links a:hover { color: var(--t0); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">Milan Khanal</a>
+    <div class="nav-links">
+      <a href="/work" class="nav-link">Work</a>
+      <a href="/lab" class="nav-link">Lab</a>
+      <a href="/writing" class="nav-link" aria-current="page">Writing</a>
+      <a href="/about" class="nav-link">About</a>
+      <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+      <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">&#9790;</button>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/work">Work</a>
+    <a href="/lab">Lab</a>
+    <a href="/writing" aria-current="page">Writing</a>
+    <a href="/about">About</a>
+    <a href="mailto:milan.khanal25@gmail.com" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+
+<div class="crumb-sticky" aria-label="Breadcrumb">
+  <div class="crumb-sticky-inner">
+    <a href="/writing" class="back">&larr; Back to Writing</a>
+    <span class="divider">|</span>
+    <span class="title">Solving the AI Cost Crisis</span>
+  </div>
+</div>
+
+<main>
+  <section class="section">
+    <article class="prose">
+
+      <header class="article-hero" data-reveal>
+        <span class="eyebrow">Field notes &middot; AI Infrastructure</span>
+        <h1>Solving the AI Cost Crisis</h1>
+        <p class="deck">Gartner forecasts 40% of agentic AI projects will be cancelled by 2027. Not because the models aren&rsquo;t capable, but because the economics don&rsquo;t hold. Here&rsquo;s the routing pattern I keep returning to.</p>
+        <div class="article-meta">
+          <span><strong>Apr 2026</strong></span>
+          <span><strong>6 min read</strong></span>
+        </div>
+      </header>
+
+      <!-- ═══════════════ SECTION 1 ═══════════════ -->
+      <span class="section-eyebrow">01 &middot; The cost reality</span>
+      <h2 class="t-section">Ferraris delivering pizza</h2>
+
+      <p>Picture a Ferrari delivering a pizza. That&rsquo;s what happens every time an enterprise routes a basic intent-extraction request to a frontier-class LLM. It works. But the compute bill scales faster than the business value does. Adoption is nearly universal (98% of organizations are experimenting, developing, or already in production with gen AI), and cost-efficiency has become the dominant priority for 83% of leaders building on top of it.</p>
+
+      <p>Gartner&rsquo;s number matches what I keep seeing in conversations: the teams struggling aren&rsquo;t blocked on intelligence. They&rsquo;re blocked on a pricing model that punishes you for every token, regardless of whether the task actually needed a reasoning engine.</p>
+
+      <div class="stat-row" data-reveal>
+        <div class="stat-callout is-primary">
+          <span class="stat-value">98%</span>
+          <span class="stat-label">Of organizations experimenting, developing, or in production with gen AI</span>
+        </div>
+        <div class="stat-callout">
+          <span class="stat-value">83%</span>
+          <span class="stat-label">Of leaders now prioritize cost-efficiency above other infrastructure goals</span>
+        </div>
+        <div class="stat-callout">
+          <span class="stat-value">40%</span>
+          <span class="stat-label">Of agentic AI projects forecast to be cancelled by 2027 (Gartner)</span>
+        </div>
+      </div>
+      <p class="stat-sources">Sources: Google Cloud, 2025 State of AI Infrastructure research report; Gartner agentic AI forecast (2025).</p>
+
+      <p>This is one of the challenges I&rsquo;ve been researching and experimenting with. My current proofs of concept run on simulated data, but as I evaluate how large organizations would actually scale a similar architecture into production, I&rsquo;m learning the same thing most of them are: you can&rsquo;t afford to throw a premium LLM at every user click. The question isn&rsquo;t &ldquo;which model?&rdquo; It&rsquo;s &ldquo;which tier of compute is the cheapest one that still answers safely?&rdquo;</p>
+
+      <!-- ═══════════════ SECTION 2 ═══════════════ -->
+      <span class="section-eyebrow">02 &middot; The framework</span>
+      <h2 class="t-section">The Complexity Router &amp; the three tiers</h2>
+
+      <p>The routing mechanism I&rsquo;ve been prototyping is a <strong>Complexity Router</strong>: a lightweight classifier plus a handful of heuristics that sits in front of the stack and decides where a request goes, based on cost and risk. The same customer-support system, looked at through the router, stops being a monolith and breaks into three visibly different kinds of traffic:</p>
+
+      <figure class="diagram-figure" data-reveal>
+        <svg class="arch-diagram" viewBox="0 0 800 420" role="img" aria-labelledby="arch-title arch-desc">
+          <title id="arch-title">3-tier AI routing architecture</title>
+          <desc id="arch-desc">Customer request enters the Complexity Router, which routes to Tier 1 Rules Engine (60% of volume, zero API cost), Tier 2 Small Language Model (30%, micro-cents per request), or Tier 3 Multi-Agent Orchestrator (10%, premium API cost).</desc>
+          <rect class="node-fill" x="280" y="10" width="240" height="56" rx="10" />
+          <text class="node-title" x="400" y="44" text-anchor="middle">Customer request</text>
+          <path class="edge" d="M 400 66 L 400 136" />
+          <rect class="node-fill-router" x="250" y="136" width="300" height="56" rx="10" />
+          <text class="node-title" x="400" y="170" text-anchor="middle">Complexity Router</text>
+          <path class="edge" d="M 310 192 L 135 264" />
+          <text class="edge-label" x="200" y="226" text-anchor="middle">60%</text>
+          <path class="edge" d="M 400 192 L 400 264" />
+          <text class="edge-label" x="415" y="226" text-anchor="start">30%</text>
+          <path class="edge" d="M 490 192 L 665 264" />
+          <text class="edge-label" x="600" y="226" text-anchor="middle">10%</text>
+          <rect class="node-fill" x="20" y="264" width="230" height="120" rx="10" />
+          <text class="node-sub" x="135" y="294" text-anchor="middle">TIER 1 &middot; $0 API</text>
+          <text class="node-title" x="135" y="330" text-anchor="middle">Rules Engine</text>
+          <text class="node-sub" x="135" y="360" text-anchor="middle">DETERMINISTIC</text>
+          <rect class="node-fill" x="285" y="264" width="230" height="120" rx="10" />
+          <text class="node-sub" x="400" y="294" text-anchor="middle">TIER 2 &middot; MICRO-CENTS</text>
+          <text class="node-title" x="400" y="330" text-anchor="middle">SLM (Gemma 4)</text>
+          <text class="node-sub" x="400" y="360" text-anchor="middle">INTENT EXTRACTION</text>
+          <rect class="node-fill" x="550" y="264" width="230" height="120" rx="10" />
+          <text class="node-sub" x="665" y="294" text-anchor="middle">TIER 3 &middot; PREMIUM API</text>
+          <text class="node-title" x="665" y="330" text-anchor="middle">Multi-Agent</text>
+          <text class="node-sub" x="665" y="360" text-anchor="middle">HIGH REASONING</text>
+        </svg>
+        <figcaption class="img-caption">The Complexity Router in practice: cheapest-safe-compute routing across three cost tiers.</figcaption>
+      </figure>
+
+      <div class="tier-stack" data-reveal>
+
+        <div class="tier-card">
+          <span class="tier-eyebrow">Tier 1 &middot; Rules Engine</span>
+          <div class="tier-meta">
+            <span>~60% volume</span>
+            <span class="sep">&middot;</span>
+            <span>$0 API cost</span>
+          </div>
+          <h3>&ldquo;Check order status&rdquo;</h3>
+          <p>Skip AI entirely. Deterministic policy, enforced in code. Free to run, 100% auditable, and impossible to hallucinate, because there&rsquo;s no generation happening. The majority of support traffic is structurally this shape; teams just don&rsquo;t see it until they instrument it.</p>
+        </div>
+
+        <div class="tier-card">
+          <span class="tier-eyebrow">Tier 2 &middot; Intelligence Function (SLM)</span>
+          <div class="tier-meta">
+            <span>~30% volume</span>
+            <span class="sep">&middot;</span>
+            <span>Micro-cents / request</span>
+          </div>
+          <h3>&ldquo;I want to return order #12345&rdquo;</h3>
+          <p>Route to a fast, cheap Small Language Model whose only job is to extract intent and the order number, then hand off to a deterministic backend. No frontier reasoning required. The next phase of the HCAI work I&rsquo;m doing is exploring <strong>running Gemma 4 locally</strong> for this tier: zero API cost, full data locality, predictable latency.</p>
+        </div>
+
+        <div class="tier-card">
+          <span class="tier-eyebrow">Tier 3 &middot; Multi-Agent Orchestrator</span>
+          <div class="tier-meta">
+            <span>~10% volume</span>
+            <span class="sep">&middot;</span>
+            <span>Premium API cost</span>
+          </div>
+          <h3>&ldquo;My shipment is late, I need this for an event tomorrow, how can we fix this?&rdquo;</h3>
+          <p>High-stakes ambiguity. Requires specialized agents to plan, fetch data, weigh policy, and draft a response under strict guardrails. Output is a mitigation strategy handed to a human for final judgement (see &sect;3). This tier is expensive, which is exactly why you only want the 10% of traffic that actually needs it landing here.</p>
+        </div>
+
+      </div>
+
+      <p>This is also why <strong>73% of leaders now prioritize edge and distributed deployment</strong>: moving Tier 1 and Tier 2 work off the hot path of centralized premium inference isn&rsquo;t just a cost argument, it&rsquo;s a latency and data-sovereignty argument too. The router pays for itself three ways.</p>
+
+      <!-- ═══════════════ SECTION 3 ═══════════════ -->
+      <span class="section-eyebrow">03 &middot; The human in Tier 3</span>
+      <h2 class="t-section">Why Tier 3 still needs a human gate</h2>
+
+      <p>Tier 3 is the only tier where I think a <strong>Human-On-The-Loop (HOTL)</strong> checkpoint is worth the friction. Tier 1 is deterministic, so there&rsquo;s nothing to review. Tier 2 is constrained extraction, so a bad output fails loudly and gets caught by validation. But Tier 3 is where the model is genuinely making judgement calls under ambiguity. That&rsquo;s where the risk compounds.</p>
+
+      <p>The risk isn&rsquo;t just a wrong answer. It&rsquo;s <strong>data lineage</strong>. When an orchestrator pulls from three systems, weighs a policy, and drafts an action, the chain of reasoning has to be auditable. Otherwise you&rsquo;re one regulatory question away from not being able to explain why the system told a customer what it did. A human reviewer at the Tier 3 gate isn&rsquo;t just a safety net; they&rsquo;re the anchor that makes the rest of the tier legally defensible.</p>
+
+      <p>The working prototype where I&rsquo;ve been implementing this pattern is <a href="/tradepilot/" class="inline">TradePilot</a>. It&rsquo;s the place where the HOTL gate actually lives in code: drafts are generated automatically, but a human signs off before anything touches a client portfolio.</p>
+
+      <a href="/tradepilot/" class="related-work-card" data-reveal>
+        <span class="rw-eyebrow">Related prototype</span>
+        <span class="rw-title">
+          <span>TradePilot</span>
+          <span class="rw-arrow">&rarr;</span>
+        </span>
+        <p class="rw-body">Where the Tier 3 HOTL pattern lives in practice. Multi-agent orchestration for high-reasoning financial workflows, with a human checkpoint before any action leaves the system.</p>
+      </a>
+
+      <!-- ═══════════════ SECTION 4 ═══════════════ -->
+      <span class="section-eyebrow">04 &middot; Strategic ROI</span>
+      <h2 class="t-section">The right tool for the job</h2>
+
+      <p>What the architecture really buys is discipline: the right tool for the job, and nothing more. External research on enterprise AI economics is converging on the same conclusion: the practical application story is finally catching up to the hype story, and the teams doing it well are the ones who stopped treating one model as the answer to every question.</p>
+
+      <div class="roi-list" data-reveal>
+        <div class="roi-item">
+          <span class="roi-label">Reduced operational cost</span>
+          <p>Match workload to compute tier: a mix of spot, reserved, and pay-as-you-go billing, driven by intelligent resource management rather than a blanket premium-model default.</p>
+        </div>
+        <div class="roi-item">
+          <span class="roi-label">Improved employee productivity</span>
+          <p>Tier 1 and Tier 2 automate the repetitive, rules-shaped work that was eating human capital. People shift to the 10% of problems that actually need human judgement.</p>
+        </div>
+        <div class="roi-item">
+          <span class="roi-label">Faster internal process automation</span>
+          <p>Top priority for 55% of manufacturing firms and 67% of retail firms. The router makes internal automation economically viable at scale, because most internal workflows are Tier 1 or Tier 2 problems, not Tier 3 ones.</p>
+        </div>
+      </div>
+
+      <!-- ═══════════════ SECTION 5 ═══════════════ -->
+      <span class="section-eyebrow">05 &middot; What&rsquo;s next</span>
+      <h2 class="t-section">What I&rsquo;m testing next</h2>
+
+      <p>Being honest about where this work actually is: it&rsquo;s research and prototyping, not a productized answer. The three threads I&rsquo;m actively pulling on right now:</p>
+
+      <ul class="cta-lines" style="margin-top:14px;">
+        <li><strong>What I&rsquo;m mapping:</strong> which categories of tasks cleanly map to deterministic rules vs. SLM extraction vs. Tier 3 orchestration, and where the boundaries get fuzzy.</li>
+        <li><strong>What I&rsquo;m testing:</strong> running Gemma 4 locally as the Tier 2 engine, to see whether zero-API-cost routing is practical for a realistic volume of support traffic.</li>
+        <li><strong>What&rsquo;s still open:</strong> the HOTL interface design for Tier 3, end-to-end data lineage tracking across tiers, and making the Complexity Router itself auditable so its decisions can be reviewed.</li>
+      </ul>
+
+      <p style="margin-top:28px;"><em>The goal of enterprise AI isn&rsquo;t to use the smartest model for every task. It&rsquo;s to use the most cost-optimized compute layer that solves the business problem safely.</em></p>
+
+      <a href="/writing" class="back-link" data-reveal>&larr; Back to Writing</a>
+
+      <div class="cta-block" data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2>Scoping a complexity router, or trying to rescue an AI footprint that&rsquo;s already burning?</h2>
+        <ul class="cta-lines">
+          <li>&rarr; Mapping traffic to tiers on an existing gen AI deployment.</li>
+          <li>&rarr; Designing the boundary between rules, SLMs, and frontier models.</li>
+          <li>&rarr; Designing a Tier 3 HOTL checkpoint that teams will actually use.</li>
+        </ul>
+        <a class="cta-btn" href="mailto:milan.khanal25@gmail.com">Get in touch</a>
+      </div>
+
+    </article>
+  </section>
+
+  <footer class="footer">
+    <span><strong>Milan Khanal</strong> &middot; AI Delivery Lead &amp; Prototype Designer</span>
+    <div class="footer-links">
+      <a href="mailto:milan.khanal25@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/milankhanal41" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/Mkhanal04/pilot-suite" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <span>&copy; 2026</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    function glyph() { return document.documentElement.getAttribute('data-theme') === 'dark' ? '\u2600' : '\u263E'; }
+    btn.innerHTML = glyph();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      btn.innerHTML = glyph();
+    });
+  })();
+  (function () {
+    var toggle = document.getElementById('mobileToggle');
+    var menu = document.getElementById('mobileMenu');
+    toggle.addEventListener('click', function () {
+      menu.classList.toggle('open');
+      toggle.innerHTML = menu.classList.contains('open') ? '&#10005;' : '&#9776;';
+    });
+  })();
+  (function () {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) { el.classList.add('revealed'); }
+      else { io.observe(el); }
+    });
+    setTimeout(function () {
+      document.querySelectorAll('[data-reveal]').forEach(function (el) {
+        if (!el.classList.contains('revealed')) el.classList.add('revealed');
+      });
+    }, 1500);
+  })();
+</script>
+</body>
+</html>

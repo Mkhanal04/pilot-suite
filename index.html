@@ -250,7 +250,13 @@ function Portfolio() {
   useEffect(() => { document.documentElement.setAttribute('data-theme', mode); }, [mode]);
 
   useEffect(() => { const c = () => setIsMobile(window.innerWidth < 640); c(); window.addEventListener("resize", c); return () => window.removeEventListener("resize", c); }, []);
-  useEffect(() => { fetch('/content/work.json').then(r => r.json()).then(data => setContent(data)).catch(() => console.error('Failed to load content')); }, []);
+  useEffect(() => {
+    Promise.all([
+      fetch('/content/work.json').then(r => r.json()),
+      fetch('/content/writing.json').then(r => r.json())
+    ]).then(([work, writing]) => setContent({ ...work, writing: writing.articles }))
+      .catch(() => console.error('Failed to load content'));
+  }, []);
 
   // Hash routing — parse on mount
   useEffect(() => {
@@ -287,6 +293,7 @@ function Portfolio() {
   );
 
   const allWork = content.work;
+  const allWriting = content.writing || [];
 
   const font = "'Newsreader', Georgia, serif";
   const sans = "'Outfit', system-ui, sans-serif";
@@ -411,6 +418,35 @@ function Portfolio() {
       </div>
     );
   };
+
+  // === WRITING CARD (editorial, type-only) ===
+  const writingMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const formatWritingDate = (d) => {
+    if (!d) return "";
+    const parts = d.split("-");
+    const idx = parseInt(parts[1], 10) - 1;
+    return (writingMonths[idx] || "") + " " + parts[0];
+  };
+
+  const WritingCard = ({ item }) => (
+    <a href={`/writing/${item.slug}/`} style={{
+      ...s.card, padding: "28px 28px 24px",
+      display: "flex", flexDirection: "column", gap: 14,
+      textDecoration: "none", height: "100%",
+      transition: "border-color 0.2s, transform 0.2s"
+    }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = t.borderH; e.currentTarget.style.transform = "translateY(-2px)"; }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = t.border; e.currentTarget.style.transform = "translateY(0)"; }}>
+      <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase", color: t.t2 }}>
+        {formatWritingDate(item.date)} {"\u00b7"} {item.category} {"\u00b7"} {item.readMinutes} min read
+      </span>
+      <h3 style={{ fontFamily: font, fontSize: "clamp(22px, 2.4vw, 28px)", fontWeight: 500, lineHeight: 1.2, letterSpacing: "-0.015em", color: t.t0, margin: 0 }}>
+        {item.title}
+      </h3>
+      <p style={{ fontSize: 15, color: t.t1, lineHeight: 1.6, margin: 0 }}>{item.deck}</p>
+      <span style={{ fontSize: 13, color: t.blue, fontWeight: 500, marginTop: "auto" }}>Read the field notes {"\u2192"}</span>
+    </a>
+  );
 
   // === NAV ===
   const navItems = [
@@ -561,6 +597,32 @@ function Portfolio() {
         </div>
       </section>
       <div style={s.divider} />
+
+      {/* ── FIELD NOTES (FEATURED WRITING) ── */}
+      {allWriting.filter(w => w.featured && w.status === 'live').length > 0 && (
+        <>
+          <section style={s.section}>
+            <div style={s.container}>
+              <R>
+                <div style={{ marginBottom: 24 }}>
+                  <span style={s.tLabel}>Field Notes {"\u00b7"} Writing</span>
+                  <h2 style={{ ...s.tSection, marginBottom: 6 }}>Recent thinking</h2>
+                  <p style={{ ...s.tBody, maxWidth: 640, color: t.t2 }}>Notes from the work {"\u2014"} enterprise AI delivery, prototyping, and what actually holds up in production.</p>
+                </div>
+              </R>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 16 }}>
+                {allWriting.filter(w => w.featured && w.status === 'live').map(item => (
+                  <R key={item.slug}><WritingCard item={item} /></R>
+                ))}
+              </div>
+              <div style={{ marginTop: 32, textAlign: "center" }}>
+                <a href="/writing" style={{ fontSize: 14, color: t.blue, fontWeight: 500, textDecoration: "none", borderBottom: `1px solid ${t.blue}`, paddingBottom: 2 }}>View all writing {"\u2192"}</a>
+              </div>
+            </div>
+          </section>
+          <div style={s.divider} />
+        </>
+      )}
 
       {/* ── THREE-BUCKET TEASER STRIP ── */}
       <section style={{ padding: isMobile ? "24px 20px 56px" : "32px 24px 72px" }}>

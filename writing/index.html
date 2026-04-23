@@ -109,7 +109,10 @@
   /* ═══ POST CARDS ═══ */
   .post-list { margin-top: 56px; display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); }
   .post-card { display: block; padding: 32px 0; border-bottom: 1px solid var(--border); transition: padding-left 0.25s ease; }
+  .post-card a { display: block; color: inherit; }
+  .post-card:hover { padding-left: 4px; }
   .post-card.is-stub { opacity: 0.72; }
+  .post-card.is-stub:hover { padding-left: 0; }
   .post-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--t2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; display: block; }
   .post-title { font-family: 'Newsreader', Georgia, serif; font-size: 24px; font-weight: 500; color: var(--t0); letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px; }
   .post-body { font-size: 15.5px; color: var(--t1); line-height: 1.65; max-width: 720px; margin-bottom: 12px; }
@@ -164,16 +167,7 @@
       </div>
 
       <div class="narrow">
-        <div class="post-list" data-reveal>
-
-          <article class="post-card is-stub">
-            <span class="post-meta">Apr 2026 &middot; Case Study &middot; 7 min read</span>
-            <h2 class="post-title">Cutting Three Months from Discovery</h2>
-            <p class="post-body">How prototype-driven discovery compressed a healthcare billing build by a quarter, and what I'd do differently next time.</p>
-            <span class="post-status">Coming soon</span>
-          </article>
-
-        </div>
+        <div class="post-list" data-reveal id="postList"></div>
       </div>
     </div>
   </section>
@@ -236,6 +230,45 @@
       if (!el.classList.contains('revealed')) el.classList.add('revealed');
     });
   }, 1500);
+
+  (function () {
+    var list = document.getElementById('postList');
+    if (!list) return;
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var fmt = function (d) {
+      if (!d) return '';
+      var p = d.split('-');
+      return months[parseInt(p[1], 10) - 1] + ' ' + p[0];
+    };
+    var esc = function (s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+    fetch('/content/writing.json').then(function (r) { return r.json(); }).then(function (data) {
+      list.innerHTML = (data.articles || []).map(function (a) {
+        var meta = fmt(a.date) + ' \u00b7 ' + esc(a.category) + ' \u00b7 ' + a.readMinutes + ' min read';
+        if (a.status === 'coming') {
+          return '<article class="post-card is-stub">' +
+            '<span class="post-meta">' + meta + '</span>' +
+            '<h2 class="post-title">' + esc(a.title) + '</h2>' +
+            '<p class="post-body">' + esc(a.deck) + '</p>' +
+            '<span class="post-status">Coming soon</span>' +
+            '</article>';
+        }
+        return '<article class="post-card">' +
+          '<a href="/writing/' + encodeURIComponent(a.slug) + '/">' +
+          '<span class="post-meta">' + meta + '</span>' +
+          '<h2 class="post-title">' + esc(a.title) + '</h2>' +
+          '<p class="post-body">' + esc(a.deck) + '</p>' +
+          '</a></article>';
+      }).join('');
+    }).catch(function () {
+      list.innerHTML = '<p style="color:var(--t2);font-size:14px;">Unable to load writing list.</p>';
+    });
+  })();
 </script>
 
 </body>

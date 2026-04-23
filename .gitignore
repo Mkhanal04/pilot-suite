@@ -32,3 +32,8 @@ node_modules/
 
 # Source spec material (not website content)
 Developer Specification Report/
+*.docx
+
+# Playwright smoke-test artifacts
+.playwright-mcp/
+smoke-*.png
