@@ -369,6 +369,9 @@
   .arch-diagram .node-sub         { fill: var(--t2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; }
   .arch-diagram .edge             { stroke: var(--t3); stroke-width: 1.5; fill: none; }
   .arch-diagram .edge-label       { fill: var(--t2); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.06em; }
+  @media (max-width: 640px) {
+    .diagram-figure { display: none; }
+  }
 
   /* ═══ CASE-STUDY COMPONENTS (spec §2.2 / §4.4 / §4.2 — available for future pieces) ═══ */
   .themed-block { padding: 36px 40px; border-radius: 14px; margin-top: 40px; color: #FFFFFF; }
