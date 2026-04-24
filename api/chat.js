@@ -1,7 +1,7 @@
 import { getDb, getConfigValue } from './_lib/db.js';
 import { hashIp } from './_lib/auth.js';
 
-const EMBEDDING_MODEL = 'text-embedding-3-small';
+const EMBEDDING_MODEL = 'gemini-embedding-001';
 const DEFAULT_MODEL = 'claude-sonnet-4-5';
 const MODEL_MAP = {
   'claude-sonnet-4-6': 'claude-sonnet-4-5',
@@ -46,17 +46,19 @@ function resolveModel(configValue) {
 }
 
 async function embed(text) {
-  const res = await fetch('https://api.openai.com/v1/embeddings', {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${process.env.GEMINI_API_KEY}`;
+  const res = await fetch(url, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ model: EMBEDDING_MODEL, input: text })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: `models/${EMBEDDING_MODEL}`,
+      content: { parts: [{ text }] },
+      outputDimensionality: 1536
+    })
   });
   if (!res.ok) throw new Error(`Embed failed: ${res.status} ${await res.text()}`);
   const data = await res.json();
-  return data.data[0].embedding;
+  return data.embedding.values;
 }
 
 async function generate(model, systemBlock, userBlock) {

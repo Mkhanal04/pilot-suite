@@ -26,7 +26,7 @@ const OPTIONAL = [
 
 const HARD_DENY_PATTERNS = [/^\.claude\//, /^memory\//, /handoff/, /\.docx$/, /\.env/];
 
-const EMBEDDING_MODEL = 'text-embedding-3-small';
+const EMBEDDING_MODEL = 'gemini-embedding-001';
 const TARGET_TOKENS = 600;
 const OVERLAP_TOKENS = 100;
 const CHARS_PER_TOKEN = 4;
@@ -109,27 +109,29 @@ function chunkText(text, targetTokens = TARGET_TOKENS, overlapTokens = OVERLAP_T
   return chunks.filter(c => c.length > 0);
 }
 
-async function embed(text, openaiKey) {
-  const res = await fetch('https://api.openai.com/v1/embeddings', {
+async function embed(text, geminiKey) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${geminiKey}`;
+  const res = await fetch(url, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${openaiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ model: EMBEDDING_MODEL, input: text })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: `models/${EMBEDDING_MODEL}`,
+      content: { parts: [{ text }] },
+      outputDimensionality: 1536
+    })
   });
   if (!res.ok) throw new Error(`Embed failed: ${res.status} ${await res.text()}`);
   const data = await res.json();
-  return data.data[0].embedding;
+  return data.embedding.values;
 }
 
 async function main() {
   const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const openaiKey = process.env.OPENAI_API_KEY;
+  const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+  const geminiKey = process.env.GEMINI_API_KEY;
 
-  if (!supabaseUrl || !supabaseKey || !openaiKey) {
-    console.error('Missing env vars. Required: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, OPENAI_API_KEY');
+  if (!supabaseUrl || !supabaseKey || !geminiKey) {
+    console.error('Missing env vars. Required: SUPABASE_URL, SUPABASE_SERVICE_KEY, GEMINI_API_KEY');
     process.exit(1);
   }
 
@@ -164,7 +166,7 @@ async function main() {
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
       const tokens = Math.ceil(chunk.length / CHARS_PER_TOKEN);
-      const embedding = await embed(chunk, openaiKey);
+      const embedding = await embed(chunk, geminiKey);
       const { error } = await db.from('documents').insert({
         source_path: path,
         section_heading: heading,
