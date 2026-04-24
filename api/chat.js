@@ -128,6 +128,10 @@ export default async function handler(req, res) {
   if (!message || typeof message !== 'string' || message.length > 2000) {
     return res.status(400).json({ error: 'Missing or invalid message (max 2000 chars)' });
   }
+  const alphanumericCount = (message.match(/[\p{L}\p{N}]/gu) || []).length;
+  if (alphanumericCount < 2) {
+    return res.status(400).json({ error: 'Message needs at least 2 letters or digits' });
+  }
 
   try {
     const db = getDb();

@@ -6,7 +6,8 @@
   "description": "Milan Khanal portfolio + digital twin chatbot",
   "scripts": {
     "ingest": "node scripts/ingest.js",
-    "dev": "python3 -m http.server 8765"
+    "dev": "python3 -m http.server 8765",
+    "dev:full": "vercel dev"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
