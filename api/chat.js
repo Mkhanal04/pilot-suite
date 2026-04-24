@@ -45,6 +45,39 @@ function resolveModel(configValue) {
   return MODEL_MAP[configValue] || configValue || DEFAULT_MODEL;
 }
 
+const GREETING_REPLY = "Hey, I'm Milan's digital twin. I answer questions about his work, background, and the prototypes he's built. What would you like to know?";
+
+function detectIntent(message) {
+  const trimmed = message.trim();
+  const lower = trimmed.toLowerCase();
+  if (/^(hi|hello|hey|yo|sup|howdy|greetings|hola)[\s!.?,]*$/i.test(trimmed)) {
+    return 'greeting';
+  }
+  const introPhrases = [
+    'tell me about yourself',
+    'tell me about you',
+    'who are you',
+    'introduce yourself',
+    'about yourself',
+    'what do you do',
+    'tell me about milan',
+    'about milan',
+    'who is milan',
+    'what is milan'
+  ];
+  for (const phrase of introPhrases) {
+    if (lower.includes(phrase)) return 'intro';
+  }
+  return null;
+}
+
+function rewriteForRetrieval(message, intent) {
+  if (intent === 'intro') {
+    return 'Milan Khanal background role experience career professional summary positioning';
+  }
+  return message;
+}
+
 async function embed(text) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${process.env.GEMINI_API_KEY}`;
   const res = await fetch(url, {
@@ -160,6 +193,17 @@ export default async function handler(req, res) {
 
     await db.from('messages').insert({ session_id, role: 'user', content: message });
 
+    const intent = detectIntent(message);
+
+    if (intent === 'greeting') {
+      await db.from('messages').insert({
+        session_id, role: 'assistant', content: GREETING_REPLY,
+        refuse_flag: false, retrieved_source_ids: [], cited_source_ids: [],
+        model: 'scripted', tier: 'greeting', latency_ms: Date.now() - start
+      });
+      return res.json({ reply: GREETING_REPLY, sources: [], refused: false });
+    }
+
     const threshold = await getConfigValue('similarity_threshold', 0.75);
     const topK = await getConfigValue('top_k', 5);
     const refuseTemplate = await getConfigValue('refuse_template',
@@ -168,9 +212,11 @@ export default async function handler(req, res) {
     const configuredModel = await getConfigValue('active_model', 'claude-sonnet-4-6');
     const model = resolveModel(configuredModel);
 
+    const retrievalQuery = rewriteForRetrieval(message, intent);
+
     let queryEmbedding;
     try {
-      queryEmbedding = await embed(message);
+      queryEmbedding = await embed(retrievalQuery);
     } catch (e) {
       await db.from('messages').insert({
         session_id, role: 'assistant',
