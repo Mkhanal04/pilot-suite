@@ -69,6 +69,8 @@
       '.mk-cb-msg.bot { align-self: flex-start; background: var(--color-muted-surface, #f1f5f9); color: var(--color-text, #0f172a); border-bottom-left-radius: 4px; }',
       '.mk-cb-msg.error { align-self: center; background: transparent; color: var(--color-muted, #64748b); font-size: 12px; font-style: italic; }',
       '.mk-cb-sources { margin-top: 8px; font-size: 11px; color: var(--color-muted, #64748b); line-height: 1.4; }',
+      '.mk-cb-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }',
+      '.mk-cb-link:hover { text-decoration-thickness: 2px; }',
       '.mk-cb-form { display: flex; padding: 12px 16px; gap: 8px; border-top: 1px solid var(--color-border, #e5e7eb); }',
       '.mk-cb-input { flex: 1; padding: 10px 14px; border: 1px solid var(--color-border, #e5e7eb); border-radius: 10px; font-family: inherit; font-size: 14px; color: inherit; background: var(--color-surface, #fff); }',
       '.mk-cb-input:focus { outline: none; border-color: var(--color-accent, #0f172a); }',
@@ -101,6 +103,7 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
     return escaped
+      .replace(/\[([^\]]+)\]\((\/[^\s)]+|https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" class="mk-cb-link">$1</a>')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
       .replace(/\n\n/g, '<br><br>')
