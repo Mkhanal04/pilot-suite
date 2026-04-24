@@ -63,6 +63,9 @@
       '.mk-cb-beta { display: inline-block; margin-left: 8px; padding: 1px 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted, #64748b); background: var(--color-muted-surface, #f1f5f9); border: 1px solid var(--color-border, #e5e7eb); border-radius: 4px; vertical-align: 2px; }',
       '.mk-cb-sub { font-size: 12px; color: var(--color-muted, #64748b); margin-top: 2px; }',
       '.mk-cb-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--color-muted, #64748b); padding: 4px 8px; }',
+      '.mk-cb-head-actions { display: flex; align-items: center; gap: 4px; }',
+      '.mk-cb-clear { background: none; border: none; font-size: 11px; cursor: pointer; color: var(--color-muted, #64748b); padding: 4px 8px; font-family: inherit; letter-spacing: 0.02em; }',
+      '.mk-cb-clear:hover { color: var(--color-accent, #0f172a); text-decoration: underline; }',
       '.mk-cb-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }',
       '.mk-cb-msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; word-break: break-word; }',
       '.mk-cb-msg.user { align-self: flex-end; background: var(--color-accent, #0f172a); color: var(--color-surface, #fff); border-bottom-right-radius: 4px; }',
@@ -141,7 +144,10 @@
         ]),
         el('div', { class: 'mk-cb-sub' }, 'Trained on Milan\'s writing and work. Answers cite sources.')
       ]),
-      el('button', { class: 'mk-cb-close', 'aria-label': 'Minimize chat', title: 'Minimize' }, '\u2304')
+      el('div', { class: 'mk-cb-head-actions' }, [
+        el('button', { class: 'mk-cb-clear', type: 'button', 'aria-label': 'Clear chat and start over', title: 'Clear chat' }, 'Clear'),
+        el('button', { class: 'mk-cb-close', 'aria-label': 'Minimize chat', title: 'Minimize' }, '\u2304')
+      ])
     ]);
     const body = el('div', { class: 'mk-cb-body', role: 'log', 'aria-live': 'polite' });
     const form = el('form', { class: 'mk-cb-form' });
@@ -160,10 +166,15 @@
     root.appendChild(panel);
     document.body.appendChild(root);
 
-    // Seed greeting
-    const greeting = el('div', { class: 'mk-cb-msg bot' });
-    greeting.innerHTML = "Hi. I'm Milan's digital twin. Ask about my projects, writing, or how I think about AI. I cite sources and refuse what's outside my knowledge base.";
-    body.appendChild(greeting);
+    const GREETING_TEXT = "Hi. I'm Milan's digital twin. Ask about my projects, writing, or how I think about AI. I cite sources and refuse what's outside my knowledge base.";
+
+    function seedGreeting() {
+      const g = el('div', { class: 'mk-cb-msg bot' });
+      g.innerHTML = GREETING_TEXT;
+      body.appendChild(g);
+    }
+
+    seedGreeting();
 
     function open() {
       panel.classList.add('open');
@@ -176,6 +187,13 @@
 
     btn.addEventListener('click', open);
     head.querySelector('.mk-cb-close').addEventListener('click', close);
+    head.querySelector('.mk-cb-clear').addEventListener('click', function () {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+      try { localStorage.removeItem(EMAIL_KEY); } catch (_) {}
+      body.innerHTML = '';
+      seedGreeting();
+      input.focus();
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) close();
     });
@@ -189,7 +207,7 @@
       body.scrollTop = body.scrollHeight;
     }
 
-    function appendBot(reply, sources, refused) {
+    function appendBot(reply, sources, refused, fromHistory) {
       const msg = el('div', { class: 'mk-cb-msg bot' });
       msg.innerHTML = renderMarkdown(reply);
       if (sources && sources.length) {
@@ -208,7 +226,7 @@
         }
       }
       body.appendChild(msg);
-      if (refused) maybeShowEmailPrompt(msg);
+      if (refused && !fromHistory) maybeShowEmailPrompt(msg);
       body.scrollTop = body.scrollHeight;
     }
 
@@ -296,6 +314,34 @@
       const text = (input.value || '').trim();
       sendMessage(text);
     });
+
+    (async function hydrateHistory() {
+      const sid = getSessionId();
+      let controller;
+      let timeoutId;
+      try {
+        controller = new AbortController();
+        timeoutId = setTimeout(function () { controller.abort(); }, 2000);
+        const res = await fetch('/api/history?session_id=' + encodeURIComponent(sid), {
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (!res.ok) return;
+        const data = await res.json().catch(function () { return {}; });
+        const msgs = (data && data.messages) || [];
+        if (msgs.length === 0) return;
+        body.innerHTML = '';
+        msgs.forEach(function (m) {
+          if (m.role === 'user') {
+            appendUser(m.content);
+          } else if (m.role === 'assistant') {
+            appendBot(m.content || '', m.sources || [], !!m.refused, true);
+          }
+        });
+      } catch (_) {
+        // Silent fail; keep seeded greeting
+      }
+    })();
   }
 
   if (document.readyState === 'loading') {
