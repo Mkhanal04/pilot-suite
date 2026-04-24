@@ -170,13 +170,26 @@ export default async function handler(req, res) {
   try {
     const db = getDb();
 
+    const ipRaw = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || '';
+    const ipHashed = ipRaw ? await hashIp(ipRaw) : null;
+
+    if (message === '[email_opt_in]') {
+      if (optional_email && typeof optional_email === 'string') {
+        await db.from('conversations').upsert({
+          session_id,
+          last_active_at: new Date().toISOString(),
+          user_agent: (req.headers['user-agent'] || '').slice(0, 256),
+          ip_hash: ipHashed,
+          optional_email: optional_email.slice(0, 256)
+        }, { onConflict: 'session_id', ignoreDuplicates: false });
+      }
+      return res.json({ reply: '', sources: [], refused: false, captured: !!optional_email });
+    }
+
     const enabled = await getConfigValue('chatbot_enabled', true);
     if (!enabled) {
       return res.status(503).json({ error: 'Chatbot is currently disabled', reply: 'The chatbot is temporarily offline.' });
     }
-
-    const ipRaw = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket?.remoteAddress || '';
-    const ipHashed = ipRaw ? await hashIp(ipRaw) : null;
 
     await db.from('conversations').upsert({
       session_id,

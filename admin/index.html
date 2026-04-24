@@ -110,6 +110,11 @@
   </section>
 
   <section class="card">
+    <h2>Emails captured</h2>
+    <div id="emails-panel"></div>
+  </section>
+
+  <section class="card">
     <h2>Recent conversations</h2>
     <div id="conversations-panel"></div>
   </section>
@@ -246,6 +251,35 @@ async function saveConfig(key, value, statusEl) {
   }
 }
 
+async function loadEmails() {
+  const { conversations } = await api('/api/admin/conversations?limit=200');
+  const withEmail = conversations.filter(c => c.optional_email);
+  const panel = document.getElementById('emails-panel');
+  panel.innerHTML = '';
+  if (withEmail.length === 0) {
+    panel.appendChild(el('div', { class: 'empty' }, 'No emails captured yet.'));
+    return;
+  }
+  const table = el('table');
+  table.appendChild(el('thead', {},
+    el('tr', {},
+      el('th', {}, 'Email'),
+      el('th', {}, 'Captured'),
+      el('th', {}, 'Session')
+    )
+  ));
+  const tbody = el('tbody');
+  for (const c of withEmail) {
+    const tr = el('tr', { onclick: () => openConversation(c.session_id) });
+    tr.appendChild(el('td', {}, c.optional_email));
+    tr.appendChild(el('td', {}, new Date(c.last_active_at).toLocaleString()));
+    tr.appendChild(el('td', {}, el('code', {}, c.session_id.slice(0, 8))));
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  panel.appendChild(table);
+}
+
 async function loadConversations() {
   const { conversations } = await api('/api/admin/conversations?limit=30');
   const panel = document.getElementById('conversations-panel');
@@ -346,12 +380,13 @@ function escapeHtml(s) {
 (async function init() {
   try {
     await loadConfig();
+    await loadEmails();
     await loadConversations();
     await loadRefuses();
   } catch (err) {
     document.getElementById('status').textContent = err.message || 'error';
   }
-  setInterval(() => { loadConversations().catch(()=>{}); loadRefuses().catch(()=>{}); }, 30000);
+  setInterval(() => { loadEmails().catch(()=>{}); loadConversations().catch(()=>{}); loadRefuses().catch(()=>{}); }, 30000);
 })();
 </script>
 </body>

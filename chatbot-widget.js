@@ -67,8 +67,7 @@
       '.mk-cb-msg.user { align-self: flex-end; background: var(--color-accent, #0f172a); color: var(--color-surface, #fff); border-bottom-right-radius: 4px; }',
       '.mk-cb-msg.bot { align-self: flex-start; background: var(--color-muted-surface, #f1f5f9); color: var(--color-text, #0f172a); border-bottom-left-radius: 4px; }',
       '.mk-cb-msg.error { align-self: center; background: transparent; color: var(--color-muted, #64748b); font-size: 12px; font-style: italic; }',
-      '.mk-cb-sources { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }',
-      '.mk-cb-source { font-size: 11px; padding: 3px 8px; border-radius: 10px; background: var(--color-surface, #fff); border: 1px solid var(--color-border, #e5e7eb); color: var(--color-muted, #64748b); }',
+      '.mk-cb-sources { margin-top: 8px; font-size: 11px; color: var(--color-muted, #64748b); line-height: 1.4; }',
       '.mk-cb-form { display: flex; padding: 12px 16px; gap: 8px; border-top: 1px solid var(--color-border, #e5e7eb); }',
       '.mk-cb-input { flex: 1; padding: 10px 14px; border: 1px solid var(--color-border, #e5e7eb); border-radius: 10px; font-family: inherit; font-size: 14px; color: inherit; background: var(--color-surface, #fff); }',
       '.mk-cb-input:focus { outline: none; border-color: var(--color-accent, #0f172a); }',
@@ -91,7 +90,8 @@
   }
 
   function renderMarkdown(text) {
-    const escaped = text
+    const stripped = text.replace(/\s*\[\d+\]/g, '').replace(/\s+([.,;:!?])/g, '$1').trim();
+    const escaped = stripped
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
@@ -130,7 +130,7 @@
         el('div', { class: 'mk-cb-title' }, 'Ask my digital twin'),
         el('div', { class: 'mk-cb-sub' }, 'Trained on Milan\'s writing and work. Answers cite sources.')
       ]),
-      el('button', { class: 'mk-cb-close', 'aria-label': 'Close chat' }, '\u00d7')
+      el('button', { class: 'mk-cb-close', 'aria-label': 'Minimize chat', title: 'Minimize' }, '\u2304')
     ]);
     const body = el('div', { class: 'mk-cb-body', role: 'log', 'aria-live': 'polite' });
     const form = el('form', { class: 'mk-cb-form' });
@@ -182,15 +182,19 @@
       const msg = el('div', { class: 'mk-cb-msg bot' });
       msg.innerHTML = renderMarkdown(reply);
       if (sources && sources.length) {
-        const srcWrap = el('div', { class: 'mk-cb-sources' });
+        const labels = [];
         const seen = {};
         sources.forEach(function (s) {
           const label = sourceLabel(s.path);
           if (seen[label]) return;
           seen[label] = true;
-          srcWrap.appendChild(el('span', { class: 'mk-cb-source' }, label));
+          labels.push(label);
         });
-        msg.appendChild(srcWrap);
+        if (labels.length) {
+          const srcLine = el('div', { class: 'mk-cb-sources' });
+          srcLine.textContent = 'Sources: ' + labels.join(', ');
+          msg.appendChild(srcLine);
+        }
       }
       body.appendChild(msg);
       if (refused) maybeShowEmailPrompt(msg);
