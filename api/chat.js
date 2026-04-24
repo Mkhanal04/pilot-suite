@@ -36,6 +36,16 @@ REFUSE PATTERNS (auto-refuse with provided template):
 
 When refusing, use the provided REFUSE_TEMPLATE exactly. Do not generate alternate refusal text.
 
+PROTOTYPE URLS (share inline when a visitor asks to see a prototype or demo):
+- TalentPilot prototype: /talentpilot
+- TradePilot prototype: /tradepilot
+
+When asked to show a prototype, share the URL inline ("Here's the TradePilot prototype: /tradepilot") and cite the relevant retrieved chunk. Follow through on any invitation you made in a prior turn.
+
+CONVERSATION MEMORY:
+- You see prior turns in this session. Treat them as context you remember.
+- If you offered something last turn ("Want to see the TradePilot prototype?") and the visitor accepts, follow through. Do not refuse what you just offered.
+
 OUTPUT:
 - 1 to 2 short paragraphs, under 150 words. No headers, no bullets unless the question demands a list.
 - Prioritize the most specific 1 to 2 items. Do not exhaust the chunks.
@@ -95,7 +105,7 @@ async function embed(text) {
   return data.embedding.values;
 }
 
-async function generate(model, systemBlock, userBlock) {
+async function generate(model, systemBlock, messages) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -109,11 +119,30 @@ async function generate(model, systemBlock, userBlock) {
       system: [
         { type: 'text', text: systemBlock, cache_control: { type: 'ephemeral' } }
       ],
-      messages: [{ role: 'user', content: userBlock }]
+      messages
     })
   });
   if (!res.ok) throw new Error(`Generate failed: ${res.status} ${await res.text()}`);
   return res.json();
+}
+
+function stripCitationsInline(text) {
+  return (text || '').replace(/\s*\[\d+\]/g, '').replace(/\s+([.,;:!?])/g, '$1').trim();
+}
+
+async function loadPriorTurns(db, sessionId, limit) {
+  const { data } = await db.from('messages')
+    .select('role, content, created_at')
+    .eq('session_id', sessionId)
+    .in('role', ['user', 'assistant'])
+    .order('created_at', { ascending: false })
+    .limit(limit + 1);
+  if (!data || data.length <= 1) return [];
+  return data
+    .slice(1)
+    .reverse()
+    .map(m => ({ role: m.role, content: stripCitationsInline(m.content) }))
+    .filter(m => m.content);
 }
 
 async function checkRateLimit(db, sessionId, maxPerHour) {
@@ -269,9 +298,12 @@ export default async function handler(req, res) {
 
     const userBlock = `<retrieved_knowledge>\n${chunksBlock}\n</retrieved_knowledge>\n\n<question>\n${message}\n</question>`;
 
+    const priorTurns = await loadPriorTurns(db, session_id, 6);
+    const messagesForClaude = [...priorTurns, { role: 'user', content: userBlock }];
+
     let genResult;
     try {
-      genResult = await generate(model, systemBlock, userBlock);
+      genResult = await generate(model, systemBlock, messagesForClaude);
     } catch (e) {
       await db.from('messages').insert({
         session_id, role: 'assistant',

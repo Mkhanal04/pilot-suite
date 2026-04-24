@@ -60,6 +60,7 @@
       '.mk-cb-panel.open { transform: translateY(0); }',
       '.mk-cb-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-border, #e5e7eb); }',
       '.mk-cb-title { font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }',
+      '.mk-cb-beta { display: inline-block; margin-left: 8px; padding: 1px 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted, #64748b); background: var(--color-muted-surface, #f1f5f9); border: 1px solid var(--color-border, #e5e7eb); border-radius: 4px; vertical-align: 2px; }',
       '.mk-cb-sub { font-size: 12px; color: var(--color-muted, #64748b); margin-top: 2px; }',
       '.mk-cb-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--color-muted, #64748b); padding: 4px 8px; }',
       '.mk-cb-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }',
@@ -90,7 +91,11 @@
   }
 
   function renderMarkdown(text) {
-    const stripped = text.replace(/\s*\[\d+\]/g, '').replace(/\s+([.,;:!?])/g, '$1').trim();
+    const stripped = text
+      .replace(/\s*\[\d+\]/g, '')
+      .replace(/\s*[\u2014\u2013]\s*/g, ', ')
+      .replace(/\s+([.,;:!?])/g, '$1')
+      .trim();
     const escaped = stripped
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
@@ -127,7 +132,10 @@
     const panel = el('div', { class: 'mk-cb-panel', role: 'dialog', 'aria-label': 'Chat with Milan' });
     const head = el('div', { class: 'mk-cb-head' }, [
       el('div', null, [
-        el('div', { class: 'mk-cb-title' }, 'Ask my digital twin'),
+        el('div', { class: 'mk-cb-title' }, [
+          'Ask my digital twin',
+          el('span', { class: 'mk-cb-beta' }, 'Beta')
+        ]),
         el('div', { class: 'mk-cb-sub' }, 'Trained on Milan\'s writing and work. Answers cite sources.')
       ]),
       el('button', { class: 'mk-cb-close', 'aria-label': 'Minimize chat', title: 'Minimize' }, '\u2304')
