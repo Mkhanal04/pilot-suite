@@ -37,3 +37,5 @@ Developer Specification Report/
 # Playwright smoke-test artifacts
 .playwright-mcp/
 smoke-*.png
+.vercel
+.env*.local

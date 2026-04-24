@@ -1,0 +1,19 @@
+{
+  "name": "pilot-suite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Milan Khanal portfolio + digital twin chatbot",
+  "scripts": {
+    "ingest": "node scripts/ingest.js",
+    "dev": "python3 -m http.server 8765",
+    "dev:full": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
