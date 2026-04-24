@@ -315,7 +315,7 @@
       sendMessage(text);
     });
 
-    (async function hydrateHistory() {
+    async function hydrateHistory() {
       const sid = getSessionId();
       let controller;
       let timeoutId;
@@ -341,7 +341,18 @@
       } catch (_) {
         // Silent fail; keep seeded greeting
       }
-    })();
+    }
+
+    hydrateHistory();
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState !== 'visible') return;
+      if (sending) return;
+      const panelOpen = panel.classList.contains('open');
+      const distFromBottom = body.scrollHeight - body.scrollTop - body.clientHeight;
+      if (panelOpen && distFromBottom > 40) return;
+      hydrateHistory();
+    });
   }
 
   if (document.readyState === 'loading') {
