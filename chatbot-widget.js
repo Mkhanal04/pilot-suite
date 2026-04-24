@@ -63,13 +63,12 @@
       '.mk-cb-sub { font-size: 12px; color: var(--color-muted, #64748b); margin-top: 2px; }',
       '.mk-cb-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--color-muted, #64748b); padding: 4px 8px; }',
       '.mk-cb-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }',
-      '.mk-cb-msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; }',
+      '.mk-cb-msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; word-break: break-word; }',
       '.mk-cb-msg.user { align-self: flex-end; background: var(--color-accent, #0f172a); color: var(--color-surface, #fff); border-bottom-right-radius: 4px; }',
       '.mk-cb-msg.bot { align-self: flex-start; background: var(--color-muted-surface, #f1f5f9); color: var(--color-text, #0f172a); border-bottom-left-radius: 4px; }',
       '.mk-cb-msg.error { align-self: center; background: transparent; color: var(--color-muted, #64748b); font-size: 12px; font-style: italic; }',
       '.mk-cb-sources { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }',
-      '.mk-cb-source { font-size: 11px; padding: 3px 8px; border-radius: 10px; background: var(--color-surface, #fff); border: 1px solid var(--color-border, #e5e7eb); color: var(--color-muted, #64748b); text-decoration: none; }',
-      '.mk-cb-source:hover { color: var(--color-accent, #0f172a); border-color: var(--color-accent, #0f172a); }',
+      '.mk-cb-source { font-size: 11px; padding: 3px 8px; border-radius: 10px; background: var(--color-surface, #fff); border: 1px solid var(--color-border, #e5e7eb); color: var(--color-muted, #64748b); }',
       '.mk-cb-form { display: flex; padding: 12px 16px; gap: 8px; border-top: 1px solid var(--color-border, #e5e7eb); }',
       '.mk-cb-input { flex: 1; padding: 10px 14px; border: 1px solid var(--color-border, #e5e7eb); border-radius: 10px; font-family: inherit; font-size: 14px; color: inherit; background: var(--color-surface, #fff); }',
       '.mk-cb-input:focus { outline: none; border-color: var(--color-accent, #0f172a); }',
@@ -114,12 +113,6 @@
     return path.split('/')[0];
   }
 
-  function sourceUrl(path) {
-    if (path === 'index.html') return '/';
-    if (path === 'content/work.json') return '/#work';
-    return '/' + path.replace(/index\.html$/, '');
-  }
-
   function init() {
     if (document.getElementById('mk-chatbot-root')) return;
     injectStyles();
@@ -139,7 +132,7 @@
       ]),
       el('button', { class: 'mk-cb-close', 'aria-label': 'Close chat' }, '\u00d7')
     ]);
-    const body = el('div', { class: 'mk-cb-body' });
+    const body = el('div', { class: 'mk-cb-body', role: 'log', 'aria-live': 'polite' });
     const form = el('form', { class: 'mk-cb-form' });
     const input = el('input', {
       class: 'mk-cb-input', type: 'text',
@@ -165,7 +158,10 @@
       panel.classList.add('open');
       setTimeout(function () { input.focus(); }, 100);
     }
-    function close() { panel.classList.remove('open'); }
+    function close() {
+      panel.classList.remove('open');
+      btn.focus();
+    }
 
     btn.addEventListener('click', open);
     head.querySelector('.mk-cb-close').addEventListener('click', close);
@@ -187,9 +183,12 @@
       msg.innerHTML = renderMarkdown(reply);
       if (sources && sources.length) {
         const srcWrap = el('div', { class: 'mk-cb-sources' });
+        const seen = {};
         sources.forEach(function (s) {
-          const a = el('a', { class: 'mk-cb-source', href: sourceUrl(s.path), target: '_blank', rel: 'noopener' }, sourceLabel(s.path));
-          srcWrap.appendChild(a);
+          const label = sourceLabel(s.path);
+          if (seen[label]) return;
+          seen[label] = true;
+          srcWrap.appendChild(el('span', { class: 'mk-cb-source' }, label));
         });
         msg.appendChild(srcWrap);
       }
@@ -227,7 +226,7 @@
       promptBox.children[1].appendChild(submitBtn);
       submitBtn.addEventListener('click', async function () {
         const val = (emailInput.value || '').trim();
-        if (!val || val.length > 256 || !val.includes('@')) return;
+        if (!val || val.length > 256 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return;
         try { localStorage.setItem(EMAIL_KEY, val); } catch (_) {}
         try {
           await fetch(API, {
@@ -245,6 +244,7 @@
       if (sending || !text) return;
       sending = true;
       send.disabled = true;
+      input.disabled = true;
       input.value = '';
       appendUser(text);
       const typing = showTyping();
@@ -271,6 +271,7 @@
       } finally {
         sending = false;
         send.disabled = false;
+        input.disabled = false;
         input.focus();
       }
     }

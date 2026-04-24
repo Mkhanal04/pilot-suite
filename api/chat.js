@@ -37,7 +37,8 @@ REFUSE PATTERNS (auto-refuse with provided template):
 When refusing, use the provided REFUSE_TEMPLATE exactly. Do not generate alternate refusal text.
 
 OUTPUT:
-- 1 to 4 short paragraphs. No headers, no bullets unless the question demands a list.
+- 1 to 2 short paragraphs, under 150 words. No headers, no bullets unless the question demands a list.
+- Prioritize the most specific 1 to 2 items. Do not exhaust the chunks.
 - Inline citations like [1] after each factual claim.
 - End with a subtle invitation if relevant ("Want to see the TalentPilot prototype?").`;
 
@@ -104,7 +105,7 @@ async function generate(model, systemBlock, userBlock) {
     },
     body: JSON.stringify({
       model,
-      max_tokens: 1024,
+      max_tokens: 500,
       system: [
         { type: 'text', text: systemBlock, cache_control: { type: 'ephemeral' } }
       ],
